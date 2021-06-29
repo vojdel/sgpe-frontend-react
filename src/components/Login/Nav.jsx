@@ -9,9 +9,11 @@ const Nav = () => {
           <FontAwesomeIcon icon={faHome} /> SGPE
               </a>
         <button className="navbar-toggler shadow-none ms-2" type="button" data-bs-toggle="collapse" data-bs-target="#navigation" aria-controls="navigation" aria-expanded="false" aria-label="toggle navigation">
-          <span className="navbar-toggle-bar1"></span>
-          <span className="navbar-toggle-bar2"></span>
-          <span className="navbar-toggle-bar3"></span>
+          <span className="navbar-toggler-icon mt-2">
+            <span className="navbar-toggle-bar1"></span>
+            <span className="navbar-toggle-bar2"></span>
+            <span className="navbar-toggle-bar3"></span>
+          </span>
         </button>
         <div className="collapse navbar-collapse" id="navigation">
           <ul className="navbar-nav d-lg-block d-none">
