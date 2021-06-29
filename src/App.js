@@ -3,12 +3,11 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 // import your fontawesome library
 import './fontawesome'
 import Dashboard from './components/Dashboard'
+import Login from './components/Login/Login';
 
 function App() {
   return (
-    <div className="container text-center">
-    <Dashboard />
-    </div>
+    <Login />
   );
 }
 

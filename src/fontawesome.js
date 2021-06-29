@@ -5,12 +5,14 @@ import { library } from '@fortawesome/fontawesome-svg-core';
 import {
   faCode,
   faHighlighter,
-  faSearch  
+  faSearch,
+  faHome
 } from '@fortawesome/free-solid-svg-icons';
 
 library.add(
   faCode,
   faHighlighter,
-  faSearch
+  faSearch,
+  faHome
   // more icons go here
 );
