@@ -2,12 +2,11 @@ import './App.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
 // import your fontawesome library
 import './fontawesome'
-import Dashboard from './components/Dashboard'
-import Registrar from './components/Registrar/Registrar';
+import Layout from './components/Layout.jsx';
 
 function App() {
   return (
-    <Registrar />
+    <Layout />
   );
 }
 
