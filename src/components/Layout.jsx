@@ -1,7 +1,7 @@
 import Siderbar from './layout/Siderbar'
 import Navbar from './layout/Navbar'
 import Footer from './layout/Footer'
-import Estado from './Estado/Estado';
+import Municipio from './Municipio/Municipio';
 import {useState} from 'react';
 
 
@@ -52,7 +52,7 @@ const Layout = () => {
           handleSiderHidden={handleSiderHidden}
           handleMenu={handleMenu}
         />
-        <Estado />
+        <Municipio />
         <Footer />
       </main>
     </div>
