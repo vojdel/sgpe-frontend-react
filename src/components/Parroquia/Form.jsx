@@ -2,25 +2,33 @@ import {useState} from 'react';
 
 const Form = () => {
 
-  const initialMunicipio = {
+  const initialParroquia = {
     id: 0,
     estado_id: 0,
-    municipio: ""
+    municipio_id: 0,
+    parroquia: ""
   }
 
-  const [municipio, setMunicipio] = useState(initialMunicipio);
+  const [parroquia, setParroquia] = useState(initialParroquia);
 
   const handleEstado = (event) => {
-    setMunicipio({
-      ...municipio,
+    setParroquia({
+      ...parroquia,
       estado_id: event.target.value
     })
   }
 
   const handleMunicipio = (event) => {
-    setMunicipio({
-      ...municipio,
-      municipio: event.target.value
+    setParroquia({
+      ...parroquia,
+      municipio_id: event.target.value
+    })
+  }
+
+  const handleParroquia = (event) => {
+    setParroquia({
+      ...parroquia,
+      parroquia: event.target.value
     })
   }
 
@@ -35,8 +43,8 @@ const Form = () => {
           <div className="modal-body">
             <form role="form text-left">
               <div className="form-group">
-                <label for="exampleFormControlSelect2">Estado:</label>
-                <select className="form-control" id="exampleFormControlSelect2" onChange={handleEstado}>
+                <label for="exampleFormControlSelect1">Estado:</label>
+                <select className="form-control" id="exampleFormControlSelect1" onChange={handleEstado}>
                   <option value="1">Yaracuy</option>
                   <option value="2">Lara</option>
                   <option value="3">Bolivar</option>
@@ -44,9 +52,19 @@ const Form = () => {
                   <option value="5">Falcon</option>
                 </select>
               </div>
-              <label>Municipio</label>
+              <div className="form-group">
+                <label for="exampleFormControlSelect2">Municipio:</label>
+                <select className="form-control" id="exampleFormControlSelect2" onChange={handleMunicipio}>
+                  <option value="1">Bruzual</option>
+                  <option value="2">No se</option>
+                  <option value="3">no se</option>
+                  <option value="4">no se</option>
+                  <option value="5">nose</option>
+                </select>
+              </div>
+              <label>Parroquia</label>
               <div className="input-group mb-3">
-                <input type="text" className="form-control" placeholder="Escribe el municipio aqui..." aria-label="Municipio" aria-describedby="municipio-addon" onChange={handleMunicipio} />
+                <input type="text" className="form-control" placeholder="Escribe el parroquia aqui..." aria-label="Parroquia" aria-describedby="parroquia-addon" onChange={handleParroquia} />
               </div>
             </form>
           </div>
