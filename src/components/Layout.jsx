@@ -4,6 +4,7 @@ import Footer from './layout/Footer'
 import Municipio from './Municipio/Municipio';
 import Estado from './Estado/Estado';
 import Parroquia from './Parroquia/Parroquia';
+import TipoAlergia from './TipoAlergia/TipoAlergia';
 import {useState} from 'react';
 
 
@@ -54,7 +55,7 @@ const Layout = () => {
           handleSiderHidden={handleSiderHidden}
           handleMenu={handleMenu}
         />
-        <Parroquia />
+        <TipoAlergia />
         <Footer />
       </main>
     </div>

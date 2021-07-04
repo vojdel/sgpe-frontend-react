@@ -1,6 +1,6 @@
 import {useState} from "react";
 
-const FormEstado = () => {
+const Form = () => {
 
   const initialEstado = {
     id: 0,
@@ -27,7 +27,7 @@ const FormEstado = () => {
             <form role="form text-left">
               <label>Estado</label>
               <div className="input-group mb-3">
-                <input type="text" className="form-control" placeholder="Escribe el estado aqui..." aria-label="Estado" aria-describedby="estado-addon" onChange={handleEstado} />
+                <input type="text" className="form-control" placeholder="Escribe el estado aqui..." aria-label="Estado" aria-describedby="estado-addon" onChange={handleEstado} value={estado.estado} />
               </div>
             </form>
           </div>
@@ -40,4 +40,4 @@ const FormEstado = () => {
     </div>
   )
 }
-export default FormEstado;
+export default Form;

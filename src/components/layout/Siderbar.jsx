@@ -1,5 +1,5 @@
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome"
-import {faAddressBook, faBlind, faChild, faHeadSideCough, faHome, faKey, faMale, faChalkboard, faChalkboardTeacher, faMapMarkedAlt, faSchool, faStethoscope, faTimes, faUserAlt, faUserCircle, faUserTie} from "@fortawesome/free-solid-svg-icons";
+import {faAddressBook, faBlind, faChild, faHeadSideCough, faHome, faKey, faMale, faChalkboard, faChalkboardTeacher, faMapMarkedAlt, faSchool, faStethoscope, faTimes, faUserAlt, faUserCircle, faUserTie, faUser} from "@fortawesome/free-solid-svg-icons";
 import SiderOption from './SiderOption';
 
 const Siderbar = ({estilo}) => {
@@ -29,10 +29,12 @@ const Siderbar = ({estilo}) => {
             <SiderOption nombre="Personas" collapseOption="collapsePersona" icon={faMale} />
             <ul className="navbar-nav collapse" id="collapsePersona">
               <SiderOption nombre="Estudiante" icon={faChild} list={true} />
+              <SiderOption nombre="Usuarios" icon={faUser} list={true} />
               <SiderOption nombre="Empleado" icon={faUserTie} list={true} />
               <SiderOption nombre="Representante" icon={faUserTie} list={true} />
+              <SiderOption nombre="Cargo" icon={faUserTie} list={true} />
             </ul>
-            <SiderOption nombre="Enfermedades" collapseOption="collapseEnfermedades" icon={faStethoscope} />
+            <SiderOption nombre="Salud del Estudiante" collapseOption="collapseEnfermedades" icon={faStethoscope} />
             <ul className="navbar-nav collapse" id="collapseEnfermedades">
               <SiderOption nombre="Tipo de Alergias" icon={faHeadSideCough} list={true} />
               <SiderOption nombre="Tipo de Discapacidad" icon={faBlind} list={true} />
@@ -49,6 +51,7 @@ const Siderbar = ({estilo}) => {
             <li className="nav-item mt-3">
               <h6 className="ps-4 ms-2 text-uppercase text-xs font-weight-bolder opacity-6 text-white">Procesos</h6>
             </li>
+            <SiderOption nombre="Inscripción" icon={faChalkboard} />
             <SiderOption nombre="Horarios" icon={faChalkboard} />
             <SiderOption nombre="Asistencias" icon={faChalkboardTeacher} />
             <SiderOption nombre="Permisos" icon={faChalkboardTeacher} />

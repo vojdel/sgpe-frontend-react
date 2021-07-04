@@ -36,7 +36,7 @@ const Form = () => {
             <form role="form text-left">
               <div className="form-group">
                 <label for="exampleFormControlSelect2">Estado:</label>
-                <select className="form-control" id="exampleFormControlSelect2" onChange={handleEstado}>
+                <select className="form-control" id="exampleFormControlSelect2" onChange={handleEstado} value={ municipio.estado_id }>
                   <option value="1">Yaracuy</option>
                   <option value="2">Lara</option>
                   <option value="3">Bolivar</option>
@@ -46,7 +46,7 @@ const Form = () => {
               </div>
               <label>Municipio</label>
               <div className="input-group mb-3">
-                <input type="text" className="form-control" placeholder="Escribe el municipio aqui..." aria-label="Municipio" aria-describedby="municipio-addon" onChange={handleMunicipio} />
+                <input type="text" className="form-control" placeholder="Escribe el municipio aqui..." aria-label="Municipio" aria-describedby="municipio-addon" onChange={handleMunicipio} value={municipio.municipio} />
               </div>
             </form>
           </div>

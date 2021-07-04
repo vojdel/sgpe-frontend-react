@@ -44,7 +44,7 @@ const Form = () => {
             <form role="form text-left">
               <div className="form-group">
                 <label for="exampleFormControlSelect1">Estado:</label>
-                <select className="form-control" id="exampleFormControlSelect1" onChange={handleEstado}>
+                <select className="form-control" id="exampleFormControlSelect1" onChange={handleEstado} value={ parroquia.estado_id }>
                   <option value="1">Yaracuy</option>
                   <option value="2">Lara</option>
                   <option value="3">Bolivar</option>
@@ -54,7 +54,7 @@ const Form = () => {
               </div>
               <div className="form-group">
                 <label for="exampleFormControlSelect2">Municipio:</label>
-                <select className="form-control" id="exampleFormControlSelect2" onChange={handleMunicipio}>
+                <select className="form-control" id="exampleFormControlSelect2" onChange={handleMunicipio} value={ parroquia.municipio_id }>
                   <option value="1">Bruzual</option>
                   <option value="2">No se</option>
                   <option value="3">no se</option>
@@ -64,7 +64,7 @@ const Form = () => {
               </div>
               <label>Parroquia</label>
               <div className="input-group mb-3">
-                <input type="text" className="form-control" placeholder="Escribe el parroquia aqui..." aria-label="Parroquia" aria-describedby="parroquia-addon" onChange={handleParroquia} />
+                <input type="text" className="form-control" placeholder="Escribe el parroquia aqui..." aria-label="Parroquia" aria-describedby="parroquia-addon" onChange={handleParroquia} value={parroquia.parroquia} />
               </div>
             </form>
           </div>
