@@ -1,10 +1,16 @@
+import React, {Suspense, lazy} from 'react';
+import {Route, BrowserRouter as Router, Switch} from 'react-router-dom';
 import Siderbar from './layout/Siderbar'
 import Navbar from './layout/Navbar'
 import Footer from './layout/Footer'
-import Municipio from './Municipio/Municipio';
 import {useState} from 'react';
 
-
+const Municipio = lazy(() => import('./Municipio/Municipio'));
+const Estado = lazy(() => import('./Estado/Estado'));
+const Parroquia = lazy(() => import('./Parroquia/Parroquia'));
+const TipoAlergia = lazy(() => import('./TipoAlergia/TipoAlergia'));
+const PageNotFound = lazy(() => import('./PageNoFound'));
+const Dashboard = lazy(() => import('./Dashboard'));
 const Layout = () => {
 
   const styleSiderHidden = {
@@ -44,17 +50,28 @@ const Layout = () => {
 
   return (
     <div className="g-sidenav-show bg-gray-100 min-vw-100">
-      <Siderbar
-        estilo={styleAside.aside}
-      />
-      <main className="main-content border-radius-lg min-vh-100" style={{marginLeft: styleAside.main}}>
-        <Navbar
-          handleSiderHidden={handleSiderHidden}
-          handleMenu={handleMenu}
+      <Router>
+        <Siderbar
+          estilo={styleAside.aside}
         />
-        <Municipio />
-        <Footer />
-      </main>
+        <main className="main-content border-radius-lg min-vh-100" style={{marginLeft: styleAside.main}}>
+          <Navbar
+            handleSiderHidden={handleSiderHidden}
+            handleMenu={handleMenu}
+          />
+          <Suspense fallback={<div>Loading...</div>}>
+            <Switch>
+              <Route path="/" component={Dashboard} exact />
+              <Route path="/estado" component={Estado} exact />
+              <Route path="/municipio" component={Municipio} exact />
+              <Route path="/parroquia" component={Parroquia} exact />
+              <Route path="/tipoalergia" component={TipoAlergia} exact />
+              <Route component={PageNotFound} />
+            </Switch>
+          </Suspense>
+          <Footer />
+        </main>
+      </Router>
     </div>
   )
 }

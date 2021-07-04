@@ -2,27 +2,38 @@ import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
 import {faPlus} from "@fortawesome/free-solid-svg-icons"
 import Form from './Form';
 import Tabla from './Tabla';
-import {useEffect, useState} from 'react';
-import {getAll} from '../../services/estado.js';
 
-const Estado = () => {
+const municipios = [
+  {
+    id: 1,
+    municipio: "Bruzual",
+    parroquia: "Bruzual"
+  },
+  {
+    id: 2,
+    municipio: "Barquisimeto",
+    parroquia: "nose"
+  },
+  {
+    id: 3,
+    municipio: "San Felipe",
+    parroquia: "San Felipe"
+  },
+  {
+    id: 4,
+    municipio: "Independencia",
+    parroquia: "nose"
+  },
+  {
+    id: 5,
+    municipio: "No se",
+    parroquia: "No se"
+  },
+]
 
-  const nombres = ["id", "estado", "action"]
+const nombres = ["id", "municipio", "parroquia", "action"]
 
-  const initialEstado = [
-    {
-      id: 1,
-      estado: "Yaracuy"
-    }
-  ];
-
-  const [estado, setEstado] = useState(initialEstado)
-
-  //useEffect(() => {
-  //getAll().then(initialEstado => {
-  //setEstado(initialEstado)
-  //})
-  //}, [])
+const Parroquia = () => {
 
   return (
     <div className="row w-100 justify-content-md-center">
@@ -42,10 +53,10 @@ const Estado = () => {
       <div className="row ps-5">
         <Tabla
           nombres={nombres}
-          datas={estado}
+          datas={municipios}
         />
       </div>
     </div>
   )
 }
-export default Estado;
+export default Parroquia;

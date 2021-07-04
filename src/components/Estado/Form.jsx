@@ -1,4 +1,20 @@
-const FormEstado = () => {
+import {useState} from "react";
+
+const Form = () => {
+
+  const initialEstado = {
+    id: 0,
+    estado: ""
+  }
+  const [estado, setEstado] = useState(initialEstado);
+
+  const handleEstado = (event) => {
+    setEstado({
+      ...estado,
+      estado: event.target.value
+    })
+  }
+
   return (
     <div className="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
       <div className="modal-dialog">
@@ -11,7 +27,7 @@ const FormEstado = () => {
             <form role="form text-left">
               <label>Estado</label>
               <div className="input-group mb-3">
-                <input type="text" className="form-control" placeholder="Escribe el estado aqui..." aria-label="Estado" aria-describedby="estado-addon" />
+                <input type="text" className="form-control" placeholder="Escribe el estado aqui..." aria-label="Estado" aria-describedby="estado-addon" onChange={handleEstado} value={estado.estado} />
               </div>
             </form>
           </div>
@@ -24,4 +40,4 @@ const FormEstado = () => {
     </div>
   )
 }
-export default FormEstado;
+export default Form;

@@ -3,24 +3,41 @@ import {faPlus} from "@fortawesome/free-solid-svg-icons"
 import Form from './Form';
 import Tabla from './Tabla';
 import {useEffect, useState} from 'react';
-import {getAll} from '../../services/estado.js';
+import {getAll} from '../../services/tipoAlergia.js';
 
-const Estado = () => {
+const TipoAlergia = () => {
 
-  const nombres = ["id", "estado", "action"]
+  const nombres = ["id", "tipo de alergia", "action"]
 
-  const initialEstado = [
+  const initialTipoAlergia = [
     {
       id: 1,
-      estado: "Yaracuy"
+      tipo_alergia: "Refriado"
+    },
+    {
+      id: 1,
+      tipo_alergia: "Refriado"
+    },
+    {
+      id: 1,
+      tipo_alergia: "Refriado"
+    },
+    {
+      id: 1,
+      tipo_alergia: "Refriado"
+    },
+    {
+      id: 1,
+      tipo_alergia: "Refriado"
     }
   ];
 
-  const [estado, setEstado] = useState(initialEstado)
+  const [tipoAlergia, setTipoAlergia] = useState(initialTipoAlergia)
 
   //useEffect(() => {
-  //getAll().then(initialEstado => {
-  //setEstado(initialEstado)
+  //getAll().then(initialTipoAlergia => {
+  //setTipoAlergia(initialTipoAlergia)
+  //console.log({initialTipoAlergia});
   //})
   //}, [])
 
@@ -42,10 +59,10 @@ const Estado = () => {
       <div className="row ps-5">
         <Tabla
           nombres={nombres}
-          datas={estado}
+          datas={tipoAlergia}
         />
       </div>
     </div>
   )
 }
-export default Estado;
+export default TipoAlergia;
