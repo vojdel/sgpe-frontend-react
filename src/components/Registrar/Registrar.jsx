@@ -1,13 +1,13 @@
-import NavRegistrar from './NavRegistrar';
-import FooterRegistrar from './FooterRegistrar.jsx';
+import NavRegistrar from './NavRegistrar'
+import FooterRegistrar from './FooterRegistrar.jsx'
 
 const Registrar = () => (
   <div className="bg-gray-100">
-    
+
     <NavRegistrar />
 
       <section className="h-50-vh mb-4">
-        <div className="page-header align-items-start section-height-50 pt-5 pb-11 m-3 border-redius-lg" style={{ backgroundImage: "url(/img/img3.jpg)" }}>
+        <div className="page-header align-items-start section-height-50 pt-5 pb-11 m-3 border-redius-lg" style={{ backgroundImage: 'url(/img/img3.jpg)' }}>
           <span className="mask bg-gradient-dark opacity-6"></span>
           <div className="container">
             <div className="row justify-content-center">
@@ -43,7 +43,7 @@ const Registrar = () => (
                   </div>
                   <div className="form-check form-check-info text-left">
                     <input type="checkbox" className="form-check-input" value="" id="flexCheckDefault" checked />
-                    <label for="flexCheckDefault" className="form-check-label">
+                    <label htmlFor="flexCheckDefault" className="form-check-label">
                       I agree the <a href="#" className="text-dark font-weight-bolder">Terms and Conditions</a>
                     </label>
                   </div>
@@ -65,4 +65,4 @@ const Registrar = () => (
 
   </div>
 )
-export default Registrar;
+export default Registrar

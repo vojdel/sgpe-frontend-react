@@ -1,15 +1,15 @@
-import {FontAwesomeIcon} from "@fortawesome/react-fontawesome"
-import {faAddressBook, faBlind, faChild, faHeadSideCough, faHome, faKey, faMale, faChalkboard, faChalkboardTeacher, faMapMarkedAlt, faSchool, faStethoscope, faTimes, faUserAlt, faUserCircle, faUserTie, faUser} from "@fortawesome/free-solid-svg-icons";
-import SiderOption from './SiderOption';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faAddressBook, faBlind, faChild, faHeadSideCough, faHome, faKey, faMale, faChalkboard, faChalkboardTeacher, faMapMarkedAlt, faSchool, faStethoscope, faTimes, faUserAlt, faUserCircle, faUserTie, faUser } from '@fortawesome/free-solid-svg-icons'
+import SiderOption from './SiderOption'
+import PropTypes from 'prop-types'
 
-const Siderbar = ({estilo}) => {
-
+const Siderbar = ({ estilo }) => {
   return (
-    <aside className={estilo} id="sidenav-main" style={{background: '#000000e6'}}>
+    <aside className={estilo} id="sidenav-main" style={{ background: '#000000e6' }}>
       <div className="sidenav-main">
         <div className="sidenav-header text-center">
           <FontAwesomeIcon icon={faTimes} className="p-3 cursor-pointer text-secondary opacity-5 position-absolute right-0 top-0 d-none d-xl-none" aria-hidden="true" id="iconSidenav" />
-          <a href="#" className="navbar-brand m-0" style={{fontSize: '20px'}}>
+          <a href="#" className="navbar-brand m-0" style={{ fontSize: '20px' }}>
             <FontAwesomeIcon icon={faHome} className="navbar-brand-img h-100 text-white" />
             <span className="ms-1 font-weight-bold text-white">SGPE</span>
           </a>
@@ -37,7 +37,7 @@ const Siderbar = ({estilo}) => {
             <SiderOption nombre="Salud del Estudiante" collapseOption="collapseEnfermedades" icon={faStethoscope} />
             <ul className="navbar-nav collapse" id="collapseEnfermedades">
               <SiderOption nombre="Tipo de Alergias" icon={faHeadSideCough} list={true} link="/tipoalergia" />
-              <SiderOption nombre="Tipo de Discapacidad" icon={faBlind} list={true} />
+              <SiderOption nombre="Tipo de Discapacidad" icon={faBlind} list={true} link="/tipodiscapacidad" />
               <SiderOption nombre="Alergias" icon={faHeadSideCough} list={true} />
               <SiderOption nombre="Discapacidad" icon={faBlind} list={true} />
             </ul>
@@ -59,13 +59,17 @@ const Siderbar = ({estilo}) => {
               <h6 className="ps-4 ms-2 text-uppercase text-xs font-weight-bolder opacity-6 text-white">Account Pages</h6>
             </li>
             <SiderOption nombre="Profile" icon={faUserAlt} />
-            <SiderOption nombre="Sign In" icon={faKey} />
-            <SiderOption nombre="Sign Up" icon={faUserCircle} />
+            <SiderOption nombre="Sign In" icon={faKey} link="/signin" />
+            <SiderOption nombre="Sign Up" icon={faUserCircle} link="/signup"/>
           </ul >
         </div >
       </div >
     </aside >
-  );
+  )
 }
 
-export default Siderbar;
+Siderbar.propTypes = {
+  estilo: PropTypes.string
+}
+
+export default Siderbar

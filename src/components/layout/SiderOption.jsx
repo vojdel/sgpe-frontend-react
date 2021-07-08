@@ -1,27 +1,9 @@
-import {FontAwesomeIcon} from "@fortawesome/react-fontawesome"
-import {useState} from "react";
-import {Link} from "react-router-dom";
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { Link } from 'react-router-dom'
+import PropTypes from 'prop-types'
 
-const SiderOption = ({nombre, collapseOption, icon, list, link}) => {
-
-  const estilo = {
-    style: (list) ? 'nav-link ps-4 w-100 py-1' : 'nav-link',
-    boolean: true
-  }
-
-  const [styleLink, setStyleLink] = useState(estilo)
-
-  const active = () => {
-    if (styleLink.boolean) {
-      setStyleLink({
-        ...styleLink,
-        style: styleLink.style + " active",
-        boolean: false
-      })
-    } else {
-      setStyleLink(estilo)
-    }
-  }
+const SiderOption = ({ nombre, collapseOption, icon, list, link }) => {
+  const estilo = (list) ? 'nav-link ps-4 w-100 py-1' : 'nav-link'
 
   if (collapseOption) {
     return (
@@ -37,7 +19,7 @@ const SiderOption = ({nombre, collapseOption, icon, list, link}) => {
   } else {
     return (
       <li className="nav-item">
-        <Link to={link} replace={true} className={styleLink.style} onClick={active} >
+        <Link to={link} replace={true} className={estilo}>
           <div className="icon icon-shape icon-sm shadow border-radius-md bg-white text-center me-2 d-flex align-items-center justify-content-center">
             <FontAwesomeIcon icon={icon} />
           </div>
@@ -47,4 +29,13 @@ const SiderOption = ({nombre, collapseOption, icon, list, link}) => {
     )
   }
 }
+
+SiderOption.propTypes = {
+  nombre: PropTypes.string,
+  collapseOption: PropTypes.string,
+  icon: PropTypes.string,
+  list: PropTypes.string,
+  link: PropTypes.string
+}
+
 export default SiderOption

@@ -1,28 +1,25 @@
-import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
-import {faPlus} from "@fortawesome/free-solid-svg-icons"
-import Form from './Form';
-import Tabla from './Tabla';
-import {useEffect, useState} from 'react';
-import {getAll} from '../../services/estado.js';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faPlus } from '@fortawesome/free-solid-svg-icons'
+import Form from './Form'
+import Tabla from './Tabla'
+import { useEffect, useState } from 'react'
+// import { getAll } from '../../services/estado.js'
 
 const Estado = () => {
-
-  const nombres = ["id", "estado", "action"]
+  const nombres = ['id', 'estado', 'action']
 
   const initialEstado = [
     {
       id: 1,
-      estado: "Yaracuy"
+      estado: 'Yaracuy'
     }
-  ];
+  ]
 
-  const [estado, setEstado] = useState(initialEstado)
+  const [estado, setEstado] = useState([])
 
-  //useEffect(() => {
-  //getAll().then(initialEstado => {
-  //setEstado(initialEstado)
-  //})
-  //}, [])
+  useEffect(() => {
+    setEstado(initialEstado)
+  }, [])
 
   return (
     <div className="row w-100 justify-content-md-center">
@@ -36,8 +33,7 @@ const Estado = () => {
             <FontAwesomeIcon icon={faPlus} className="text-white" />
           </button>
         </div>
-        <Form
-        />
+        <Form />
       </div>
       <div className="row ps-5">
         <Tabla
@@ -48,4 +44,4 @@ const Estado = () => {
     </div>
   )
 }
-export default Estado;
+export default Estado

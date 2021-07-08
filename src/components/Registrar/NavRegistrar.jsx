@@ -1,5 +1,5 @@
-import {FontAwesomeIcon} from "@fortawesome/react-fontawesome"
-import {faChartPie, faHome, faKey, faUserCircle} from '@fortawesome/free-solid-svg-icons';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faChartPie, faHome, faKey, faUserCircle } from '@fortawesome/free-solid-svg-icons'
 
 const NavLogout = () => {
   return (
@@ -46,4 +46,4 @@ const NavLogout = () => {
   )
 }
 
-export default NavLogout;
+export default NavLogout

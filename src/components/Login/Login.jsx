@@ -1,13 +1,13 @@
-import FooterLogin from './Footerlogin.jsx';
-import Nav from './Nav.jsx';
+import FooterLogin from './Footerlogin.jsx'
+import Nav from './Nav.jsx'
 
-const Login = (  ) => {
+const Login = () => {
   return (
     <div className="position-sticky z-index-sticky top-0">
       <div className="row">
         <div className="col-12">
-          
-         <Nav /> 
+
+         <Nav />
 
           <section>
             <div className="page-header section-height-75">
@@ -31,7 +31,7 @@ const Login = (  ) => {
                           </div>
                           <div className="form-check form-switch">
                             <input className="form-check-input" type="checkbox" id="rememberMe" checked="" style={{ width: '40px' }} />
-                            <label className="form-check-label" for="rememberMe">Remember me</label>
+                            <label className="form-check-label" htmlFor="rememberMe">Remember me</label>
                             </div>
                             <div className="text-center">
                               <button type="button" className="btn bg-gradient-info w-100 mt-4 mb-0">Sign in</button>
@@ -45,7 +45,7 @@ const Login = (  ) => {
                   </div>
                   <div className="col-md-6">
                     <div className="oblique position-absolute top-0 h-100 d-md-block d-none me-n8">
-                      <div className="oblique-image bg-cover position-absolute fixed-top ms-auto h-100 z-index-0 ms-n6" style={{backgroundImage: "url(/img/img1.jpg)"}}></div>
+                      <div className="oblique-image bg-cover position-absolute fixed-top ms-auto h-100 z-index-0 ms-n6" style={{ backgroundImage: 'url(/img/img1.jpg)' }}></div>
                     </div>
                   </div>
                 </div>

@@ -1,45 +1,41 @@
-import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
-import {faPlus} from "@fortawesome/free-solid-svg-icons"
-import Form from './Form';
-import Tabla from './Tabla';
-import {useEffect, useState} from 'react';
-import {getAll} from '../../services/tipoAlergia.js';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faPlus } from '@fortawesome/free-solid-svg-icons'
+import Form from './Form'
+import Tabla from './Tabla'
+import { useEffect, useState } from 'react'
+// import { getAll } from '../../services/tipoAlergia.js'
 
 const TipoAlergia = () => {
-
-  const nombres = ["id", "tipo de alergia", "action"]
+  const nombres = ['id', 'tipo de alergia', 'action']
 
   const initialTipoAlergia = [
     {
       id: 1,
-      tipo_alergia: "Refriado"
+      tipo_alergia: 'Refriado'
     },
     {
       id: 1,
-      tipo_alergia: "Refriado"
+      tipo_alergia: 'Refriado'
     },
     {
       id: 1,
-      tipo_alergia: "Refriado"
+      tipo_alergia: 'Refriado'
     },
     {
       id: 1,
-      tipo_alergia: "Refriado"
+      tipo_alergia: 'Refriado'
     },
     {
       id: 1,
-      tipo_alergia: "Refriado"
+      tipo_alergia: 'Refriado'
     }
-  ];
+  ]
 
-  const [tipoAlergia, setTipoAlergia] = useState(initialTipoAlergia)
+  const [tipoAlergia, setTipoAlergia] = useState([])
 
-  //useEffect(() => {
-  //getAll().then(initialTipoAlergia => {
-  //setTipoAlergia(initialTipoAlergia)
-  //console.log({initialTipoAlergia});
-  //})
-  //}, [])
+  useEffect(() => {
+    setTipoAlergia(initialTipoAlergia)
+  }, [])
 
   return (
     <div className="row w-100 justify-content-md-center">
@@ -65,4 +61,4 @@ const TipoAlergia = () => {
     </div>
   )
 }
-export default TipoAlergia;
+export default TipoAlergia

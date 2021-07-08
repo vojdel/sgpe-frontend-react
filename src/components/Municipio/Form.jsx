@@ -1,14 +1,13 @@
-import {useState} from 'react';
+import { useState } from 'react'
 
 const Form = () => {
-
   const initialMunicipio = {
     id: 0,
     estado_id: 0,
-    municipio: ""
+    municipio: ''
   }
 
-  const [municipio, setMunicipio] = useState(initialMunicipio);
+  const [municipio, setMunicipio] = useState(initialMunicipio)
 
   const handleEstado = (event) => {
     setMunicipio({
@@ -25,7 +24,7 @@ const Form = () => {
   }
 
   return (
-    <div className="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    <div className="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabIndex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
       <div className="modal-dialog">
         <div className="modal-content">
           <div className="modal-header">
@@ -35,7 +34,7 @@ const Form = () => {
           <div className="modal-body">
             <form role="form text-left">
               <div className="form-group">
-                <label for="exampleFormControlSelect2">Estado:</label>
+                <label htmlFor="exampleFormControlSelect2">Estado:</label>
                 <select className="form-control" id="exampleFormControlSelect2" onChange={handleEstado} value={ municipio.estado_id }>
                   <option value="1">Yaracuy</option>
                   <option value="2">Lara</option>
@@ -59,4 +58,4 @@ const Form = () => {
     </div>
   )
 }
-export default Form;
+export default Form

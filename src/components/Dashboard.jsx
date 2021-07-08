@@ -5,7 +5,7 @@ const Dashboard = () => {
         <p>DASHBOARD</p>
       </div>
     </div>
-  );
+  )
 }
 
-export default Dashboard;
+export default Dashboard

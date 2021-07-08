@@ -1,7 +1,8 @@
-import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
-import {faPenAlt, faTrashAlt} from "@fortawesome/free-solid-svg-icons"
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faPenAlt, faTrashAlt } from '@fortawesome/free-solid-svg-icons'
+import PropTypes from 'prop-types'
 
-const Tabla = ({nombres, datas}) => {
+const Tabla = ({ nombres, datas }) => {
   return (
     <div className="card my-5 mt-0">
       <div className="table-responsive">
@@ -48,4 +49,10 @@ const Tabla = ({nombres, datas}) => {
     </div >
   )
 }
+
+Tabla.propTypes = {
+  nombres: PropTypes.array,
+  datas: PropTypes.array
+}
+
 export default Tabla

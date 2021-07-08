@@ -6,7 +6,7 @@
 export const getAll = () => {
   return fetch('../../../examples/estado.json')
     .then(response => {
-      const {data} = response.json();
-      return data;
+      const { data } = response.json()
+      return data
     })
 }

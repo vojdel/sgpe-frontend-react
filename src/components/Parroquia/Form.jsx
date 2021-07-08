@@ -1,15 +1,14 @@
-import {useState} from 'react';
+import { useState } from 'react'
 
 const Form = () => {
-
   const initialParroquia = {
     id: 0,
     estado_id: 0,
     municipio_id: 0,
-    parroquia: ""
+    parroquia: ''
   }
 
-  const [parroquia, setParroquia] = useState(initialParroquia);
+  const [parroquia, setParroquia] = useState(initialParroquia)
 
   const handleEstado = (event) => {
     setParroquia({
@@ -33,7 +32,7 @@ const Form = () => {
   }
 
   return (
-    <div className="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    <div className="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabIndex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
       <div className="modal-dialog">
         <div className="modal-content">
           <div className="modal-header">
@@ -43,7 +42,7 @@ const Form = () => {
           <div className="modal-body">
             <form role="form text-left">
               <div className="form-group">
-                <label for="exampleFormControlSelect1">Estado:</label>
+                <label htmlFor="exampleFormControlSelect1">Estado:</label>
                 <select className="form-control" id="exampleFormControlSelect1" onChange={handleEstado} value={ parroquia.estado_id }>
                   <option value="1">Yaracuy</option>
                   <option value="2">Lara</option>
@@ -53,7 +52,7 @@ const Form = () => {
                 </select>
               </div>
               <div className="form-group">
-                <label for="exampleFormControlSelect2">Municipio:</label>
+                <label htmlFor="exampleFormControlSelect2">Municipio:</label>
                 <select className="form-control" id="exampleFormControlSelect2" onChange={handleMunicipio} value={ parroquia.municipio_id }>
                   <option value="1">Bruzual</option>
                   <option value="2">No se</option>
@@ -77,4 +76,4 @@ const Form = () => {
     </div>
   )
 }
-export default Form;
+export default Form

@@ -1,21 +1,21 @@
-import Login from './components/Login/Login';
-import Estado from './components/Estado/Estado';
-import Municipio from './components/Municipio/Municipio';
-import Registrar from './components/Registrar/Registrar';
-import Dashboard from './components/Dashboard';
+import Login from './components/Login/Login'
+import Estado from './components/Estado/Estado'
+import Municipio from './components/Municipio/Municipio'
+import Registrar from './components/Registrar/Registrar'
+import Dashboard from './components/Dashboard'
 
 const routes = [
   {
     path: '/',
     exact: true,
     redirect: '/home',
-    component: "<div>Loading... </div>"
+    component: '<div>Loading... </div>'
   },
   {
     path: '/home',
     exact: false,
     private: false,
-    component: "<div>Home</div>",
+    component: '<div>Home</div>',
     routes: [
       {
         path: '/home/login',
@@ -47,4 +47,4 @@ const routes = [
 
 ]
 
-export default routes;
+export default routes

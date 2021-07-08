@@ -1,12 +1,11 @@
-import {useState} from "react";
+import { useState } from 'react'
 
 const Form = () => {
-
   const initialTipoAlergia = {
     id: 0,
-    tipo_alergia: ""
+    tipo_alergia: ''
   }
-  const [tipoAlergia, setTipoAlergia] = useState(initialTipoAlergia);
+  const [tipoAlergia, setTipoAlergia] = useState(initialTipoAlergia)
 
   const handleTipoAlergia = (event) => {
     setTipoAlergia({
@@ -20,7 +19,7 @@ const Form = () => {
   }
 
   return (
-    <div className="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    <div className="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabIndex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
       <div className="modal-dialog">
         <div className="modal-content">
           <div className="modal-header">
@@ -44,4 +43,4 @@ const Form = () => {
     </div>
   )
 }
-export default Form;
+export default Form

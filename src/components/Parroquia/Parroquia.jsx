@@ -1,40 +1,39 @@
-import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
-import {faPlus} from "@fortawesome/free-solid-svg-icons"
-import Form from './Form';
-import Tabla from './Tabla';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faPlus } from '@fortawesome/free-solid-svg-icons'
+import Form from './Form'
+import Tabla from './Tabla'
 
 const municipios = [
   {
     id: 1,
-    municipio: "Bruzual",
-    parroquia: "Bruzual"
+    municipio: 'Bruzual',
+    parroquia: 'Bruzual'
   },
   {
     id: 2,
-    municipio: "Barquisimeto",
-    parroquia: "nose"
+    municipio: 'Barquisimeto',
+    parroquia: 'nose'
   },
   {
     id: 3,
-    municipio: "San Felipe",
-    parroquia: "San Felipe"
+    municipio: 'San Felipe',
+    parroquia: 'San Felipe'
   },
   {
     id: 4,
-    municipio: "Independencia",
-    parroquia: "nose"
+    municipio: 'Independencia',
+    parroquia: 'nose'
   },
   {
     id: 5,
-    municipio: "No se",
-    parroquia: "No se"
-  },
+    municipio: 'No se',
+    parroquia: 'No se'
+  }
 ]
 
-const nombres = ["id", "municipio", "parroquia", "action"]
+const nombres = ['id', 'municipio', 'parroquia', 'action']
 
 const Parroquia = () => {
-
   return (
     <div className="row w-100 justify-content-md-center">
       <div className="row my-3 ps-5 justify-content-between">
@@ -59,4 +58,4 @@ const Parroquia = () => {
     </div>
   )
 }
-export default Parroquia;
+export default Parroquia
