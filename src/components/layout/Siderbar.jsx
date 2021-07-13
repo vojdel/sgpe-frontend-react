@@ -38,8 +38,8 @@ const Siderbar = ({ estilo }) => {
             <ul className="navbar-nav collapse" id="collapseEnfermedades">
               <SiderOption nombre="Tipo de Alergias" icon={faHeadSideCough} list={true} link="/tipoalergia" />
               <SiderOption nombre="Tipo de Discapacidad" icon={faBlind} list={true} link="/tipodiscapacidad" />
-              <SiderOption nombre="Alergias" icon={faHeadSideCough} list={true} />
-              <SiderOption nombre="Discapacidad" icon={faBlind} list={true} />
+              <SiderOption nombre="Alergias" icon={faHeadSideCough} list={true} link="/alergia" />
+              <SiderOption nombre="Discapacidad" icon={faBlind} list={true} link="/discapacidad" />
             </ul>
             <SiderOption nombre="Escuela" collapseOption="collapseEscuela" icon={faSchool} />
             <ul className="navbar-nav collapse" id="collapseEscuela">
