@@ -1,15 +1,20 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faAddressBook, faBlind, faChild, faHeadSideCough, faHome, faKey, faMale, faChalkboard, faChalkboardTeacher, faMapMarkedAlt, faSchool, faStethoscope, faTimes, faUserAlt, faUserCircle, faUserTie, faUser } from '@fortawesome/free-solid-svg-icons'
+import { faAddressBook, faBlind, faChild, faHeadSideCough, faHome, faKey, faMale, faChalkboard, faChalkboardTeacher, faMapMarkedAlt, faSchool, faStethoscope, faTimes, faUserAlt, faUserCircle, faUserTie, faUser, faBars } from '@fortawesome/free-solid-svg-icons'
 import SiderOption from './SiderOption'
 import PropTypes from 'prop-types'
 
-const Siderbar = ({ estilo }) => {
+const Siderbar = ({ estilo, handleMenu }) => {
   return (
-    <aside className={estilo} id="sidenav-main" style={{ background: '#000000e6' }}>
+    <aside className={estilo} id="sidenav-main" style={{ background: '#000000' }}>
       <div className="sidenav-main">
         <div className="sidenav-header text-center">
           <FontAwesomeIcon icon={faTimes} className="p-3 cursor-pointer text-secondary opacity-5 position-absolute right-0 top-0 d-none d-xl-none" aria-hidden="true" id="iconSidenav" />
           <a href="#" className="navbar-brand m-0" style={{ fontSize: '20px' }}>
+            <div onClick={handleMenu} className="d-inline-block" style={{ width: '35px' }}>
+              <button className="btn btn-dark me-3 mb-0" style={{ background: 'transparent' }}>
+                <FontAwesomeIcon icon={faBars} />
+              </button>
+            </div>
             <FontAwesomeIcon icon={faHome} className="navbar-brand-img h-100 text-white" />
             <span className="ms-1 font-weight-bold text-white">SGPE</span>
           </a>
@@ -60,7 +65,7 @@ const Siderbar = ({ estilo }) => {
             </li>
             <SiderOption nombre="Profile" icon={faUserAlt} />
             <SiderOption nombre="Sign In" icon={faKey} link="/signin" />
-            <SiderOption nombre="Sign Up" icon={faUserCircle} link="/signup"/>
+            <SiderOption nombre="Sign Up" icon={faUserCircle} link="/signup" />
           </ul >
         </div >
       </div >
@@ -69,7 +74,8 @@ const Siderbar = ({ estilo }) => {
 }
 
 Siderbar.propTypes = {
-  estilo: PropTypes.string
+  estilo: PropTypes.string,
+  handleMenu: PropTypes.func.isRequired
 }
 
 export default Siderbar

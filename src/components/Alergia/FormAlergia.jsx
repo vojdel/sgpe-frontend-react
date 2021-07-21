@@ -1,51 +1,85 @@
-import { useFormik } from 'formik'
-import AlergiaSchema from './AlergiaScheme'
+import { Formik, Form, Field } from 'formik'
+import { AlergiaSchema } from './AlergiaSchema'
 import PropTypes from 'prop-types'
 
-const FormAlergia = ({ initial, submit, sections }) => {
-  const formik = useFormik({
-    initialValues: initial,
-    validationSchema: AlergiaSchema,
-    onSubmit: values => submit(values)
-  })
+/**
+  * Formulario de Alergia
+  * @params {{initial: {id: number, alergia: string, tipo_alergias: number, descripcion: string}, submit: Function, sections: [{id: number, tipo_alergias: string}, tipoModal: boolean]}}
+  * @returs {React.Component} Componente del Formulario
+  * */
+const FormAlergia = ({ initial, submit, sections, tipoModal }) => {
+  /* @type {string} */
+  const notError = ''
 
   return (
-    <div className="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabIndex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    <div className="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabIndex={-1} aria-labelledby="staticBackdropLabel" aria-hidden="true">
       <div className="modal-dialog">
         <div className="modal-content">
           <div className="modal-header">
-            <h3 className="modal-title font-weight-bolder text-info text-gradient" id="staticBackdropLabel">Alergia</h3>
-            <button type="button" className="btn-close" data-bs-dismiss="modal" aria-label="Close" onClick={formik.handleReset}></button>
+            <h3 className="modal-title font-weight-bolder text-info text-gradient" id="staticBackdropLabel">Estado</h3>
+            <button type="button" className="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
           </div>
           <div className="modal-body">
-            <form role="form text-left" onSubmit={formik.handleSubmit}>
-              <label>Tipo de Alergias</label>
-              <div className="input-group mb-3">
-                <select className="form-control" value={formik.values.tipo_alergias} onChange={formik.handleChange} onBlur={formik.handleBlur}>
-                  <option value="0">{(sections.length > 0) ? 'Registre tipo de Alergia' : 'Seleccione...'}</option>
-                  {
-                    sections.map((sec, index) => {
-                      return (<option key={index} value={sec.id}>{sec.tipo_alergias}</option>)
-                    })
-                  }
-                </select>
-                <span>{formik.error.tipo_alergias}</span>
-              </div>
-              <label>Alergia</label>
-              <div className="input-group mb-3">
-                <input type="text" className="form-control" placeholder="Escribe la alergia aqui..." aria-label="alergia" aria-describedby="alergia-addon" onChange={formik.onChange} value={formik.values.alergias} onBlur={formik.handleBlur} />
-                <span>{formik.error.alergia}</span>
-              </div>
-              <div className="input-group">
-                <span className="input-group-text">Descripción</span>
-                <textarea className="form-control" aria-label="With textarea"></textarea>
-              </div>
-            </form>
-            <textarea id="" cols="30" rows="10" value={formik.values.descripcion}></textarea>
-          </div>
-          <div className="modal-footer">
-            <button type="button" className="btn bg-gradient-warning" data-bs-dismiss="modal" onClick={formik.handleReset}>Close</button>
-            <button type="button" className="btn bg-gradient-info">Registrar</button>
+            <Formik
+              initialValues={initial}
+              validationSchema={AlergiaSchema}
+              onSubmit={values => {
+                // same shape as initial values
+                submit(values)
+                console.log({ values })
+              }}
+            >
+              {({ errors, touched, handleChange, handleBlur, handleSubmit, handleReset, isValid }) => (
+                <Form onSubmit={handleSubmit}
+                  className="form text-left">
+                  <div className="form-group mb-1">
+                    <label>Alergia</label>
+                    <Field name="alergia" onChange={handleChange} onBlur={handleBlur}
+                      className={`form-control ${(errors.alergia && touched.alergia) ? 'is-invalid' : 'is-valid'}`}
+                    />
+                    {errors.alergia && touched.alergia
+                      ? (
+                        <small className="text-danger">{errors.alergia}</small>
+                        )
+                      : notError}
+                  </div>
+                  <div className="form-group mb-1">
+                    <label>Tipo de Alergia</label>
+                    <Field as="select"
+                      name="tipo_alergias"
+                      onChange={handleChange}
+                      onBlur={handleBlur}
+                      className={`form-control ${(errors.tipo_alergias && touched.tipo_alergias) ? 'is-invalid' : 'is-valid'}`}
+                    >
+                      <option value="0">
+                        {(sections.length === 0) ? 'Registre un tipo de alergia' : 'Seleccione...'}
+                      </option>
+                      {
+                        sections.map((sec, index) => (<option value={sec.id} key={index}>{sec.tipo_alergias}</option>))
+                      }
+                    </Field>
+                    {errors.tipo_alergias && touched.tipo_alergias
+                      ? (<small className="text-danger">{errors.tipo_alergias}</small>)
+                      : notError}
+                  </div>
+                  <div className="form-group mb-1">
+                    <label>Descripción</label>
+                    <Field name="descripcion" type="descripcion" onChange={handleChange} onBlur={handleBlur}
+                      className={`form-control ${(errors.descripcion && touched.tipo_alergias) ? 'is-invalid' : 'is-valid'}`}
+                    />
+                    {errors.descripcion && touched.descripcion ? <small className="text-danger">{errors.descripcion}</small> : notError}
+                  </div>
+                  <div className="modal-footer">
+                    <button type="button" className="btn bg-gradient-warning" data-bs-dismiss="modal" onClick={handleReset}>Close</button>
+                    <button type="submit"
+                      className="btn bg-gradient-info"
+                      disabled={!isValid}>
+                      {(tipoModal) ? 'Registrar' : 'Modificar'}
+                    </button>
+                  </div>
+                </Form>
+              )}
+            </Formik>
           </div>
         </div>
       </div>
@@ -56,7 +90,8 @@ const FormAlergia = ({ initial, submit, sections }) => {
 FormAlergia.propTypes = {
   initial: PropTypes.object.isRequired,
   submit: PropTypes.func.isRequired,
-  sections: PropTypes.array.isRequired
+  sections: PropTypes.array.isRequired,
+  tipoModal: PropTypes.bool.isRequired
 }
 
 export default FormAlergia

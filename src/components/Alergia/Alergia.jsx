@@ -2,33 +2,23 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faPlus } from '@fortawesome/free-solid-svg-icons'
 import FormAlergia from './FormAlergia'
 import TablaAlergia from './TablaAlergia'
-import { useEffect, useState } from 'react'
+import { useState, useEffect } from 'react'
 
 const Alergia = () => {
-  const nombres = ['id', 'tipo de alergia', 'action']
+  const [alergias, setAlergias] = useState([])
+  /**
+    * @type {any}
+    * */
+  const [newAlergia, setNewAlergia] = useState({
+    id: 0,
+    alergia: '',
+    tipo_alergias: 0,
+    descripcion: ''
+  })
 
-  const initialAlergia = [
-    {
-      id: 1,
-      alergia: 'Refriado'
-    },
-    {
-      id: 1,
-      alergia: 'Refriado'
-    },
-    {
-      id: 1,
-      alergia: 'Refriado'
-    },
-    {
-      id: 1,
-      alergia: 'Refriado'
-    },
-    {
-      id: 1,
-      alergia: 'Refriado'
-    }
-  ]
+  const [tipoModal, setTipoModal] = useState(true)
+
+  const nombres = ['id', 'tipo de alergia', 'alergia', 'action']
 
   const sections = [
     {
@@ -37,24 +27,66 @@ const Alergia = () => {
     }
   ]
 
-  const [alergias, setAlergias] = useState([])
-  const [alergia, setAlergia] = useState({
-    id: 0,
-    alergia: '',
-    tipo_alergias: 0
-  })
-
   useEffect(() => {
-    setAlergias(initialAlergia)
+    setAlergias([
+      {
+        id: 1,
+        alergia: 'Refriado',
+        tipo_alergias: 1
+      },
+      {
+        id: 1,
+        alergia: 'Refriado',
+        tipo_alergias: 1
+      },
+      {
+        id: 1,
+        alergia: 'Refriado',
+        tipo_alergias: 1
+      },
+      {
+        id: 1,
+        alergia: 'Refriado',
+        tipo_alergias: 1
+      },
+      {
+        id: 1,
+        alergia: 'Refriado',
+        tipo_alergias: 1
+      }
+    ])
   }, [])
 
+  /**
+   * @type {any}
+   * @param {object} values
+   * @returns {void}
+   */
   const create = (values) => {
     setAlergias([...alergias, values])
+    setTipoModal(true)
   }
 
-  const delete = (id) => {
+  /*
+    * @param {number} id
+    * @returns {void}
+    * */
+  const deleteAlergia = (id) => {
     setAlergias(alergias.filter(alergia => alergia.id !== id))
-  };
+  }
+  /**
+   * @param {{id:number, alergia: string, tipo_alergias: number, descripcion: string}} val
+   * @returns {void}
+    */
+  const editar = (val) => {
+    setNewAlergia({
+      id: val.id,
+      alergia: val.alergia,
+      tipo_alergias: val.tipo_alergias,
+      descripcion: val.descripcion
+    })
+    setTipoModal(false)
+  }
 
   return (
     <div className="row w-100 justify-content-md-center">
@@ -69,17 +101,18 @@ const Alergia = () => {
           </button>
         </div>
         <FormAlergia
-          initial={alergia}
+          initial={newAlergia}
           submit={create}
           sections={sections}
+          tipoModal={tipoModal}
         />
       </div>
       <div className="row ps-5">
         <TablaAlergia
           nombres={nombres}
           datas={alergias}
-          editar={setAlergia}
-    eliminar={delete}
+          editar={editar}
+          eliminar={deleteAlergia}
         />
       </div>
     </div>

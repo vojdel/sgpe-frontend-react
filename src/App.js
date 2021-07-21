@@ -8,15 +8,11 @@ import Footer from './components/layout/Footer'
 
 const Municipio = lazy(() => import('./components/Municipio/Municipio'))
 const Estado = lazy(() => import('./components/Estado/Estado'))
-const Parroquia = lazy(() => import('./components/Parroquia/Parroquia'))
-const TipoAlergia = lazy(() => import('./components/TipoAlergia/TipoAlergia'))
-const TipoDiscapacidad = lazy(() => import('./components/TipoDiscapacidad/TipoDiscapacidad'))
 const PageNotFound = lazy(() => import('./components/PageNoFound'))
 const Dashboard = lazy(() => import('./components/Dashboard'))
 const SignIn = lazy(() => import('./components/Login/Login'))
 const SignUp = lazy(() => import('./components/Registrar/Registrar'))
 const Alergia = lazy(() => import('./components/Alergia/Alergia'))
-const Discapacidad = lazy(() => import('./components/Discapacidad/Discapacidad'))
 
 function App () {
   const styleSiderHidden = {
@@ -32,7 +28,6 @@ function App () {
       document.body.classList.add('g-sidenav-pinned')
       setStyleAside({
         ...styleAside,
-        main: '0',
         menu: false
       })
     } else {
@@ -45,7 +40,6 @@ function App () {
     if (styleAside.menu) {
       setStyleAside({
         ...styleAside,
-        main: '0px',
         aside: styleAside.aside + ' d-none',
         menu: false
       })
@@ -59,24 +53,21 @@ function App () {
       <Router>
         <Siderbar
           estilo={styleAside.aside}
+          handleMenu={handleMenu}
         />
-        <main className="main-content border-radius-lg min-vh-100" style={{ marginLeft: styleAside.main }}>
+        <main className="main-content border-radius-lg min-vh-100" style={{ marginLeft: '0px' }}>
           <Navbar
             handleSiderHidden={handleSiderHidden}
             handleMenu={handleMenu}
           />
-          <Suspense fallback={<div>Loading...</div>}>
+          <Suspense fallback={<div className="spinner"></div>}>
             <Switch>
               <Route path="/" component={Dashboard} exact />
               <Route path="/signin" component={SignIn} exact />
               <Route path="/signup" component={SignUp} exact />
               <Route path="/estado" component={Estado} exact />
               <Route path="/municipio" component={Municipio} exact />
-              <Route path="/parroquia" component={Parroquia} exact />
-              <Route path="/tipoalergia" component={TipoAlergia} exact />
-              <Route path="/tipodiscapacidad" component={TipoDiscapacidad} exact />
               <Route path="/alergia" component={Alergia} exact />
-              <Route path="/discapacidad" component={Discapacidad} exact />
               <Route component={PageNotFound} />
             </Switch>
           </Suspense>

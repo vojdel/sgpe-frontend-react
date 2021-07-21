@@ -1,12 +1,21 @@
 import { useState } from 'react'
 
+/**
+ * Form.
+ * @returns Modal de Estado
+ */
 const Form = () => {
   const initialEstado = {
     id: 0,
     estado: ''
   }
+
   const [estado, setEstado] = useState(initialEstado)
 
+  /**
+    * Manejar input estado
+    * @param {any} event
+    * */
   const handleEstado = (event) => {
     setEstado({
       ...estado,

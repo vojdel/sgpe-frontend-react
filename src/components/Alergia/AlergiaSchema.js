@@ -1,7 +1,7 @@
 import * as Yup from 'yup'
 
-export const AlergiaScheme = Yup.object().shape({
-  alergias: Yup.string()
+export const AlergiaSchema = Yup.object().shape({
+  alergia: Yup.string()
     .min(5, 'muy corto')
     .max(20, 'demaciado largo')
     .required('es requerido'),
@@ -9,7 +9,7 @@ export const AlergiaScheme = Yup.object().shape({
     .min(5, 'muy corto')
     .max(20, 'demaciado largo')
     .required('es requerido'),
-  tipo_alergia: Yup.number()
-    .required('Es requerido')
-    .positive('Solo numeros positivos')
+  tipo_alergias: Yup.number()
+    .required('Elija un Tipo de Alergia')
+    .positive('Elija un Tipo de Alergia')
 })
