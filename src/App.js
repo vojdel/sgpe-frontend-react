@@ -13,10 +13,11 @@ const Dashboard = lazy(() => import('./components/Dashboard'))
 const SignIn = lazy(() => import('./components/Login/Login'))
 const SignUp = lazy(() => import('./components/Registrar/Registrar'))
 const Alergia = lazy(() => import('./components/Alergia/Alergia'))
+const Estudiante = lazy(() => import('./components/Estudiante/Estudiante'))
 
 function App () {
   const styleSiderHidden = {
-    aside: 'sidenav navbat navbar-vertical navbar-expand-xs border-0 fixed-left',
+    aside: 'sidenav navbat navbar-vertical navbar-expand-xs border-0 fixed-left d-none',
     main: '15.65rem',
     menu: true
   }
@@ -40,7 +41,7 @@ function App () {
     if (styleAside.menu) {
       setStyleAside({
         ...styleAside,
-        aside: styleAside.aside + ' d-none',
+        aside: 'sidenav navbat navbar-vertical navbar-expand-xs border-0 fixed-left',
         menu: false
       })
     } else {
@@ -48,18 +49,29 @@ function App () {
     }
   }
 
-  return (
-    <div className="g-sidenav-show bg-gray-100 min-vw-100">
-      <Router>
+  const isLogin = () => {
+    const rutas = ['/signin', '/signup']
+    if (!rutas.includes(document.location.pathname)) {
+      return (<div>
         <Siderbar
           estilo={styleAside.aside}
           handleMenu={handleMenu}
         />
+        <Navbar
+          handleSiderHidden={handleSiderHidden}
+          handleMenu={handleMenu}
+        />
+      </div>)
+    } else {
+      return ''
+    }
+  }
+
+  return (
+    <div className="g-sidenav-show bg-gray-100 min-vw-100">
+      <Router>
         <main className="main-content border-radius-lg min-vh-100" style={{ marginLeft: '0px' }}>
-          <Navbar
-            handleSiderHidden={handleSiderHidden}
-            handleMenu={handleMenu}
-          />
+          {isLogin()}
           <Suspense fallback={<div className="spinner"></div>}>
             <Switch>
               <Route path="/" component={Dashboard} exact />
@@ -68,6 +80,7 @@ function App () {
               <Route path="/estado" component={Estado} exact />
               <Route path="/municipio" component={Municipio} exact />
               <Route path="/alergia" component={Alergia} exact />
+              <Route path="/estudiante" component={Estudiante} exact />
               <Route component={PageNotFound} />
             </Switch>
           </Suspense>
