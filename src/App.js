@@ -14,6 +14,7 @@ const SignIn = lazy(() => import('./components/Login/Login'))
 const SignUp = lazy(() => import('./components/Registrar/Registrar'))
 const Alergia = lazy(() => import('./components/Alergia/Alergia'))
 const Estudiante = lazy(() => import('./components/Estudiante/Estudiante'))
+const Representante = lazy(() => import('./components/Representante/Representante'))
 
 function App () {
   const styleSiderHidden = {
@@ -81,6 +82,7 @@ function App () {
               <Route path="/municipio" component={Municipio} exact />
               <Route path="/alergia" component={Alergia} exact />
               <Route path="/estudiante" component={Estudiante} exact />
+              <Route path="/representante" component={Representante} exact />
               <Route component={PageNotFound} />
             </Switch>
           </Suspense>
