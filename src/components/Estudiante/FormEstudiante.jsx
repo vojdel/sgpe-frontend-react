@@ -110,6 +110,10 @@ const FormEstudiante = () => {
                 <div className="input-group mb-3">
                   <input type="text" className="form-control" placeholder="Escribe el apellido aqui..." aria-label="Apellido" aria-describedby="estado-addon" onChange={handleChange} name="apellido" value={estudiante.apellido} />
                 </div>
+              <label>Telefono</label>
+              <div className="input-group mb-3">
+                <input type="number" className="form-control" placeholder="Escribe el Telefono aqui..." aria-label="Telefono" aria-describedby="telefono-addon" onChange={handleChange} name="telefono" value={estudiante.telefono} />
+              </div>
                 <div className="row">
                   <div className="col-md-6 col-12 d-inline-block">
                     <label>Estado</label>

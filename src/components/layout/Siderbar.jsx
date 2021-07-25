@@ -1,5 +1,5 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faAddressBook, faBlind, faChild, faHeadSideCough, faHome, faKey, faMale, faChalkboard, faChalkboardTeacher, faMapMarkedAlt, faSchool, faStethoscope, faTimes, faUserAlt, faUserCircle, faUserTie, faUser, faBars } from '@fortawesome/free-solid-svg-icons'
+import { faAddressBook, faChild, faHome, faKey, faMale, faChalkboard, faChalkboardTeacher, faMapMarkedAlt, faSchool, faTimes, faUserAlt, faUserCircle, faUserTie, faUser, faBars } from '@fortawesome/free-solid-svg-icons'
 import SiderOption from './SiderOption'
 import PropTypes from 'prop-types'
 
@@ -10,7 +10,7 @@ const Siderbar = ({ estilo, handleMenu }) => {
         <div className="sidenav-header text-center">
           <FontAwesomeIcon icon={faTimes} className="p-3 cursor-pointer text-secondary opacity-5 position-absolute right-0 top-0 d-none d-xl-none" aria-hidden="true" id="iconSidenav" />
           <a href="#" className="navbar-brand m-0" style={{ fontSize: '20px' }}>
-            <div onClick={handleMenu} className="d-inline-block" style={{ width: '35px' }}>
+            <div onClick={handleMenu} className="d-inline-block" style={{ width: '35px', marginLeft: '-70px' }}>
               <button className="btn btn-dark me-3 mb-0" style={{ background: 'transparent' }}>
                 <FontAwesomeIcon icon={faBars} />
               </button>
@@ -29,29 +29,21 @@ const Siderbar = ({ estilo, handleMenu }) => {
             <ul className="navbar-nav collapse" id="collapseDireccion">
               <SiderOption nombre="Estado" icon={faMapMarkedAlt} list={true} link="/estado" />
               <SiderOption nombre="Municipio" icon={faMapMarkedAlt} list={true} link="/municipio" />
-              <SiderOption nombre="Parroquia" icon={faMapMarkedAlt} list={true} link="/parroquia" />
             </ul>
             <SiderOption nombre="Personas" collapseOption="collapsePersona" icon={faMale} />
             <ul className="navbar-nav collapse" id="collapsePersona">
-              <SiderOption nombre="Estudiante" icon={faChild} list={true} />
-              <SiderOption nombre="Usuarios" icon={faUser} list={true} />
-              <SiderOption nombre="Empleado" icon={faUserTie} list={true} />
-              <SiderOption nombre="Representante" icon={faUserTie} list={true} />
+              <SiderOption nombre="Estudiante" icon={faChild} list={true} link="/estudiante" />
+              <SiderOption nombre="Usuarios" icon={faUser} list={true} link="/usuario"/>
+              <SiderOption nombre="Personal" icon={faUserTie} list={true} link="/personal" />
+              <SiderOption nombre="Representante" icon={faUserTie} list={true} link="/representante" />
               <SiderOption nombre="Cargo" icon={faUserTie} list={true} />
-            </ul>
-            <SiderOption nombre="Salud del Estudiante" collapseOption="collapseEnfermedades" icon={faStethoscope} />
-            <ul className="navbar-nav collapse" id="collapseEnfermedades">
-              <SiderOption nombre="Tipo de Alergias" icon={faHeadSideCough} list={true} link="/tipoalergia" />
-              <SiderOption nombre="Tipo de Discapacidad" icon={faBlind} list={true} link="/tipodiscapacidad" />
-              <SiderOption nombre="Alergias" icon={faHeadSideCough} list={true} link="/alergia" />
-              <SiderOption nombre="Discapacidad" icon={faBlind} list={true} link="/discapacidad" />
             </ul>
             <SiderOption nombre="Escuela" collapseOption="collapseEscuela" icon={faSchool} />
             <ul className="navbar-nav collapse" id="collapseEscuela">
-              <SiderOption nombre="Grado" icon={faSchool} list={true} />
-              <SiderOption nombre="Salon" icon={faSchool} list={true} />
-              <SiderOption nombre="Seccion" icon={faSchool} list={true} />
-              <SiderOption nombre="Periodo Escolar" icon={faSchool} list={true} />
+              <SiderOption nombre="Grado" icon={faSchool} list={true} link="/grado"/>
+              <SiderOption nombre="Salon" icon={faSchool} list={true} link="/salon"/>
+              <SiderOption nombre="Seccion" icon={faSchool} list={true} link="/seccion"/>
+              <SiderOption nombre="Periodo Escolar" icon={faSchool} list={true} link="/peridoescolar"/>
             </ul>
             <li className="nav-item mt-3">
               <h6 className="ps-4 ms-2 text-uppercase text-xs font-weight-bolder opacity-6 text-white">Procesos</h6>
