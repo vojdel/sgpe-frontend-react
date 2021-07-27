@@ -1,5 +1,6 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { MunicipioSchema } from './MunicipioSchema'
+import { validaciones, esValido, cleanForm } from '../../util/validations.js'
 
 const Form = () => {
   const initialMunicipio = {
@@ -7,61 +8,51 @@ const Form = () => {
     estado_id: 0,
     municipio: ''
   }
-
-  const [municipio, setMunicipio] = useState(initialMunicipio)
-  const [errors, setErrors] = useState({
+  const initialError = {
     esValido: false,
     id: '',
     estado_id: '',
     municipio: ''
-  })
+  }
+  const [municipio, setMunicipio] = useState(initialMunicipio)
+  const [errors, setErrors] = useState(initialError)
+
+  useEffect(() => {
+    esValido(MunicipioSchema, municipio, errors, setErrors)
+  }, [municipio])
 
   /**
     * Manejar input estado
     * @param {any} event
     * */
   const handleChange = (event) => {
-    const name = event.target.name
-    const classList = event.target.classList
-
     setMunicipio({
       ...municipio,
-      [name]: event.target.value
+      [event.target.name]: event.target.value
     })
-    MunicipioSchema.validate({
-      [name]: event.target.value
-    })
-      .then(val => {
-        setErrors({
-          ...errors,
-          esValido: val,
-          [name]: ''
-        })
+    validaciones(MunicipioSchema, event.target.name, event.target.value, errors, setErrors, event.target.classList)
+  }
 
-        if (classList.contains('is-invalid')) {
-          classList.remove('is-invalid')
-          classList.add('is-valid')
-        } else {
-          classList.add('is-valid')
-        }
-      }).catch(err => {
-        setErrors({
-          ...errors,
-          esValido: false,
-          [name]: (err.path === name) ? err.message : ''
-        })
+  // const cleanForm = () => {
+  // setMunicipio(initialMunicipio)
+  // setErrors(initialError)
+  // const formulario = document.querySelector('form').elements
+  // formulario.estado_id.classList.remove('is-invalid', 'is-valid')
+  // formulario.municipio.classList.remove('is-invalid', 'is-valid')
+  // }
 
-        if (err.path === name) {
-          classList.remove('is-valid')
-          classList.add('is-invalid')
-        } else if (err.path !== name) {
-          classList.remove('is-invalid')
-          classList.add('is-valid')
-        } else {
-          classList.add('is-invalid')
-        }
-        console.log(err.path)
-      })
+  const clean = () => {
+    cleanForm(setMunicipio, initialMunicipio, setErrors, initialError, ['estado_id', 'municipio'])
+  }
+
+  /**
+    * Manejar input estado
+    * @param {any} event
+    * */
+  const handleSubmit = (event) => {
+    event.preventDefault()
+    cleanForm(setMunicipio, initialMunicipio, setErrors, initialError, ['estado_id', 'municipio'])
+    console.log(municipio)
   }
 
   return (
@@ -69,8 +60,8 @@ const Form = () => {
       <div className="modal-dialog">
         <div className="modal-content">
           <div className="modal-header">
-            <h3 className="modal-title font-weight-bolder text-info text-gradient" id="staticBackdropLabel">Estado</h3>
-            <button type="button" className="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            <h3 className="modal-title font-weight-bolder text-info text-gradient" id="staticBackdropLabel">Municipio</h3>
+            <button type="button" className="btn-close" data-bs-dismiss="modal" aria-label="Close" onClick={clean}></button>
           </div>
           <div className="modal-body">
             <form role="form text-left">
@@ -94,8 +85,11 @@ const Form = () => {
             </form>
           </div>
           <div className="modal-footer">
-            <button type="button" className="btn bg-gradient-warning" data-bs-dismiss="modal">Close</button>
-            <button type="button" className="btn bg-gradient-info">Registrar</button>
+            <button type="button" className="btn bg-gradient-warning" data-bs-dismiss="modal" onClick={clean}>Close</button>
+            {(errors.esValido)
+              ? <button type="submit" className="btn bg-gradient-info" onClick={handleSubmit}>Registrar</button>
+              : <button type="button" className="btn bg-gradient-info" disabled>Registrar</button>
+            }
           </div>
         </div>
       </div>
