@@ -36,7 +36,7 @@ const Siderbar = ({ estilo, handleMenu }) => {
               <SiderOption nombre="Usuarios" icon={faUser} list={true} link="/usuario"/>
               <SiderOption nombre="Personal" icon={faUserTie} list={true} link="/personal" />
               <SiderOption nombre="Representante" icon={faUserTie} list={true} link="/representante" />
-              <SiderOption nombre="Cargo" icon={faUserTie} list={true} />
+              <SiderOption nombre="Cargo" icon={faUserTie} list={true} link="/cargo" />
             </ul>
             <SiderOption nombre="Escuela" collapseOption="collapseEscuela" icon={faSchool} />
             <ul className="navbar-nav collapse" id="collapseEscuela">

@@ -1,4 +1,3 @@
-import FooterLogin from './Footerlogin.jsx'
 import Nav from './Nav.jsx'
 
 const Login = () => {
@@ -30,7 +29,7 @@ const Login = () => {
                             <input type="password" name="" id="" className="form-control" placeholder="Password" aria-describedby="password-addon"/>
                           </div>
                           <div className="form-check form-switch">
-                            <input className="form-check-input" type="checkbox" id="rememberMe" checked="" style={{ width: '40px' }} />
+                            <input className="form-check-input" type="checkbox" id="rememberMe" checked style={{ width: '40px' }} />
                             <label className="form-check-label" htmlFor="rememberMe">Remember me</label>
                             </div>
                             <div className="text-center">
@@ -52,8 +51,6 @@ const Login = () => {
               </div>
             </div>
           </section>
-
-          <FooterLogin />
 
         </div>
       </div>

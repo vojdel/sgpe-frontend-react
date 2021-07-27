@@ -157,13 +157,13 @@ const FormPersonal = () => {
                 </div>
     <div className="row">
                 <div className="col-md-6 col-12 d-inline-block">
-                  <label>Año ING Inst</label>
+                  <label>Año de Ingreso a la Institución</label>
                   <div className="input-group mb-3">
                     <input type="date" className="form-control" aria-label="anio_ing_inst" aria-describedby="anio_ing-inst-addon" onChange={handleChange} name="anio_ing_inst" value={personal.anio_ing_inst} />
                   </div>
                 </div>
                 <div className="col-md-6 col-12 d-inline-block">
-                  <label>Año ING MPPE</label>
+                  <label>Año de Ingreso al MPPE</label>
                   <div className="input-group mb-3">
                     <input type="date" className="form-control" aria-label="anio_ing_mppe" aria-describedby="anio_ing_mppe-addon" onChange={handleChange} name="anio_ing_mppe" value={personal.anio_ing_mppe} />
                   </div>

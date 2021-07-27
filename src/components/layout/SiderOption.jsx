@@ -9,13 +9,15 @@ const SiderOption = ({ nombre, collapseOption, icon, list, link }) => {
     * @returns {void}
     * */
   const handleClick = (event) => {
-    const active = event.target
-    if (!document.querySelector('a.nav-link.active')) {
-      active.classList.add('active')
-    } else {
-      const disabled = document.querySelector('a.nav-link.active')
-      disabled.classList.remove('active')
-      active.classList.add('active')
+    if (list) {
+      const active = event.target
+      if (!document.querySelector('a.nav-link.active')) {
+        active.classList.add('active')
+      } else {
+        const disabled = document.querySelector('a.nav-link.active')
+        disabled.classList.remove('active')
+        active.classList.add('active')
+      }
     }
   }
 
@@ -48,7 +50,7 @@ SiderOption.propTypes = {
   nombre: PropTypes.string,
   collapseOption: PropTypes.string,
   icon: PropTypes.any,
-  list: PropTypes.string,
+  list: PropTypes.bool,
   link: PropTypes.string
 }
 

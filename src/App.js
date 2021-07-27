@@ -16,6 +16,11 @@ const Alergia = lazy(() => import('./components/Alergia/Alergia'))
 const Estudiante = lazy(() => import('./components/Estudiante/Estudiante'))
 const Representante = lazy(() => import('./components/Representante/Representante'))
 const Personal = lazy(() => import('./components/Personal/Personal'))
+const Cargo = lazy(() => import('./components/Cargo/Cargo'))
+const Grado = lazy(() => import('./components/Grado/Grado'))
+const Seccion = lazy(() => import('./components/Seccion/Seccion'))
+const Materia = lazy(() => import('./components/Materia/Materia'))
+const Usuario = lazy(() => import('./components/Usuario/Usuario'))
 
 function App () {
   const styleSiderHidden = {
@@ -72,7 +77,9 @@ function App () {
   return (
     <div className="g-sidenav-show bg-gray-100 min-vw-100">
       <Router>
-        <main className="main-content border-radius-lg min-vh-100" style={{ marginLeft: '0px' }}>
+        <main
+          className="main-content border-radius-lg min-vh-100"
+          style={{ marginLeft: '0px' }}>
           {isLogin()}
           <Suspense fallback={<div className="spinner"></div>}>
             <Switch>
@@ -85,6 +92,11 @@ function App () {
               <Route path="/estudiante" component={Estudiante} exact />
               <Route path="/representante" component={Representante} exact />
               <Route path="/personal" component={Personal} exact />
+              <Route path="/cargo" component={Cargo} exact />
+              <Route path="/grado" component={Grado} exact />
+              <Route path="/seccion" component={Seccion} exact />
+              <Route path="/materia" component={Materia} exact />
+              <Route path="/usuario" component={Usuario} exact />
               <Route component={PageNotFound} />
             </Switch>
           </Suspense>
