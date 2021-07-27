@@ -33,14 +33,6 @@ const Form = () => {
     validaciones(MunicipioSchema, event.target.name, event.target.value, errors, setErrors, event.target.classList)
   }
 
-  // const cleanForm = () => {
-  // setMunicipio(initialMunicipio)
-  // setErrors(initialError)
-  // const formulario = document.querySelector('form').elements
-  // formulario.estado_id.classList.remove('is-invalid', 'is-valid')
-  // formulario.municipio.classList.remove('is-invalid', 'is-valid')
-  // }
-
   const clean = () => {
     cleanForm(setMunicipio, initialMunicipio, setErrors, initialError, ['estado_id', 'municipio'])
   }
