@@ -1,4 +1,5 @@
 import { useState } from 'react'
+import { EstadoSchema } from './EstadoSchema'
 
 /**
  * Form.
@@ -11,6 +12,10 @@ const Form = () => {
   }
 
   const [estado, setEstado] = useState(initialEstado)
+  const [errors, setErrors] = useState({
+    esValido: false,
+    message: []
+  })
 
   /**
     * Manejar input estado
@@ -21,6 +26,33 @@ const Form = () => {
       ...estado,
       estado: event.target.value
     })
+    EstadoSchema.validate(estado)
+      .then(val => {
+        setErrors({
+          ...errors,
+          esValido: val
+        })
+      }).catch(err => {
+        setErrors({
+          esValido: false,
+          message: err.errors
+        })
+      })
+  }
+  const handleSubmit = (event) => {
+    event.preventDefault()
+    EstadoSchema.isValid(estado)
+      .then(val => {
+        setErrors({
+          ...errors,
+          esValido: val
+        })
+      }).catch(err => {
+        setErrors({
+          esValido: false,
+          message: err.errors
+        })
+      })
   }
 
   return (
@@ -37,11 +69,16 @@ const Form = () => {
               <div className="input-group mb-3">
                 <input type="text" className="form-control" placeholder="Escribe el estado aqui..." aria-label="Estado" aria-describedby="estado-addon" onChange={handleEstado} value={estado.estado} />
               </div>
+              {!errors.esValido ? <div className="text-danger">{errors.message}</div> : null}
             </form>
           </div>
           <div className="modal-footer">
             <button type="button" className="btn bg-gradient-warning" data-bs-dismiss="modal">Close</button>
-            <button type="button" className="btn bg-gradient-info">Registrar</button>
+            {
+              (errors.esValido)
+                ? <button type="button" className="btn bg-gradient-info" onSubmit={handleSubmit}>Registrar</button>
+                : <button type="button" className="btn bg-gradient-info" disabled>Registrar</button>
+            }
           </div>
         </div>
       </div>

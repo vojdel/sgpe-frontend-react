@@ -10,7 +10,7 @@ const Estado = () => {
 
   const initialEstado = [
     {
-      id: 1,
+      id: '',
       estado: 'Yaracuy'
     }
   ]
