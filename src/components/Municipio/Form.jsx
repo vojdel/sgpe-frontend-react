@@ -1,4 +1,5 @@
 import { useState } from 'react'
+import { MunicipioSchema } from './MunicipioSchema'
 
 const Form = () => {
   const initialMunicipio = {
@@ -8,12 +9,59 @@ const Form = () => {
   }
 
   const [municipio, setMunicipio] = useState(initialMunicipio)
+  const [errors, setErrors] = useState({
+    esValido: false,
+    id: '',
+    estado_id: '',
+    municipio: ''
+  })
 
+  /**
+    * Manejar input estado
+    * @param {any} event
+    * */
   const handleChange = (event) => {
+    const name = event.target.name
+    const classList = event.target.classList
+
     setMunicipio({
       ...municipio,
-      [event.target.name]: event.target.value
+      [name]: event.target.value
     })
+    MunicipioSchema.validate({
+      [name]: event.target.value
+    })
+      .then(val => {
+        setErrors({
+          ...errors,
+          esValido: val,
+          [name]: ''
+        })
+
+        if (classList.contains('is-invalid')) {
+          classList.remove('is-invalid')
+          classList.add('is-valid')
+        } else {
+          classList.add('is-valid')
+        }
+      }).catch(err => {
+        setErrors({
+          ...errors,
+          esValido: false,
+          [name]: (err.path === name) ? err.message : ''
+        })
+
+        if (err.path === name) {
+          classList.remove('is-valid')
+          classList.add('is-invalid')
+        } else if (err.path !== name) {
+          classList.remove('is-invalid')
+          classList.add('is-valid')
+        } else {
+          classList.add('is-invalid')
+        }
+        console.log(err.path)
+      })
   }
 
   return (
@@ -28,7 +76,7 @@ const Form = () => {
             <form role="form text-left">
               <div className="form-group">
                 <label htmlFor="exampleFormControlSelect2">Estado:</label>
-                <select className="form-control" id="exampleFormControlSelect2" onChange={handleChange} value={municipio.estado_id}>
+                <select className="form-control" id="exampleFormControlSelect2" name="estado_id" onChange={handleChange} value={municipio.estado_id}>
                   <option value="0">Seleccione...</option>
                   <option value="1">Yaracuy</option>
                   <option value="2">Lara</option>
@@ -36,10 +84,12 @@ const Form = () => {
                   <option value="4">Trujillo</option>
                   <option value="5">Falcon</option>
                 </select>
+                {errors.estado_id ? <div className="invalid-feedback">{errors.estado_id}</div> : null}
               </div>
               <label>Municipio</label>
               <div className="input-group mb-3">
-                <input type="text" className="form-control" placeholder="Escribe el municipio aqui..." aria-label="Municipio" aria-describedby="municipio-addon" onChange={handleChange} value={municipio.municipio} />
+                <input type="text" className="form-control" placeholder="Escribe el municipio aqui..." aria-label="Municipio" aria-describedby="municipio-addon" name="municipio" onChange={handleChange} value={municipio.municipio} />
+                {errors.municipio ? <div className="invalid-feedback">{errors.municipio}</div> : null}
               </div>
             </form>
           </div>
