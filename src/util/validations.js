@@ -3,40 +3,34 @@
  *
  * @param {object} schema Eschema del paquete Yup de las validaciones
  * @param {string} name name del input, select o textarea
- * @param {string|number} value valor del input, select o textarea
+ * @param {object} value valor del input, select o textarea
  * @param {object} errors objeto de los errores
  * @param {Function} setErrors hook para modificar los errores
  * @param {any} classList lista de classes en el input, select o textarea
- * @returns {void}
+ * @returns {Promise}
  */
-export const validaciones = (schema, name, value, errors, setErrors, classList) => {
-  schema.validate({
-    [name]: value
-  })
-    .then(() => {
+export const validaciones = async (schema, name, value, errors, setErrors, classList) => {
+  await schema.validate(value)
+    .then((result) => {
       setErrors({
         ...errors,
         [name]: ''
       })
-
       if (classList.contains('is-invalid')) {
         classList.remove('is-invalid')
         classList.add('is-valid')
       } else {
         classList.add('is-valid')
       }
-    }).catch(err => {
+    })
+    .catch(err => {
       setErrors({
         ...errors,
-        [name]: (err.path === name) ? err.message : ''
+        [name]: err.message
       })
-
-      if (err.path === name) {
+      if (classList.contains('is-valid')) {
         classList.remove('is-valid')
         classList.add('is-invalid')
-      } else if (err.path !== name) {
-        classList.remove('is-invalid')
-        classList.add('is-valid')
       } else {
         classList.add('is-invalid')
       }
@@ -46,26 +40,39 @@ export const validaciones = (schema, name, value, errors, setErrors, classList) 
 /**
  * esValido.
  *
- * @param {object} schema
+ * @param {Array<string>} names
  * @param {object} values
- * @param {object} errors
- * @param {Function} setErrors
- * @returns {Promise}
+ * @returns {boolean}
  */
-export const esValido = async (schema, values, errors, setErrors) => {
-  return setErrors({
-    ...errors,
-    esValido: await schema.isValid(values)
+export const esValido = (names, values) => {
+  console.log(values)
+  let result = false
+  names.forEach(name => {
+    if (!values[name].includes('') && typeof values[name] !== 'boolean') {
+      result = true
+      console.log(values[name])
+    }
   })
+  return result
 }
 
+/**
+ * cleanForm.
+ *
+ * @param {Function} setData
+ * @param {object} initialData
+ * @param {Function} setErrors
+ * @param {object} initialError
+ * @param {Array<string>} form
+ * @returns {void}
+ */
 export const cleanForm = (setData, initialData, setErrors, initialError, form) => {
   setData(initialData)
   setErrors(initialError)
   const formulario = document.querySelector('form').elements
-  // formulario.estado_id.classList.remove('is-invalid', 'is-valid')
-  // formulario.municipio.classList.remove('is-invalid', 'is-valid')
   form.forEach(f => {
-    formulario[f].classList.remove('is-invalid', 'is-valid')
+    if (formulario[f].classList.contains('is-valid') || formulario[f].classList.contains('is-invalid')) {
+      formulario[f].classList.remove('is-invalid', 'is-valid')
+    }
   })
 }

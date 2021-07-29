@@ -33,29 +33,30 @@ const Siderbar = ({ estilo, handleMenu }) => {
             <SiderOption nombre="Personas" collapseOption="collapsePersona" icon={faMale} />
             <ul className="navbar-nav collapse" id="collapsePersona">
               <SiderOption nombre="Estudiante" icon={faChild} list={true} link="/estudiante" />
-              <SiderOption nombre="Usuarios" icon={faUser} list={true} link="/usuario"/>
+              <SiderOption nombre="Usuarios" icon={faUser} list={true} link="/usuario" />
               <SiderOption nombre="Personal" icon={faUserTie} list={true} link="/personal" />
               <SiderOption nombre="Representante" icon={faUserTie} list={true} link="/representante" />
               <SiderOption nombre="Cargo" icon={faUserTie} list={true} link="/cargo" />
             </ul>
             <SiderOption nombre="Escuela" collapseOption="collapseEscuela" icon={faSchool} />
             <ul className="navbar-nav collapse" id="collapseEscuela">
-              <SiderOption nombre="Grado" icon={faSchool} list={true} link="/grado"/>
-              <SiderOption nombre="Salon" icon={faSchool} list={true} link="/salon"/>
-              <SiderOption nombre="Seccion" icon={faSchool} list={true} link="/seccion"/>
-              <SiderOption nombre="Periodo Escolar" icon={faSchool} list={true} link="/peridoescolar"/>
+              <SiderOption nombre="Grado" icon={faSchool} list={true} link="/grado" />
+              <SiderOption nombre="Salon" icon={faSchool} list={true} link="/salon" />
+              <SiderOption nombre="Seccion" icon={faSchool} list={true} link="/seccion" />
+              <SiderOption nombre="Periodo Escolar" icon={faSchool} list={true} link="/peridoescolar" />
+              <SiderOption nombre="Materia" icon={faSchool} list={true} link="/materia" />
             </ul>
             <li className="nav-item mt-3">
               <h6 className="ps-4 ms-2 text-uppercase text-xs font-weight-bolder opacity-6 text-white">Procesos</h6>
             </li>
-            <SiderOption nombre="Inscripción" icon={faChalkboard} />
-            <SiderOption nombre="Horarios" icon={faChalkboard} />
-            <SiderOption nombre="Asistencias" icon={faChalkboardTeacher} />
-            <SiderOption nombre="Permisos" icon={faChalkboardTeacher} />
+            <SiderOption nombre="Inscripción" icon={faChalkboard} link="/" />
+            <SiderOption nombre="Horarios" icon={faChalkboard} link="/" />
+            <SiderOption nombre="Asistencias" icon={faChalkboardTeacher} link="/" />
+            <SiderOption nombre="Permisos" icon={faChalkboardTeacher} link="/" />
             <li className="nav-item mt-3">
               <h6 className="ps-4 ms-2 text-uppercase text-xs font-weight-bolder opacity-6 text-white">Account Pages</h6>
             </li>
-            <SiderOption nombre="Profile" icon={faUserAlt} />
+            <SiderOption nombre="Profile" icon={faUserAlt} link="/" />
             <SiderOption nombre="Sign In" icon={faKey} link="/signin" />
             <SiderOption nombre="Sign Up" icon={faUserCircle} link="/signup" />
           </ul >

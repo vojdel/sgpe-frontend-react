@@ -20,7 +20,10 @@ const FormMateria = () => {
   const [errors, setErrors] = useState(initialError)
 
   useEffect(() => {
-    esValido(MateriaSchema, materia, errors, setErrors)
+    setErrors({
+      ...errors,
+      esValido: esValido(MateriaSchema, materia)
+    })
   }, [materia])
 
   /**
@@ -46,7 +49,6 @@ const FormMateria = () => {
   const handleSubmit = (event) => {
     event.preventDefault()
     cleanForm(setMateria, initialMateria, setErrors, initialError, ['materia'])
-    console.log(materia)
   }
 
   return (
@@ -62,7 +64,7 @@ const FormMateria = () => {
               <label>Materia</label>
               <div className="input-group mb-3">
                 <input type="text" className="form-control" placeholder="Escribe la materia aqui..." aria-label="Materia" aria-describedby="materia-addon" name="materia" onChange={handleMateria} value={materia.materia} />
-                {errors.municipio ? <div className="invalid-feedback">{errors.materia}</div> : null}
+                {errors.materia ? <div className="invalid-feedback">{errors.materia}</div> : null}
               </div>
             </form>
           </div>

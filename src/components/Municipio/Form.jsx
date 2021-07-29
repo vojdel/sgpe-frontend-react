@@ -18,7 +18,11 @@ const Form = () => {
   const [errors, setErrors] = useState(initialError)
 
   useEffect(() => {
-    esValido(MunicipioSchema, municipio, errors, setErrors)
+    // esValido(MunicipioSchema, municipio, errors, setErrors)
+    setErrors({
+      ...errors,
+      esValido: esValido(MunicipioSchema, municipio)
+    })
   }, [municipio])
 
   /**
@@ -31,6 +35,7 @@ const Form = () => {
       [event.target.name]: event.target.value
     })
     validaciones(MunicipioSchema, event.target.name, event.target.value, errors, setErrors, event.target.classList)
+    console.log(errors)
   }
 
   const clean = () => {

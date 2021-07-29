@@ -6,6 +6,7 @@ const SiderOption = ({ nombre, collapseOption, icon, list, link }) => {
   const estilo = (list) ? 'nav-link ps-4 w-100 py-1' : 'nav-link'
 
   /**
+   * @param {any} event
     * @returns {void}
     * */
   const handleClick = (event) => {
