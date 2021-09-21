@@ -10,7 +10,7 @@ const Municipio = lazy(() => import('./components/Municipio/Municipio'))
 const Estado = lazy(() => import('./components/Estado/Estado'))
 const PageNotFound = lazy(() => import('./components/PageNoFound'))
 const Dashboard = lazy(() => import('./components/Dashboard'))
-const SignIn = lazy(() => import('./components/Login/Login'))
+const Login = lazy(() => import('./components/Login/Login'))
 const SignUp = lazy(() => import('./components/Registrar/Registrar'))
 const Alergia = lazy(() => import('./components/Alergia/Alergia'))
 const Estudiante = lazy(() => import('./components/Estudiante/Estudiante'))
@@ -21,6 +21,7 @@ const Grado = lazy(() => import('./components/Grado/Grado'))
 const Seccion = lazy(() => import('./components/Seccion/Seccion'))
 const Materia = lazy(() => import('./components/Materia/Materia'))
 const Usuario = lazy(() => import('./components/Usuario/Usuario'))
+const Logout = lazy(() => import('./components/layout/logout'))
 
 function App () {
   const styleSiderHidden = {
@@ -57,9 +58,8 @@ function App () {
   }
 
   const isLogin = () => {
-    const rutas = ['/signin', '/signup']
-    if (!rutas.includes(document.location.pathname)) {
-      return (<div>
+    // if (window.localStorage.getItem('loggedUser')) {
+    return (<div>
         <Siderbar
           estilo={styleAside.aside}
           handleMenu={handleMenu}
@@ -69,9 +69,9 @@ function App () {
           handleMenu={handleMenu}
         />
       </div>)
-    } else {
-      return ''
-    }
+    // } else {
+    // return ''
+    // }
   }
 
   return (
@@ -84,7 +84,9 @@ function App () {
           <Suspense fallback={<div className="spinner"></div>}>
             <Switch>
               <Route path="/" component={Dashboard} exact />
-              <Route path="/signin" component={SignIn} exact />
+              <Route path="/signin" exact>
+                <Login />
+              </Route>
               <Route path="/signup" component={SignUp} exact />
               <Route path="/estado" component={Estado} exact />
               <Route path="/municipio" component={Municipio} exact />
@@ -97,6 +99,9 @@ function App () {
               <Route path="/seccion" component={Seccion} exact />
               <Route path="/materia" component={Materia} exact />
               <Route path="/usuario" component={Usuario} exact />
+              <Route path="/logout" exact>
+                <Logout />
+              </Route>
               <Route component={PageNotFound} />
             </Switch>
           </Suspense>

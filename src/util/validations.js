@@ -40,19 +40,21 @@ export const validaciones = async (schema, name, value, errors, setErrors, class
 /**
  * esValido.
  *
+ * @type {Function}
  * @param {Array<string>} names
  * @param {object} values
  * @returns {boolean}
  */
 export const esValido = (names, values) => {
-  console.log(values)
   let result = false
+  console.log(values)
   names.forEach(name => {
-    if (!values[name].includes('') && typeof values[name] !== 'boolean') {
-      result = true
+    if (values[name].length === 0 && typeof values[name] !== 'boolean') {
       console.log(values[name])
+      result = true
     }
   })
+  console.log(result)
   return result
 }
 
@@ -70,9 +72,9 @@ export const cleanForm = (setData, initialData, setErrors, initialError, form) =
   setData(initialData)
   setErrors(initialError)
   const formulario = document.querySelector('form').elements
-  form.forEach(f => {
-    if (formulario[f].classList.contains('is-valid') || formulario[f].classList.contains('is-invalid')) {
-      formulario[f].classList.remove('is-invalid', 'is-valid')
+  form.forEach(name => {
+    if (formulario[name].classList.contains('is-valid') || formulario[name].classList.contains('is-invalid')) {
+      formulario[name].classList.remove('is-invalid', 'is-valid')
     }
   })
 }
