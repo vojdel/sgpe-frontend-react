@@ -46,12 +46,12 @@ export const validaciones = async (schema, name, value, errors, setErrors, class
  * @returns {boolean}
  */
 export const esValido = (names, values) => {
-  let result = false
+  let result = true
   console.log(values)
   names.forEach(name => {
-    if (values[name].length === 0 && typeof values[name] !== 'boolean') {
+    if (values[name].length !== 0 && typeof values[name] !== 'boolean') {
       console.log(values[name])
-      result = true
+      result = false
     }
   })
   console.log(result)

@@ -1,32 +1,33 @@
 import { useState, useEffect } from 'react'
 import { EstadoSchema } from './EstadoSchema'
 import { validaciones, esValido, cleanForm } from '../../util/validations.js'
+import PropTypes from 'prop-types'
+import { getAll, getOne, create, update } from '../../services/service.js'
 
 /**
  * Form.
  * @returns Modal de Estado
  */
-const Form = () => {
+const Form = ({ id, setRegistro, changeId }) => {
   const initialEstado = {
     id: 0,
-    estado: ''
+    states: ''
   }
 
   const initialError = {
-    esValido: false,
     id: '',
-    estado: ''
+    states: ''
   }
 
   const [estado, setEstado] = useState(initialEstado)
   const [errors, setErrors] = useState(initialError)
+  const [valido, setValido] = useState(false)
 
   useEffect(() => {
-    setErrors({
-      ...errors,
-      esValido: esValido(EstadoSchema, estado)
-    })
-  }, [estado])
+    if (id !== 0) {
+      getOne(id, 'estado').then(data => setEstado(data))
+    }
+  }, [id])
 
   /**
     * Manejar input estado
@@ -36,13 +37,15 @@ const Form = () => {
     event.preventDefault()
     setEstado({
       ...estado,
-      estado: event.target.value
+      [event.target.name]: event.target.value
     })
-    validaciones(EstadoSchema, event.target.name, event.target.value, errors, setErrors, event.target.classList)
+    validaciones(EstadoSchema[event.target.name], event.target.name, event.target.value, errors, setErrors, event.target.classList)
+    console.log(errors)
   }
 
   const clean = () => {
-    cleanForm(setEstado, initialEstado, setErrors, initialError, ['estado'])
+    cleanForm(setEstado, initialEstado, setErrors, initialError, ['states'])
+    changeId(0)
   }
 
   /**
@@ -51,11 +54,40 @@ const Form = () => {
     * */
   const handleSubmit = (event) => {
     event.preventDefault()
-    cleanForm(setEstado, initialEstado, setErrors, initialError, ['estado'])
+    if (id === 0) {
+      create('estado', {
+        estado: estado.states
+      }).then(data => {
+        clean()
+        console.log(data)
+        getAll('estado').then(({ data }) => {
+          setRegistro(data)
+        }).finally(() => {
+          setValido(false)
+        })
+      })
+    } else {
+      update(id, 'estado', {
+        estado: estado.states
+      }).then(data => {
+        clean()
+        console.log(data)
+        getAll('estado').then(({ data }) => {
+          setRegistro(data)
+        })
+      }).finally(() => {
+        setValido(false)
+      })
+    }
   }
 
+  useEffect(() => {
+    const validacion = esValido(['states'], errors)
+    setValido(validacion)
+  }, [errors])
+
   return (
-    <div className="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabIndex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    <div className="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabIndex={-1} aria-labelledby="staticBackdropLabel" aria-hidden="true">
       <div className="modal-dialog">
         <div className="modal-content">
           <div className="modal-header">
@@ -66,14 +98,14 @@ const Form = () => {
             <form role="form text-left">
               <label>Estado</label>
               <div className="input-group mb-3">
-                <input type="text" className="form-control" placeholder="Escribe el estado aqui..." aria-label="Estado" aria-describedby="estado-addon" name="estado" onChange={handleEstado} value={estado.estado} />
+                <input type="text" className="form-control" placeholder="Escribe el states aqui..." aria-label="Estado" aria-describedby="states-addon" name="states" onChange={handleEstado} value={estado.states} />
               </div>
-              {errors.estado ? <div className="text-danger">{errors.estado}</div> : null}
+              {errors.states ? <div className="text-danger">{errors.states}</div> : null}
             </form>
           </div>
           <div className="modal-footer">
             <button type="button" className="btn bg-gradient-warning" data-bs-dismiss="modal" onClick={clean}>Close</button>
-            {(errors.esValido)
+            {(valido)
               ? <button type="button" className="btn bg-gradient-info" onClick={handleSubmit}>Registrar</button>
               : <button type="button" className="btn bg-gradient-info" disabled>Registrar</button>
             }
@@ -83,4 +115,11 @@ const Form = () => {
     </div>
   )
 }
+
+Form.propTypes = {
+  id: PropTypes.number,
+  setRegistro: PropTypes.func,
+  changeId: PropTypes.func
+}
+
 export default Form

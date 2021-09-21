@@ -1,4 +1,5 @@
 import axios from 'axios'
+import { getToken } from '../util/getToken'
 
 /**
  * getAll.
@@ -8,18 +9,7 @@ import axios from 'axios'
  * @returns {Promise} los estados
  */
 export const getAll = (ruta) => {
-  const loggedToken = window.localStorage.getItem('loggedUser')
-  const token = JSON.parse(loggedToken)
-
-  const options = {
-    method: 'GET',
-    url: `http://localhost:8000/api/${ruta}`,
-    headers: {
-      Accept: 'application/json',
-      'X-Requested-With': 'XMLHttpRequest',
-      Authorization: `Bearer ${token.access_token}`
-    }
-  }
+  const options = getToken('GET', `http://localhost:8000/api/${ruta}`)
   return axios.request(options)
 }
 
@@ -32,18 +22,7 @@ export const getAll = (ruta) => {
  * @returns {Promise} los estados
  */
 export const search = (ruta, busqueda) => {
-  const loggedToken = window.localStorage.getItem('loggedUser')
-  const token = JSON.parse(loggedToken)
-
-  const options = {
-    method: 'GET',
-    url: `http://localhost:8000/api/${ruta}/busqueda=${busqueda}`,
-    headers: {
-      Accept: 'application/json',
-      'X-Requested-With': 'XMLHttpRequest',
-      Authorization: `Bearer ${token.access_token}`
-    }
-  }
+  const options = getToken('GET', `http://localhost:8000/api/${ruta}/busqueda=${busqueda}`)
   return axios.request(options)
 }
 
@@ -57,15 +36,7 @@ export const search = (ruta, busqueda) => {
  * @return {Promise}
  */
 export const getOne = (id, ruta) => {
-  const loggedToken = window.localStorage.getItem('loggedUser')
-  const token = JSON.parse(loggedToken)
-
-  const options = {
-    method: 'GET',
-    url: `http://localhost:8000/api/${ruta}/${id}`,
-    headers: { Accept: 'application/json', 'X-Requested-With': 'XMLHttpRequest', Authorization: `Bearer ${token.access_token}` }
-  }
-
+  const options = getToken('GET', `http://localhost:8000/api/${ruta}/${id}`)
   return axios.request(options).then(function (response) {
     console.log(response.data)
     return response.data
@@ -85,16 +56,8 @@ export const getOne = (id, ruta) => {
  * @return {Promise}
  */
 export const create = (ruta, data) => {
-  const loggedToken = window.localStorage.getItem('loggedUser')
-  const token = JSON.parse(loggedToken)
-
-  const options = {
-    method: 'POST',
-    url: `http://localhost:8000/api/${ruta}`,
-    headers: { 'Content-Type': 'application/json', 'X-Requested-With': 'XMLHttpRequest', Authorization: `Bearer ${token.access_token}` },
-    data: data
-  }
-
+  const options = getToken('POST', `http://localhost:8000/api/${ruta}`)
+  options.data = data
   return axios.request(options).then(function (response) {
     console.log(response.data)
   }).catch(function (error) {
@@ -113,21 +76,8 @@ export const create = (ruta, data) => {
  * @return {Promise}
  */
 export const update = (id, ruta, data) => {
-  const loggedToken = window.localStorage.getItem('loggedUser')
-  const token = JSON.parse(loggedToken)
-
-  const options = {
-    method: 'PUT',
-    url: `http://localhost:8000/api/${ruta}/${id}`,
-    headers: {
-      Accept: 'application/json',
-      'X-Requested-With': 'XMLHttpRequest',
-      'Content-Type': 'application/json',
-      Authorization: `Bearer ${token.access_token}`
-    },
-    data: data
-  }
-
+  const options = getToken('PUT', `http://localhost:8000/api/${ruta}/${id}`)
+  options.data = data
   return axios.request(options).then(function (response) {
     console.log(response.data)
     return response.data
@@ -147,15 +97,7 @@ export const update = (id, ruta, data) => {
  * @return {Promise}
  */
 export const destroy = (id, ruta) => {
-  const loggedToken = window.localStorage.getItem('loggedUser')
-  const token = JSON.parse(loggedToken)
-
-  const options = {
-    method: 'DELETE',
-    url: `http://localhost:8000/api/${ruta}/${id}`,
-    headers: { Accept: 'application/json', 'X-Requested-With': 'XMLHttpRequest', Authorization: `Bearer ${token.access_token}` }
-  }
-
+  const options = getToken('DELETE', `http://localhost:8000/api/${ruta}/${id}`)
   return axios.request(options).then(function (response) {
     console.log(response.data)
     return response.data
