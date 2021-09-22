@@ -1,29 +1,39 @@
 import { useState, useEffect } from 'react'
 import { MunicipioSchema } from './MunicipioSchema'
 import { validaciones, esValido, cleanForm } from '../../util/validations.js'
+import PropTypes from 'prop-types'
+import { getAll, getOne, create, update } from '../../services/service.js'
+import { getAllEstado } from '../../services/cbbx'
 
-const Form = () => {
+const Form = ({ id, setRegistro, changeId }) => {
   const initialMunicipio = {
     id: 0,
-    estado_id: 0,
-    municipio: ''
+    state_id: 0,
+    municipalitys: ''
   }
   const initialError = {
-    esValido: false,
     id: '',
-    estado_id: '',
-    municipio: ''
+    state_id: '',
+    municipalitys: ''
   }
+
   const [municipio, setMunicipio] = useState(initialMunicipio)
   const [errors, setErrors] = useState(initialError)
+  const [valido, setValido] = useState(false)
+  const [estados, setEstados] = useState([])
 
   useEffect(() => {
-    // esValido(MunicipioSchema, municipio, errors, setErrors)
-    setErrors({
-      ...errors,
-      esValido: esValido(MunicipioSchema, municipio)
+    getAllEstado().then(response => {
+      console.log(response.data)
+      setEstados(response.data)
     })
-  }, [municipio])
+  }, [])
+
+  useEffect(() => {
+    if (id !== 0) {
+      getOne(id, 'municipio').then(data => setMunicipio(data[0]))
+    }
+  }, [id])
 
   /**
     * Manejar input estado
@@ -34,12 +44,16 @@ const Form = () => {
       ...municipio,
       [event.target.name]: event.target.value
     })
-    validaciones(MunicipioSchema, event.target.name, event.target.value, errors, setErrors, event.target.classList)
+    validaciones(MunicipioSchema[event.target.name], event.target.name, event.target.value, errors, setErrors, event.target.classList)
     console.log(errors)
   }
 
   const clean = () => {
-    cleanForm(setMunicipio, initialMunicipio, setErrors, initialError, ['estado_id', 'municipio'])
+    cleanForm(setMunicipio, initialMunicipio, setErrors, initialError, ['state_id', 'municipalitys'])
+    changeId(0)
+    setTimeout(() => {
+      setValido(false)
+    }, 1000)
   }
 
   /**
@@ -48,9 +62,40 @@ const Form = () => {
     * */
   const handleSubmit = (event) => {
     event.preventDefault()
-    cleanForm(setMunicipio, initialMunicipio, setErrors, initialError, ['estado_id', 'municipio'])
-    console.log(municipio)
+    if (id === 0) {
+      create('municipio', {
+        estado_id: municipio.state_id,
+        municipio: municipio.municipalitys
+      }).then(response => {
+        clean()
+        console.log(response)
+        getAll('municipio').then(response => {
+          console.log(response.data)
+          setRegistro(response.data)
+        }).finally(() => {
+          setValido(false)
+        })
+      })
+    } else {
+      update(id, 'municipio', {
+        estado_id: municipio.state_id,
+        municipio: municipio.municipalitys
+      }).then(response => {
+        clean()
+        console.log(response)
+        getAll('municipio').then(response => {
+          setRegistro(response.data)
+        })
+      }).finally(() => {
+        setValido(false)
+      })
+    }
   }
+
+  useEffect(() => {
+    const validacion = esValido(['state_id', 'municipalitys'], errors)
+    setValido(validacion)
+  }, [errors])
 
   return (
     <div className="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabIndex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
@@ -64,26 +109,26 @@ const Form = () => {
             <form role="form text-left">
               <div className="form-group">
                 <label htmlFor="exampleFormControlSelect2">Estado:</label>
-                <select className="form-control" id="exampleFormControlSelect2" name="estado_id" onChange={handleChange} value={municipio.estado_id}>
-                  <option value="0">Seleccione...</option>
-                  <option value="1">Yaracuy</option>
-                  <option value="2">Lara</option>
-                  <option value="3">Bolivar</option>
-                  <option value="4">Trujillo</option>
-                  <option value="5">Falcon</option>
+                <select className="form-control" id="exampleFormControlSelect2" name="state_id" onChange={handleChange} value={municipio.state_id}>
+                  <option value="0">Seleccione un Estado...</option>
+                  {
+                    estados.map((estado, index) => {
+                      return (<option value={estado.id} key={index}>{estado.states}</option>)
+                    })
+                  }
                 </select>
-                {errors.estado_id ? <div className="invalid-feedback">{errors.estado_id}</div> : null}
+                {errors.state_id ? <div className="invalid-feedback">{errors.state_id}</div> : null}
               </div>
               <label>Municipio</label>
               <div className="input-group mb-3">
-                <input type="text" className="form-control" placeholder="Escribe el municipio aqui..." aria-label="Municipio" aria-describedby="municipio-addon" name="municipio" onChange={handleChange} value={municipio.municipio} />
-                {errors.municipio ? <div className="invalid-feedback">{errors.municipio}</div> : null}
+                <input type="text" className="form-control" placeholder="Escribe el municipio aqui..." aria-label="Municipio" aria-describedby="municipalitys-addon" name="municipalitys" onChange={handleChange} value={municipio.municipalitys} />
+                {errors.municipalitys ? <div className="invalid-feedback">{errors.municipalitys}</div> : null}
               </div>
             </form>
           </div>
           <div className="modal-footer">
             <button type="button" className="btn bg-gradient-warning" data-bs-dismiss="modal" onClick={clean}>Close</button>
-            {(errors.esValido)
+            {(valido)
               ? <button type="submit" className="btn bg-gradient-info" onClick={handleSubmit}>Registrar</button>
               : <button type="button" className="btn bg-gradient-info" disabled>Registrar</button>
             }
@@ -93,4 +138,11 @@ const Form = () => {
     </div>
   )
 }
+
+Form.propTypes = {
+  id: PropTypes.number,
+  setRegistro: PropTypes.func,
+  changeId: PropTypes.func
+}
+
 export default Form
