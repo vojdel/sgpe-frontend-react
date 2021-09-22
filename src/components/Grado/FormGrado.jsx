@@ -1,32 +1,33 @@
 import { useState, useEffect } from 'react'
 import { GradoSchema } from './GradoSchema'
 import { validaciones, esValido, cleanForm } from '../../util/validations.js'
+import { getAll, getOne, create, update } from '../../services/service.js'
+import PropTypes from 'prop-types'
 
 /**
  * FormGrado.
  * @returns Modal de Grado
  */
-const FormGrado = () => {
+const FormGrado = ({ id, setRegistro, changeId }) => {
   const initialGrado = {
     id: 0,
-    grado: ''
+    grados: ''
   }
 
   const initialError = {
-    esValido: false,
     id: '',
-    grado: ''
+    grados: ''
   }
 
   const [grado, setGrado] = useState(initialGrado)
   const [errors, setErrors] = useState(initialError)
+  const [valido, setValido] = useState(false)
 
   useEffect(() => {
-    setErrors({
-      ...errors,
-      esValido: esValido(GradoSchema, grado)
-    })
-  }, [grado])
+    if (id !== 0) {
+      getOne(id, 'grado').then(data => setGrado(data))
+    }
+  }, [id])
 
   /**
     * Manejar input grado
@@ -36,23 +37,53 @@ const FormGrado = () => {
   const handleGrado = (event) => {
     setGrado({
       ...grado,
-      grado: event.target.value
+      grados: event.target.value
     })
-    validaciones(GradoSchema, event.target.name, event.target.value, errors, setErrors, event.target.classList)
+    validaciones(GradoSchema[event.target.name], event.target.name, event.target.value, errors, setErrors, event.target.classList)
   }
 
   const clean = () => {
-    cleanForm(setGrado, initialGrado, setErrors, initialError, ['grado'])
+    cleanForm(setGrado, initialGrado, setErrors, initialError, ['grados'])
+    changeId(0)
   }
 
   /**
-    * Manejar input grado
+    * Manejar input estado
     * @param {any} event
     * */
   const handleSubmit = (event) => {
     event.preventDefault()
-    cleanForm(setGrado, initialGrado, setErrors, initialError, ['grado'])
+    if (id === 0) {
+      create('grado', {
+        grado: grado.grados
+      }).then(data => {
+        clean()
+        console.log(data)
+        getAll('grado').then(({ data }) => {
+          setRegistro(data)
+        }).finally(() => {
+          setValido(false)
+        })
+      })
+    } else {
+      update(id, 'grado', {
+        grado: grado.grados
+      }).then(data => {
+        clean()
+        console.log(data)
+        getAll('grado').then(({ data }) => {
+          setRegistro(data)
+        })
+      }).finally(() => {
+        setValido(false)
+      })
+    }
   }
+
+  useEffect(() => {
+    const validacion = esValido(['grados'], errors)
+    setValido(validacion)
+  }, [errors])
 
   return (
     <div className="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabIndex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
@@ -66,14 +97,14 @@ const FormGrado = () => {
             <form role="form text-left">
               <label>Grado</label>
               <div className="input-group mb-3">
-                <input type="text" className="form-control" placeholder="Escribe el grado aqui..." aria-label="Grado" aria-describedby="grado-addon" name="cargo" onChange={handleGrado} value={grado.grado} />
-                {errors.cargo ? <div className="text-danger">{errors.cargo}</div> : null}
+                <input type="text" className="form-control" placeholder="Escribe el grado aqui..." aria-label="Grado" aria-describedby="grado-addon" name="grados" onChange={handleGrado} value={grado.grados} />
+                {errors.grados ? <div className="text-danger">{errors.grados}</div> : null}
               </div>
             </form>
           </div>
           <div className="modal-footer">
             <button type="button" className="btn bg-gradient-warning" data-bs-dismiss="modal" onClick={clean}>Close</button>
-            {(errors.esValido)
+            {(valido)
               ? <button type="button" className="btn bg-gradient-info" onClick={handleSubmit}>Registrar</button>
               : <button type="button" className="btn bg-gradient-info" disabled>Registrar</button>
             }
@@ -83,4 +114,11 @@ const FormGrado = () => {
     </div>
   )
 }
+
+FormGrado.propTypes = {
+  id: PropTypes.number,
+  setRegistro: PropTypes.func,
+  changeId: PropTypes.func
+}
+
 export default FormGrado
