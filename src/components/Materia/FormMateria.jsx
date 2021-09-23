@@ -1,45 +1,61 @@
 import { useState, useEffect } from 'react'
 import { MateriaSchema } from './MateriaSchema'
 import { validaciones, esValido, cleanForm } from '../../util/validations.js'
+import { getAll, getOne, create, update } from '../../services/service.js'
+import PropTypes from 'prop-types'
 /**
  * FormMateria.
  * @returns Modal de Materia
  */
-const FormMateria = () => {
+const FormMateria = ({ id, setRegistro, changeId }) => {
   const initialMateria = {
     id: 0,
     materia: ''
   }
   const initialError = {
-    esValido: false,
     id: '',
     materia: ''
   }
 
   const [materia, setMateria] = useState(initialMateria)
   const [errors, setErrors] = useState(initialError)
+  const [valido, setValido] = useState(false)
 
   useEffect(() => {
-    setErrors({
-      ...errors,
-      esValido: esValido(MateriaSchema, materia)
-    })
-  }, [materia])
+    if (id !== 0) {
+      getOne(id, 'materia').then(data => {
+        setMateria({
+          id: data.id,
+          materia: data.nombre
+        })
+      })
+    }
+  }, [id])
+
+  useEffect(() => {
+    const validacion = esValido(['materia'], errors)
+    setValido(validacion)
+  }, [errors])
 
   /**
     * Manejar input materia
     * @param {any} event
     * */
-  const handleMateria = (event) => {
+  const handleChange = ({ target }) => {
+    const { name, value, classList } = target
     setMateria({
       ...materia,
-      [event.target.name]: event.target.value
+      [name]: value
     })
-    validaciones(MateriaSchema, event.target.name, event.target.value, errors, setErrors, event.target.classList)
+    validaciones(MateriaSchema, name, value, errors, setErrors, classList)
   }
 
   const clean = () => {
     cleanForm(setMateria, initialMateria, setErrors, initialError, ['materia'])
+    changeId(0)
+    setTimeout(() => {
+      setValido(false)
+    }, 1000)
   }
 
   /**
@@ -48,8 +64,37 @@ const FormMateria = () => {
     * */
   const handleSubmit = (event) => {
     event.preventDefault()
-    cleanForm(setMateria, initialMateria, setErrors, initialError, ['materia'])
+    if (id === 0) {
+      create('materia', {
+        materia: materia.materia
+      }).then(data => {
+        clean()
+        console.log(data)
+        getAll('materia').then(({ data }) => {
+          setRegistro(data)
+        }).finally(() => {
+          setValido(false)
+        })
+      })
+    } else {
+      update(id, 'materia', {
+        materia: materia.materia
+      }).then(data => {
+        clean()
+        console.log(data)
+        getAll('materia').then(({ data }) => {
+          setRegistro(data)
+        })
+      }).finally(() => {
+        setValido(false)
+      })
+    }
   }
+
+  useEffect(() => {
+    const validacion = esValido(['materia'], errors)
+    setValido(validacion)
+  }, [errors])
 
   return (
     <div className="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabIndex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
@@ -63,16 +108,20 @@ const FormMateria = () => {
             <form role="form text-left">
               <label>Materia</label>
               <div className="input-group mb-3">
-                <input type="text" className="form-control" placeholder="Escribe la materia aqui..." aria-label="Materia" aria-describedby="materia-addon" name="materia" onChange={handleMateria} value={materia.materia} />
+                <input type="text" className="form-control" placeholder="Escribe la materia aqui..." aria-label="Materia" aria-describedby="materia-addon" name="materia" onChange={handleChange} value={materia.materia} />
                 {errors.materia ? <div className="invalid-feedback">{errors.materia}</div> : null}
               </div>
             </form>
           </div>
           <div className="modal-footer">
             <button type="button" className="btn bg-gradient-warning" data-bs-dismiss="modal" onClick={clean}>Close</button>
-            {(errors.esValido)
-              ? <button type="submit" className="btn bg-gradient-info" onClick={handleSubmit}>Registrar</button>
-              : <button type="button" className="btn bg-gradient-info" disabled>Registrar</button>
+            {(valido)
+              ? <button type="submit" className="btn bg-gradient-info" onClick={handleSubmit}>
+                {(id === 0) ? 'Registrar' : 'Editar'}
+              </button>
+              : <button type="button" className="btn bg-gradient-info" disabled>
+                {(id === 0) ? 'Registrar' : 'Editar'}
+              </button>
             }
           </div>
         </div>
@@ -80,4 +129,11 @@ const FormMateria = () => {
     </div>
   )
 }
+
+FormMateria.propTypes = {
+  id: PropTypes.number,
+  setRegistro: PropTypes.func,
+  changeId: PropTypes.func
+}
+
 export default FormMateria
