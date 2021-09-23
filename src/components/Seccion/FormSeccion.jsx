@@ -1,57 +1,112 @@
 import { useState, useEffect } from 'react'
 import { SeccionSchema } from './SeccionSchema'
 import { validaciones, esValido, cleanForm } from '../../util/validations.js'
+import { getAll, getOne, create, update } from '../../services/service.js'
+import { getAllGrados } from '../../services/cbbx'
+import PropTypes from 'prop-types'
 
 /**
  * FormSeccion.
  * @returns Modal de Seccion
  */
-const FormSeccion = () => {
+const FormSeccion = ({ id, setRegistro, changeId }) => {
   const initialSeccion = {
     id: 0,
-    seccion: ''
+    secciones: '',
+    grado: 0
   }
 
   const initialError = {
-    esValido: false,
     id: '',
-    seccion: ''
+    secciones: '',
+    grado: ''
   }
 
   const [seccion, setSeccion] = useState(initialSeccion)
   const [errors, setErrors] = useState(initialError)
+  const [valido, setValido] = useState(false)
+  const [grados, setGrados] = useState([])
 
   useEffect(() => {
-    setErrors({
-      ...errors,
-      esValido: esValido(SeccionSchema, seccion)
+    getAllGrados().then(response => {
+      console.log(response.data)
+      setGrados(response.data)
     })
-  }, [seccion])
+  }, [])
+
+  useEffect(() => {
+    if (id !== 0) {
+      getOne(id, 'seccion').then(data => {
+        setSeccion({
+          id: data.id,
+          secciones: data.secciones,
+          grado: data.grado
+        })
+      })
+    }
+  }, [id])
 
   /**
-    * Manejar input seccion
-    * @param {any} event
-    * */
-  const handleSeccion = (event) => {
+  * Manejar input seccion
+  * @param {any} event
+  * */
+  const handleChange = ({ target }) => {
+    const { name, value, classList } = target
     setSeccion({
       ...seccion,
-      seccion: event.target.value
+      [name]: value
     })
-    validaciones(SeccionSchema, event.target.name, event.target.value, errors, setErrors, event.target.classList)
+    validaciones(SeccionSchema[name], name, value, errors, setErrors, classList)
+    console.log(seccion)
   }
 
   const clean = () => {
-    cleanForm(setSeccion, initialSeccion, setErrors, initialError, ['seccion'])
+    cleanForm(setSeccion, initialSeccion, setErrors, initialError, ['secciones', 'grado'])
+    changeId(0)
+    setTimeout(() => {
+      setValido(false)
+    }, 1000)
   }
 
   /**
-    * Manejar input seccion
+    * Manejar input estado
     * @param {any} event
     * */
   const handleSubmit = (event) => {
     event.preventDefault()
-    cleanForm(setSeccion, initialSeccion, setErrors, initialError, ['seccion'])
+    if (id === 0) {
+      create('seccion', {
+        grado: seccion.grado,
+        seccion: seccion.secciones
+      }).then(data => {
+        clean()
+        console.log(data)
+        getAll('seccion').then(({ data }) => {
+          setRegistro(data)
+        }).finally(() => {
+          setValido(false)
+        })
+      })
+    } else {
+      update(id, 'seccion', {
+        grado: seccion.grado,
+        seccion: seccion.secciones
+      }).then(data => {
+        clean()
+        console.log(data)
+        getAll('seccion').then(({ data }) => {
+          setRegistro(data)
+        })
+      }).finally(() => {
+        setValido(false)
+      })
+    }
   }
+
+  useEffect(() => {
+    const validacion = esValido(['secciones', 'grado'], errors)
+    setValido(validacion)
+  }, [errors])
 
   return (
     <div className="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabIndex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
@@ -63,23 +118,45 @@ const FormSeccion = () => {
           </div>
           <div className="modal-body">
             <form role="form text-left">
+              <div className="form-group">
+                <label htmlFor="exampleFormControlSelect2">Grado:</label>
+                <select className="form-control" id="exampleFormControlSelect2" name="grado" onChange={handleChange} value={seccion.grado}>
+                  <option value="0">Seleccione un Grado...</option>
+                  {
+                    grados.map((grado, index) => {
+                      return (<option value={grado.id} key={index}>{grado.grados}</option>)
+                    })
+                  }
+                </select>
+                {errors.grado ? <div className="invalid-feedback">{errors.grado}</div> : null}
+              </div>
               <label>Seccion</label>
               <div className="input-group mb-3">
-                <input type="text" className="form-control" placeholder="Escribe el seccion aqui..." aria-label="Seccion" aria-describedby="seccion-addon" name="seccion" onChange={handleSeccion} value={seccion.seccion} />
-              {errors.seccion ? <div className="text-danger">{errors.seccion}</div> : null}
+                <input type="text" className="form-control" placeholder="Escribe el seccion aqui..." aria-label="Seccion" aria-describedby="seccion-addon" name="secciones" onChange={handleChange} value={seccion.secciones} />
+                {errors.secciones ? <div className="text-danger">{errors.secciones}</div> : null}
               </div>
             </form>
           </div>
           <div className="modal-footer">
             <button type="button" className="btn bg-gradient-warning" data-bs-dismiss="modal" onClick={clean}>Close</button>
-            {(errors.esValido)
-              ? <button type="button" className="btn bg-gradient-info" onClick={handleSubmit}>Registrar</button>
-              : <button type="button" className="btn bg-gradient-info" disabled>Registrar</button>
+            {(valido)
+              ? <button type="button" className="btn bg-gradient-info" onClick={handleSubmit}>
+                {(id === 0) ? 'Registrar' : 'Editar'}
+              </button>
+              : <button type="button" className="btn bg-gradient-info" disabled>
+                {(id === 0) ? 'Registrar' : 'Editar'}
+              </button>
             }
           </div>
         </div>
       </div>
     </div>
   )
+}
+
+FormSeccion.propTypes = {
+  id: PropTypes.number,
+  setRegistro: PropTypes.func,
+  changeId: PropTypes.func
 }
 export default FormSeccion
