@@ -1,12 +1,12 @@
 import * as yup from 'yup'
 
-export const CargoSchema = yup.object().shape({
+export const RepresentanteSchema = {
   cedula: yup.number()
-    .min(7, 'Tamaño minimo de cedula invalido')
-    .max(10, 'Tamaño maximo de cedula invalido')
+    .min(1000000, 'Tamaño minimo de cedula invalido')
+    .max(100000000, 'Tamaño maximo de cedula invalido')
     .required('La cedula es requerida'),
   nombre: yup.string()
-    .min(5, 'Tamaño minimo de nombre invalido')
+    .min(4, 'Tamaño minimo de nombre invalido')
     .max(30, 'tamaño maximo de nombre invalido')
     .required('El nombre es requerido'),
   apellido: yup.string()
@@ -23,10 +23,13 @@ export const CargoSchema = yup.object().shape({
     .min(10, 'tamaño minimo de la direccion invalido')
     .max(50, 'Tamaño maximo de la direccion invalido')
     .required('La direccion es requerido'),
+  states: yup.number()
+    .min(1, 'Seleccione un estado')
+    .required('Seleccione un estado'),
   municipality: yup.number()
     .min(1, 'Seleccione un municipio')
     .required('Seleccione un municipio'),
   ocupacion_laboral: yup.number()
     .min(1, 'Seleccione una ocupacion laboral')
     .required('Seleccione una ocupacion laboral')
-})
+}
