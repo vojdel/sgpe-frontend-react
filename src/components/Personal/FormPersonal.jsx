@@ -1,40 +1,41 @@
 import { useState, useEffect } from 'react'
-import { PersonalSchema } from './PersonalSchema'
-import { validaciones, esValido, cleanForm } from '../../util/validations.js'
+import { PersonalSchema, PersonalNextSchema } from './PersonalSchema'
+import { validaciones, cleanForm } from '../../util/validations.js'
+import PropTypes from 'prop-types'
+import { getAll, getOne, create, update } from '../../services/service.js'
+import { getAllEstado, getAllMunicpios, getAllCargos } from '../../services/cbbx'
+import * as yup from 'yup'
 
 /**
  * FormPersonal.
  * @returns Modal de Personal
  */
-const FormPersonal = () => {
+const FormPersonal = ({ id, setRegistro, changeId }) => {
   const initialPersonal = {
-    id: 0,
     cedula: '',
     nombre: '',
     apellido: '',
     sex: 'Masculino',
     telefono: '',
     direccion: '',
+    states: 0,
     municipality: 0,
-    email: 'correo@gmail.com',
-    anio_ing_inst: '2021-01-01',
-    anio_ing_mppe: '2021-01-01',
+    anio_ing_inst: `${new Date().getFullYear()}-${new Date().getMonth()}-${new Date().getDate()}`,
+    anio_ing_mppe: `${new Date().getFullYear()}-${new Date().getMonth()}-${new Date().getDate()}`,
     tit_pregrad: '',
     tit_postgrad: '',
     cargo: 0
   }
 
   const initialError = {
-    esValido: false,
-    id: '',
     cedula: '',
     nombre: '',
     apellido: '',
     sex: '',
     telefono: '',
     direccion: '',
+    states: '',
     municipality: '',
-    email: '',
     anio_ing_inst: '',
     anio_ing_mppe: '',
     tit_pregrad: '',
@@ -49,8 +50,8 @@ const FormPersonal = () => {
     'sex',
     'telefono',
     'direccion',
+    'states',
     'municipality',
-    'email',
     'anio_ing_inst',
     'anio_ing_mppe',
     'tit_pregrad',
@@ -60,6 +61,52 @@ const FormPersonal = () => {
 
   const [personal, setPersonal] = useState(initialPersonal)
   const [errors, setErrors] = useState(initialError)
+  const [validoNext, setValidoNext] = useState(false)
+  const [valido, setValido] = useState(false)
+  const [estados, setEstados] = useState([])
+  const [municipios, setMunicipios] = useState([])
+  const [cargos, setCargos] = useState([])
+
+  useEffect(() => {
+    getAllEstado().then(response => {
+      console.log(response.data)
+      setEstados(response.data)
+    }).catch(() => {
+      setEstados([{
+        id: 0,
+        states: 'no existen estados registrados'
+      }])
+    })
+    getAllCargos().then(response => {
+      console.log(response.data)
+      setCargos(response.data)
+    }).catch(() => {
+      setCargos([{
+        id: 0,
+        cargos: 'no existen Cargos registrados'
+      }])
+    })
+  }, [])
+
+  useEffect(() => {
+    if (id !== 0) {
+      getOne(id, 'empleado').then(data => setPersonal(data[0]))
+    }
+  }, [id])
+
+  useEffect(() => {
+    if (personal.states !== 0) {
+      getAllMunicpios(personal.states).then(response => {
+        console.log(response.data)
+        setMunicipios(response.data)
+      }).catch(() => {
+        setMunicipios([{
+          id: 0,
+          municipio: 'no existen Municipios registrados'
+        }])
+      })
+    }
+  }, [personal.states])
 
   /**
     * Manejar input estado
@@ -82,6 +129,11 @@ const FormPersonal = () => {
 
   const clean = () => {
     cleanForm(setPersonal, initialPersonal, setErrors, initialError, nameOfForm)
+    changeId(0)
+    setTimeout(() => {
+      setValido(false)
+    }, 1000)
+    handleTabs('home', 'profile')
   }
 
   /**
@@ -90,7 +142,54 @@ const FormPersonal = () => {
     * */
   const handleSubmit = (event) => {
     event.preventDefault()
-    cleanForm(setPersonal, initialPersonal, setErrors, initialError, nameOfForm)
+    if (id === 0) {
+      create('empleado', {
+        cedula: personal.cedula,
+        nombre: personal.nombre,
+        apellido: personal.apellido,
+        sex: personal.sex,
+        telefono: personal.telefono,
+        direccion: personal.direccion,
+        municipio: personal.municipality,
+        anio_ing_inst: personal.anio_ing_inst,
+        anio_ing_mppe: personal.anio_ing_mppe,
+        tit_pregrad: personal.tit_pregrad,
+        tit_postgrad: personal.tit_postgrad,
+        cargo: personal.cargo
+      }).then(response => {
+        clean()
+        console.log(response)
+        getAll('empleado').then(response => {
+          console.log(response.data)
+          setRegistro(response.data)
+        }).finally(() => {
+          setValido(false)
+        })
+      })
+    } else {
+      update(id, 'empleado', {
+        cedula: personal.cedula,
+        nombre: personal.nombre,
+        apellido: personal.apellido,
+        sex: personal.sex,
+        telefono: personal.telefono,
+        direccion: personal.direccion,
+        municipio: personal.municipality,
+        anio_ing_inst: personal.anio_ing_inst,
+        anio_ing_mppe: personal.anio_ing_mppe,
+        tit_pregrad: personal.tit_pregrad,
+        tit_postgrad: personal.tit_postgrad,
+        cargo: personal.cargo
+      }).then(response => {
+        clean()
+        console.log(response)
+        getAll('representante').then(response => {
+          setRegistro(response.data)
+        })
+      }).finally(() => {
+        setValido(false)
+      })
+    }
   }
 
   /**
@@ -116,13 +215,13 @@ const FormPersonal = () => {
     hiddenContent.classList.add('d-none')
   }
 
-  useEffect(() => {
-    setErrors({
-      ...errors,
-      esValido: esValido(nameOfForm, errors)
-    })
-    console.log(esValido(nameOfForm, errors))
-  }, [personal])
+  useEffect(async () => {
+    // const validacion = esValido(nameOfForm, errors)
+    const validacionNext = await yup.object().shape(PersonalNextSchema).isValid(personal)
+    setValidoNext(validacionNext)
+    const validacion = await yup.object().shape(PersonalSchema).isValid(personal)
+    setValido(validacion)
+  }, [errors])
 
   return (
     <div className="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabIndex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
@@ -178,12 +277,23 @@ const FormPersonal = () => {
                   <input type="text" className="form-control" placeholder="Escribe el apellido aqui..." aria-label="Apellido" aria-describedby="estado-addon" onChange={handleChange} name="apellido" value={personal.apellido} />
                   {errors.apellido ? <div className="invalid-feedback">{errors.apellido}</div> : null}
                 </div>
+                <label>Telefono</label>
+                <div className="input-group mb-3">
+                  <input type="number" className="form-control" placeholder="Escribe el Telefono aqui..." aria-label="Telefono" aria-describedby="telefono-addon" onChange={handleChange} name="telefono" value={personal.telefono} />
+                  {errors.telefono ? <div className="invalid-feedback">{errors.telefono}</div> : null}
+                </div>
                 <div className="row">
                   <div className="col-md-6 col-12 d-inline-block">
                     <label>Estado</label>
                     <div className="input-group mb-3">
-                      <select className="form-control" aria-label="Estado" aria-describedby="estado-addon" name="sex" >
-                        <option value="0">Seleccione...</option>
+                      <select className="form-control" aria-label="Estado" aria-describedby="estado-addon" name="states" value={personal.states} onChange={handleChange} >
+                        <option value="0">Seleccione un Estado...</option>
+                        {
+                          estados.map((estado, index) => {
+                            return (<option value={estado.id} key={index}>{estado.states}</option>)
+                          })
+                        }
+                        {errors.states ? <div className="invalid-feedback">{errors.states}</div> : null}
                       </select>
                     </div>
                   </div>
@@ -191,8 +301,12 @@ const FormPersonal = () => {
                     <label>Municipio</label>
                     <div className="input-group mb-3">
                       <select className="form-control" aria-label="Municipio" aria-describedby="municipality-addon" onChange={handleChange} name="municipality" value={personal.municipality} >
-                        <option value="0">Seleccione...</option>
-                        <option value="1">Yaracuy</option>
+                        <option value="0">Seleccione un Municipio...</option>
+                        {
+                          municipios.map((municipio, index) => {
+                            return (<option value={municipio.id} key={index}>{municipio.municipio}</option>)
+                          })
+                        }
                       </select>
                       {errors.municipality ? <div className="invalid-feedback">{errors.municipality}</div> : null}
                     </div>
@@ -204,21 +318,16 @@ const FormPersonal = () => {
                   {errors.direccion ? <div className="invalid-feedback">{errors.direccion}</div> : null}
                 </div>
                 <div className="modal-footer">
-                  <button type="button" className="btn bg-gradient-warning" data-bs-dismiss="modal">Close</button>
-                  <button type="button" className="btn bg-gradient-info" onClick={() => handleTabs('profile', 'home')} > Continuar</button>
+                  <button type="button" className="btn bg-gradient-warning" data-bs-dismiss="modal" onClick={clean}>Close</button>
+    {
+      (validoNext)
+        ? <button type="button" className="btn bg-gradient-info" onClick={() => handleTabs('profile', 'home')} > Continuar</button>
+        : <button type="button" className="btn bg-gradient-info" disabled> Continuar</button>
+    }
                 </div>
               </div>
 
               <div className="tab-pane fade d-none" id="nav-profile" role="tabpanel" aria-labelledby="nav-profile-tab">
-                <div className="row">
-                  <div className="col-12">
-                    <label>Correo</label>
-                    <div className="input-group mb-3">
-                      <input type="email" className="form-control" placeholder="Escribe el correo aqui..." aria-label="Email" aria-describedby="email-addon" onChange={handleChange} name="email" value={personal.email} />
-                      {errors.email ? <div className="invalid-feedback">{errors.email}</div> : null}
-                    </div>
-                  </div>
-                </div>
                 <div className="row">
                   <div className="col-md-6 col-12 d-inline-block">
                     <label>Año de Ingreso a la Institución</label>
@@ -255,8 +364,12 @@ const FormPersonal = () => {
                   <label>Cargo</label>
                   <div className="input-group mb-3">
                     <select className="form-control" aria-label="Cargo" aria-describedby="cargo-addon" onChange={handleChange} name="cargo" value={personal.cargo} >
-                      <option value="0">Seleccione...</option>
-                      <option value="1">Profesor</option>
+                      <option value="0">Seleccione un Cargo...</option>
+                      {
+                        cargos.map((cargo, index) => {
+                          return (<option value={cargo.id} key={index}>{cargo.cargos}</option>)
+                        })
+                      }
                     </select>
                     {errors.cargo ? <div className="invalid-feedback">{errors.cargo}</div> : null}
                   </div>
@@ -264,9 +377,13 @@ const FormPersonal = () => {
                 <div className="modal-footer">
                   <button type="button" className="btn bg-gradient-danger" data-bs-dismiss="modal" onClick={clean}>Close</button>
                   <button type="button" className="btn bg-gradient-warning" onClick={() => handleTabs('home', 'profile')}>Atras</button>
-                  {(errors.esValido)
-                    ? <button type="submit" className="btn bg-gradient-info" onClick={handleSubmit}>Registrar</button>
-                    : <button type="button" className="btn bg-gradient-info" disabled>Registrar</button>
+                  {(valido)
+                    ? <button type="submit" className="btn bg-gradient-info" onClick={handleSubmit}>
+                      {(id === 0) ? 'Registrar' : 'Editar'}
+                    </button>
+                    : <button type="button" className="btn bg-gradient-info" disabled>
+                      {(id === 0) ? 'Registrar' : 'Editar'}
+                    </button>
                   }
                 </div>
               </div>
@@ -277,4 +394,11 @@ const FormPersonal = () => {
     </div >
   )
 }
+
+FormPersonal.propTypes = {
+  id: PropTypes.number,
+  setRegistro: PropTypes.func,
+  changeId: PropTypes.func
+}
+
 export default FormPersonal

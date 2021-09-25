@@ -21,14 +21,12 @@ export const PersonalSchema = {
   direccion: yup.string()
     .min(10, 'Tamaño minimo de la direccion invalido')
     .max(50, 'Tamaño maximo de la direccion invalido'),
+  states: yup.number()
+    .min(1, 'Seleccione un estado')
+    .required('Seleccione un estado'),
   municipality: yup.number()
     .min(1, 'Seleccione un municipio')
     .default(0),
-  email: yup.string()
-    .email('formato del correo invalido')
-    .min(10, 'Tamaño minimo del correo es invalido')
-    .max(25, 'Tamaño maximo del correo es invalido')
-    .default(''),
   anio_ing_inst: yup.date()
     .min('1950-01-01', 'Elija una fecha mayor a 01/01/1950')
     .max(new Date(), `Elija una fecha menor a ${new Date()}`)
@@ -47,5 +45,34 @@ export const PersonalSchema = {
     .default(''),
   cargo: yup.number()
     .min(1, 'Seleccione un Cargo')
+    .default(0)
+}
+
+export const PersonalNextSchema = {
+  cedula: yup.string()
+    .min(7)
+    .max(11)
+    .required(),
+  nombre: yup.string()
+    .min(5)
+    .max(30)
+    .default(''),
+  apellido: yup.string()
+    .min(5)
+    .max(30)
+    .default(''),
+  sex: yup.string(),
+  telefono: yup.string()
+    .min(10)
+    .max(13)
+    .default(''),
+  direccion: yup.string()
+    .min(10)
+    .max(50),
+  states: yup.number()
+    .min(1)
+    .required(),
+  municipality: yup.number()
+    .min(1)
     .default(0)
 }
