@@ -2,8 +2,8 @@ import * as yup from 'yup'
 
 export const EstudianteSchema = {
   cedula: yup.number()
-    .min(6, 'Tamaño de cedula invalido')
-    .max(8, 'Tamaño de cedula invalido')
+    .min(1000000, 'Tamaño de cedula invalido')
+    .max(100000000, 'Tamaño de cedula invalido')
     .required('Es obligatoria la cedula'),
   nombre: yup.string()
     .min(5, 'Tamaño del nombre invalido')
@@ -17,13 +17,16 @@ export const EstudianteSchema = {
     .required()
     .default('Masculino'),
   telefono: yup.string()
-    .min(12, 'Tamaño del telefono insuficiente')
+    .min(11, 'Tamaño del telefono insuficiente')
     .max(15, 'tamaño del telefono superado')
     .required('El Telefono es requerido'),
   direccion: yup.string()
     .min(10, 'Tamaño de la direccion invalida')
     .max(50, 'Tamaño de la direccion es demaciado larga')
     .required(),
+  states: yup.number()
+    .min(1, 'Seleccione un estado')
+    .required('Seleccione un estado'),
   municipality: yup.number()
     .min(1, 'Debe seleccionar un municipio')
     .required('Debe seleccionar un municipio'),
@@ -49,5 +52,55 @@ export const EstudianteSchema = {
   talla: yup.string()
     .required('La talla es reuerida'),
   t_sangre: yup.string()
-    .required('El tipo de sangre es requerid')
+    .required('El tipo de sangre es requerid'),
+  fecha_inscrip: yup.date()
+    .min('2000-01-01', 'Debe elejir una fecha despues del 2000')
+    .max(new Date(), `Debe elejir una fecha antes de ${new Date()}`),
+  estado_inscrip: yup.bool()
+    .required()
+    .default(false),
+  beca: yup.bool()
+    .required()
+    .default(false),
+  repite: yup.bool()
+    .required()
+    .default(false)
+}
+
+export const EstudianteNextSchema = {
+  cedula: yup.number()
+    .min(1000000)
+    .max(100000000)
+    .required(),
+  nombre: yup.string()
+    .min(5)
+    .max(30)
+    .required(),
+  apellido: yup.string()
+    .min(5)
+    .max(30)
+    .required(),
+  sex: yup.string(),
+  telefono: yup.string()
+    .min(11)
+    .max(15)
+    .required(),
+  direccion: yup.string()
+    .min(10)
+    .max(50)
+    .required(),
+  states: yup.number()
+    .min(1)
+    .required(),
+  municipality: yup.number()
+    .min(1)
+    .required(),
+  fecha_nacimiento: yup.date()
+    .min('2000-01-01')
+    .max(new Date())
+    .required(),
+  lugar_nacimiento: yup.string()
+    .min(10)
+    .max(50)
+    .required()
 }
