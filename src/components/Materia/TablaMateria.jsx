@@ -38,7 +38,8 @@ const TablaMateria = ({ nombres, datas, changeRegistro, changeId }) => {
                       <div className="text-xs font-weight-bold mb-0">{data.nombre}</div>
                     </td>
                     <td className="align-middle w-25 text-center">
-                      <button className="btn btn-icon btn-2 btn-warning" type="button" data-toggle="tooltip" data-original-title="Edit user" data-bs-toggle="modal" data-bs-target="#staticBackdrop"onClick={() => changeId(data.id)}>
+                      <button className="btn btn-icon btn-2 btn-warning" type="button" data-toggle="tooltip" data-original-title="Edit user" data-bs-toggle="modal" data-bs-target="#staticBackdrop"
+                  onClick={() => changeId(data.id)}>
                         <span className="btn-inner--icon">
                           <FontAwesomeIcon icon={faPenAlt} />
                         </span>

@@ -41,6 +41,9 @@ export const changeTitle = (ruta) => {
     case '/usuario':
       result = 'Usuario'
       break
+    case '/periodoescolar':
+      result = 'Periodo Escolar'
+      break
   }
   return result
 }

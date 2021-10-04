@@ -22,6 +22,7 @@ const Seccion = lazy(() => import('./components/Seccion/Seccion'))
 const Materia = lazy(() => import('./components/Materia/Materia'))
 const Usuario = lazy(() => import('./components/Usuario/Usuario'))
 const Logout = lazy(() => import('./components/layout/logout'))
+const PeriodoEscolar = lazy(() => import('./components/PeriodoEscolar/PeriodoEscolar'))
 
 function App () {
   const styleSiderHidden = {
@@ -98,6 +99,7 @@ function App () {
               <Route path="/grado" component={Grado} exact />
               <Route path="/seccion" component={Seccion} exact />
               <Route path="/materia" component={Materia} exact />
+              <Route path="/periodoescolar" component={PeriodoEscolar} exact />
               <Route path="/usuario" component={Usuario} exact />
               <Route path="/logout" exact>
                 <Logout />

@@ -1,5 +1,5 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faAddressBook, faChild, faHome, faKey, faMale, faChalkboard, faChalkboardTeacher, faMapMarkedAlt, faSchool, faTimes, faUserAlt, faUserCircle, faUserTie, faUser, faBars, faDoorClosed } from '@fortawesome/free-solid-svg-icons'
+import { faAddressBook, faChild, faHome, faKey, faMale, faChalkboard, faChalkboardTeacher, faMapMarkedAlt, faSchool, faTimes, faUserAlt, faUserTie, faUser, faBars, faDoorClosed } from '@fortawesome/free-solid-svg-icons'
 import SiderOption from './SiderOption'
 import PropTypes from 'prop-types'
 import { useLocation } from 'react-router-dom'
@@ -48,17 +48,19 @@ const Siderbar = ({ estilo, handleMenu }) => {
               <SiderOption nombre="Personas" collapseOption="collapsePersona" icon={faMale} />
               <ul className="navbar-nav collapse" id="collapsePersona">
                 <SiderOption nombre="Estudiante" icon={faChild} list={true} link="/estudiante" />
-                <SiderOption nombre="Usuarios" icon={faUser} list={true} link="/usuario" />
                 <SiderOption nombre="Personal" icon={faUserTie} list={true} link="/personal" />
                 <SiderOption nombre="Representante" icon={faUserTie} list={true} link="/representante" />
                 <SiderOption nombre="Cargo" icon={faUserTie} list={true} link="/cargo" />
+                <SiderOption nombre="Usuarios" icon={faUser} list={true} link="/usuario" />
               </ul>
               <SiderOption nombre="Escuela" collapseOption="collapseEscuela" icon={faSchool} />
               <ul className="navbar-nav collapse" id="collapseEscuela">
                 <SiderOption nombre="Grado" icon={faSchool} list={true} link="/grado" />
-                <SiderOption nombre="Salon" icon={faSchool} list={true} link="/salon" />
+                {
+                  // <SiderOption nombre="Salon" icon={faSchool} list={true} link="/salon" />
+                }
                 <SiderOption nombre="Seccion" icon={faSchool} list={true} link="/seccion" />
-                <SiderOption nombre="Periodo Escolar" icon={faSchool} list={true} link="/peridoescolar" />
+                <SiderOption nombre="Periodo Escolar" icon={faSchool} list={true} link="/periodoescolar" />
                 <SiderOption nombre="Materia" icon={faSchool} list={true} link="/materia" />
               </ul>
               <li className="nav-item mt-3">
@@ -73,7 +75,6 @@ const Siderbar = ({ estilo, handleMenu }) => {
               </li>
               <SiderOption nombre="Profile" icon={faUserAlt} link="/" />
               <SiderOption nombre="Sign In" icon={faKey} link="/signin" />
-              <SiderOption nombre="Sign Up" icon={faUserCircle} link="/signup" />
               <SiderOption nombre="Logout" icon={faDoorClosed} link="/logout" />
             </ul >
           </div >

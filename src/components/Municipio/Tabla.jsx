@@ -70,4 +70,5 @@ Tabla.propTypes = {
   changeRegistro: PropTypes.func,
   changeId: PropTypes.func
 }
+
 export default Tabla

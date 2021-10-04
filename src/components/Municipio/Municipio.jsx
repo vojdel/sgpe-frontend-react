@@ -23,7 +23,7 @@ const Municipio = () => {
 
   const handleSearch = (event) => {
     event.preventDefault()
-    search('estado', busqueda)
+    search('municipio', busqueda)
       .then(function (response) {
         console.log(response.data)
         return response.data

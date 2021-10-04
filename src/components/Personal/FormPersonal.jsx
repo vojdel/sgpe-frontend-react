@@ -183,7 +183,7 @@ const FormPersonal = ({ id, setRegistro, changeId }) => {
       }).then(response => {
         clean()
         console.log(response)
-        getAll('representante').then(response => {
+        getAll('empleado').then(response => {
           setRegistro(response.data)
         })
       }).finally(() => {
@@ -293,8 +293,8 @@ const FormPersonal = ({ id, setRegistro, changeId }) => {
                             return (<option value={estado.id} key={index}>{estado.states}</option>)
                           })
                         }
-                        {errors.states ? <div className="invalid-feedback">{errors.states}</div> : null}
                       </select>
+                        {errors.states ? <div className="invalid-feedback">{errors.states}</div> : null}
                     </div>
                   </div>
                   <div className="col-md-6 col-12 d-inline-block">
