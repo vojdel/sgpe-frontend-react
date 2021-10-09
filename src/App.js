@@ -23,6 +23,8 @@ const Materia = lazy(() => import('./components/Materia/Materia'))
 const Usuario = lazy(() => import('./components/Usuario/Usuario'))
 const Logout = lazy(() => import('./components/layout/logout'))
 const PeriodoEscolar = lazy(() => import('./components/PeriodoEscolar/PeriodoEscolar'))
+const Inscripcion = lazy(() => import('./components/Inscripcion/Inscripcion'))
+const FormInscripcion = lazy(() => import('./components/Inscripcion/FormInscripcion'))
 
 function App () {
   const styleSiderHidden = {
@@ -61,15 +63,15 @@ function App () {
   const isLogin = () => {
     // if (window.localStorage.getItem('loggedUser')) {
     return (<div>
-        <Siderbar
-          estilo={styleAside.aside}
-          handleMenu={handleMenu}
-        />
-        <Navbar
-          handleSiderHidden={handleSiderHidden}
-          handleMenu={handleMenu}
-        />
-      </div>)
+      <Siderbar
+        estilo={styleAside.aside}
+        handleMenu={handleMenu}
+      />
+      <Navbar
+        handleSiderHidden={handleSiderHidden}
+        handleMenu={handleMenu}
+      />
+    </div>)
     // } else {
     // return ''
     // }
@@ -101,6 +103,10 @@ function App () {
               <Route path="/materia" component={Materia} exact />
               <Route path="/periodoescolar" component={PeriodoEscolar} exact />
               <Route path="/usuario" component={Usuario} exact />
+              { /* Procesos */}
+              <Route path="/inscripcion" component={Inscripcion} exact />
+              <Route path="/inscripcion/form" component={FormInscripcion} exact />
+
               <Route path="/logout" exact>
                 <Logout />
               </Route>
