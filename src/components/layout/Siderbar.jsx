@@ -67,9 +67,8 @@ const Siderbar = ({ estilo, handleMenu }) => {
                 <h6 className="ps-4 ms-2 text-uppercase text-xs font-weight-bolder opacity-6 text-white">Procesos</h6>
               </li>
               <SiderOption nombre="Inscripción" icon={faChalkboard} link="/inscripcion" />
-              <SiderOption nombre="Horarios" icon={faChalkboard} link="/" />
-              <SiderOption nombre="Asistencias" icon={faChalkboardTeacher} link="/" />
-              <SiderOption nombre="Permisos" icon={faChalkboardTeacher} link="/" />
+              <SiderOption nombre="Asistencias" icon={faChalkboardTeacher} link="/asistencia" />
+              <SiderOption nombre="Notas" icon={faChalkboardTeacher} link="/" />
               <li className="nav-item mt-3">
                 <h6 className="ps-4 ms-2 text-uppercase text-xs font-weight-bolder opacity-6 text-white">Account Pages</h6>
               </li>

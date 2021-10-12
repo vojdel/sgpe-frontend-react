@@ -25,6 +25,7 @@ const Logout = lazy(() => import('./components/layout/logout'))
 const PeriodoEscolar = lazy(() => import('./components/PeriodoEscolar/PeriodoEscolar'))
 const Inscripcion = lazy(() => import('./components/Inscripcion/Inscripcion'))
 const FormInscripcion = lazy(() => import('./components/Inscripcion/FormInscripcion'))
+const Asistencia = lazy(() => import('./components/Asistencia/Asistencia'))
 
 function App () {
   const styleSiderHidden = {
@@ -106,6 +107,7 @@ function App () {
               { /* Procesos */}
               <Route path="/inscripcion" component={Inscripcion} exact />
               <Route path="/inscripcion/form" component={FormInscripcion} exact />
+              <Route path="/asistencia" component={Asistencia} exact />
 
               <Route path="/logout" exact>
                 <Logout />
