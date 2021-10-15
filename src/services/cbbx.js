@@ -101,3 +101,14 @@ export const getAllParentescos = () => {
   const options = getToken('GET', 'http://localhost:8000/api/cbbx/parentescos')
   return axios.request(options)
 }
+
+/**
+ * getAllMateria.
+ * @type {Function}
+ * @description Hace una peticion para obtener todos los registros de parencos
+ * @returns {Promise} los Parentesco posibles
+ */
+export const getAllMateria = () => {
+  const options = getToken('GET', 'http://localhost:8000/api/cbbx/materia')
+  return axios.request(options)
+}

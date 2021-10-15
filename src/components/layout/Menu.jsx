@@ -1,5 +1,5 @@
-// faBell, faClock, faCog,
-import { faBars, faUser, faDoorOpen } from '@fortawesome/free-solid-svg-icons'
+// faBell, faClock, faCog, faDoorOpen
+import { faBars, faUser } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { Link, useHistory } from 'react-router-dom'
 import PropTypes from 'prop-types'
@@ -46,12 +46,6 @@ const Menu = ({ handleSiderHidden, handleMenu, titulo }) => {
               <Link to="/signin" className="nav-link text-body font-weight-bold px-0">
                 <FontAwesomeIcon icon={faUser} className="me-sm-1 text-white" />
                 <span className="d-sm-inline d-none text-white">{userName || 'Usuario'}</span>
-              </Link>
-            </li>
-            <li className="nav-item d-flex align-items-center">
-              <Link to="/logout" className="nav-link text-body font-weight-bold px-0">
-                <FontAwesomeIcon icon={faDoorOpen} className="me-sm-1 text-white" />
-                <span className="d-sm-inline d-none text-white">Logout</span>
               </Link>
             </li>
             <li className="nav-item d-xl-none ps-3 d-flex align-items-center" onClick={handleSiderHidden}>

@@ -120,7 +120,7 @@ const FormInscripcion = () => {
     const inscripcionId = window.localStorage.getItem('inscripcion_id')
     setTimeout(() => {
       if (inscripcionId !== null) {
-        setId(inscripcionId)
+        setId(parseInt(inscripcionId))
         getOne(inscripcionId, 'inscripcion').then(data => {
           setInscripcion(data)
           setValido(true)
@@ -559,101 +559,101 @@ const FormInscripcion = () => {
               { /* Inscripción */}
 
               <div className="tab-pane fade d-none" id="nav-inscripcion" role="tabpanel" aria-labelledby="nav-inscripcion-tab" style={{ minHeight: '550px' }} >
-                  <div className="row">
-                    <h2 className="text-center">Inscripción</h2>
-                  </div>
-                  <div className="row justify-content-center">
-                    <div className="col-5">
-                      <label className="form-label" htmlFor="empleado_id">Cedula</label>
-                      <div className="input-group mb-3">
-                        <select className="form-control" aria-label="emplaedo" id="empleado_id" aria-describedby="empleado-addon" name="empleado_id" onChange={handleChange} value={inscripcion.empleado_id}>
-                          <option value="0">Seleccione un Empleado...</option>
-                          {
-                            empleados.map((empleado, index) => {
-                              return (<option value={empleado.id} key={index}>
-                                {`${empleado.cedula}, ${empleado.nombre} ${empleado.apellido}, ${empleado.cargo}`}
-                              </option>)
-                            })
-                          }
-                        </select>
-                      </div>
-                      {errors.respuesta ? <div className="invalid-feedback">{errors.respuesta}</div> : null}
+                <div className="row">
+                  <h2 className="text-center">Inscripción</h2>
+                </div>
+                <div className="row justify-content-center">
+                  <div className="col-5">
+                    <label className="form-label" htmlFor="empleado_id">Cedula</label>
+                    <div className="input-group mb-3">
+                      <select className="form-control" aria-label="emplaedo" id="empleado_id" aria-describedby="empleado-addon" name="empleado_id" onChange={handleChange} value={inscripcion.empleado_id}>
+                        <option value="0">Seleccione un Empleado...</option>
+                        {
+                          empleados.map((empleado, index) => {
+                            return (<option value={empleado.id} key={index}>
+                              {`${empleado.cedula}, ${empleado.nombre} ${empleado.apellido}, ${empleado.cargo}`}
+                            </option>)
+                          })
+                        }
+                      </select>
                     </div>
-                  </div>
-                  <div className="row">
-                    <div className="col-4">
-                      <label htmlFor="empleado-nombre" className="form-label">Nombre: </label>
-                      <input type="text" name="empleado.nombre" id="empleado-nombre" className="form-control" value={inscripcion.empleado.nombre} />
-                    </div>
-                    <div className="col-4">
-                      <label htmlFor="empleado-apellido" className="form-label">Apellido: </label>
-                      <input type="text" name="empleado.apellido" id="empleado-apellido" className="form-control" value={inscripcion.empleado.apellido} />
-                    </div>
-                    <div className="col-4">
-                      <label htmlFor="empleado-cargo" className="form-label">Cargo: </label>
-                      <input type="text" name="empleado.cargo" id="empleado-cargo" className="form-control" value={inscripcion.empleado.cargo} />
-                    </div>
-                  </div>
-                  <div className="row">
-                    <div className="col-4">
-                      <label className="form-label" htmlFor="periodoEscolar">Periodo Escolar</label>
-                      <div className="input-group mb-3">
-                        <select className="form-control" aria-label="emplaedo" id="periodoEscolar" aria-describedby="empleado-addon" name="periodoEscolar" onChange={handleChange} value={inscripcion.periodoEscolar}>
-                          <option value="0">Seleccione un Periodo Escolar...</option>
-                          {
-                            periodoEscolar.map((periodo, index) => {
-                              return (<option value={periodo.id} key={index}>
-                                {`${periodo.anio_ini}-${periodo.anio_fin}`}
-                              </option>)
-                            })
-                          }
-                        </select>
-                      </div>
-                      {errors.periodoEscolar ? <div className="invalid-feedback">{errors.periodoEscolar}</div> : null}
-                    </div>
-                    <div className="col-4">
-                      <label className="form-label" htmlFor="grado">Grado</label>
-                      <div className="input-group mb-3">
-                        <select className="form-control" aria-label="emplaedo" id="grado" aria-describedby="empleado-addon" name="grado" onChange={handleChange} value={inscripcion.grado}>
-                          <option value="0">Seleccione un Grado...</option>
-                          {
-                            grados.map((grado, index) => {
-                              return (<option value={grado.id} key={index}>{grado.grados}</option>)
-                            })
-                          }
-                        </select>
-                      </div>
-                      {errors.grado ? <div className="invalid-feedback">{errors.grado}</div> : null}
-                    </div>
-                    <div className="col-4">
-                      <label className="form-label" htmlFor="seccion">Seccion</label>
-                      <div className="input-group mb-3">
-                        <select className="form-control" aria-label="emplaedo" id="seccion" aria-describedby="empleado-addon" name="seccion" onChange={handleChange} value={inscripcion.seccion}>
-                          <option value="0">Seleccione una Seccion...</option>
-                          {
-                            secciones.map((seccion, index) => {
-                              return (<option value={seccion.id} key={index}>
-                                {seccion.secciones}
-                              </option>)
-                            })
-                          }
-                        </select>
-                      </div>
-                      {errors.seccion ? <div className="invalid-feedback">{errors.seccion}</div> : null}
-                    </div>
-                  </div>
-                  <div className="row">
-                    <div className="card-footer text-end pb-0" style={cardFooter}>
-                      <button type="button" className="btn bg-gradient-warning" data-bs-dismiss="modal" onClick={salir}>Close</button>
-                      <button type="button" className="btn bg-gradient-info" onClick={() => handleTabs('representante', 'inscripcion')} > Atras</button>
-                      {
-                        (valido)
-                          ? <button type="submit" className="btn bg-gradient-info" onClick={handleSubmit}>Inscribir</button>
-                          : <button type="submit" className="btn bg-gradient-info" disabled >Inscribir</button>
-                      }
-                    </div>
+                    {errors.respuesta ? <div className="invalid-feedback">{errors.respuesta}</div> : null}
                   </div>
                 </div>
+                <div className="row">
+                  <div className="col-4">
+                    <label htmlFor="empleado-nombre" className="form-label">Nombre: </label>
+                    <input type="text" name="empleado.nombre" id="empleado-nombre" className="form-control" value={inscripcion.empleado.nombre} />
+                  </div>
+                  <div className="col-4">
+                    <label htmlFor="empleado-apellido" className="form-label">Apellido: </label>
+                    <input type="text" name="empleado.apellido" id="empleado-apellido" className="form-control" value={inscripcion.empleado.apellido} />
+                  </div>
+                  <div className="col-4">
+                    <label htmlFor="empleado-cargo" className="form-label">Cargo: </label>
+                    <input type="text" name="empleado.cargo" id="empleado-cargo" className="form-control" value={inscripcion.empleado.cargo} />
+                  </div>
+                </div>
+                <div className="row">
+                  <div className="col-4">
+                    <label className="form-label" htmlFor="periodoEscolar">Periodo Escolar</label>
+                    <div className="input-group mb-3">
+                      <select className="form-control" aria-label="emplaedo" id="periodoEscolar" aria-describedby="empleado-addon" name="periodoEscolar" onChange={handleChange} value={inscripcion.periodoEscolar}>
+                        <option value="0">Seleccione un Periodo Escolar...</option>
+                        {
+                          periodoEscolar.map((periodo, index) => {
+                            return (<option value={periodo.id} key={index}>
+                              {`${periodo.anio_ini}-${periodo.anio_fin}`}
+                            </option>)
+                          })
+                        }
+                      </select>
+                    </div>
+                    {errors.periodoEscolar ? <div className="invalid-feedback">{errors.periodoEscolar}</div> : null}
+                  </div>
+                  <div className="col-4">
+                    <label className="form-label" htmlFor="grado">Grado</label>
+                    <div className="input-group mb-3">
+                      <select className="form-control" aria-label="emplaedo" id="grado" aria-describedby="empleado-addon" name="grado" onChange={handleChange} value={inscripcion.grado}>
+                        <option value="0">Seleccione un Grado...</option>
+                        {
+                          grados.map((grado, index) => {
+                            return (<option value={grado.id} key={index}>{grado.grados}</option>)
+                          })
+                        }
+                      </select>
+                    </div>
+                    {errors.grado ? <div className="invalid-feedback">{errors.grado}</div> : null}
+                  </div>
+                  <div className="col-4">
+                    <label className="form-label" htmlFor="seccion">Seccion</label>
+                    <div className="input-group mb-3">
+                      <select className="form-control" aria-label="emplaedo" id="seccion" aria-describedby="empleado-addon" name="seccion" onChange={handleChange} value={inscripcion.seccion}>
+                        <option value="0">Seleccione una Seccion...</option>
+                        {
+                          secciones.map((seccion, index) => {
+                            return (<option value={seccion.id} key={index}>
+                              {seccion.secciones}
+                            </option>)
+                          })
+                        }
+                      </select>
+                    </div>
+                    {errors.seccion ? <div className="invalid-feedback">{errors.seccion}</div> : null}
+                  </div>
+                </div>
+                <div className="row">
+                  <div className="card-footer text-end pb-0" style={cardFooter}>
+                    <button type="button" className="btn bg-gradient-warning" data-bs-dismiss="modal" onClick={salir}>Close</button>
+                    <button type="button" className="btn bg-gradient-info" onClick={() => handleTabs('representante', 'inscripcion')} > Atras</button>
+                    {
+                      (valido)
+                        ? <button type="submit" className="btn bg-gradient-info" onClick={handleSubmit}>Inscribir</button>
+                        : <button type="submit" className="btn bg-gradient-info" disabled >Inscribir</button>
+                    }
+                  </div>
+                </div>
+              </div>
             </form>
           </div>
         </div>
@@ -661,4 +661,5 @@ const FormInscripcion = () => {
     </div>
   )
 }
+
 export default FormInscripcion
