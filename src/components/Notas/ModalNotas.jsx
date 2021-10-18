@@ -3,7 +3,7 @@ import PropTypes from 'prop-types'
 import { useNotasEstudiante } from '../../hooks/useNotasEstudiante'
 import { getNotasEstudiante, getNotas, createNotaEstudiante, updateNotasEstudiante } from '../../services/notas'
 
-const ModalNotas = ({ id, setRegistro, changeId, grupoId }) => {
+const ModalNotas = ({ id, materia, setRegistro, changeId, changeMateria, grupoId }) => {
   const [estudiante, setEstudiante] = useState('')
   const primerLapso = useNotasEstudiante({ type: 'number', name: 'primerLapso', lapso: 1 })
   const segundoLapso = useNotasEstudiante({ type: 'number', name: 'segundoLapso', lapso: 2 })
@@ -26,7 +26,7 @@ const ModalNotas = ({ id, setRegistro, changeId, grupoId }) => {
       }).then(response => {
         clean()
         console.log(response)
-        getNotas(grupoId).then(response => {
+        getNotas(grupoId, materia).then(response => {
           console.log(response.data)
           setRegistro(response.data)
         })
@@ -41,7 +41,7 @@ const ModalNotas = ({ id, setRegistro, changeId, grupoId }) => {
       }).then(response => {
         clean()
         console.log(response)
-        getNotas(grupoId).then(response => {
+        getNotas(grupoId, materia).then(response => {
           setRegistro(response.data)
         })
       })
@@ -58,17 +58,19 @@ const ModalNotas = ({ id, setRegistro, changeId, grupoId }) => {
 
   useEffect(() => {
     if (id !== 0) {
-      getNotasEstudiante(id)
+      getNotasEstudiante(id, materia)
         .then(response => {
           console.log(response)
           return response.data
         })
         .then(data => {
           console.log(data)
-          setEstudiante(`${data.nombre} ${data.apellido}`)
-          primerLapso.setInit(data.notas[0])
-          segundoLapso.setInit(data.notas[1])
-          tercerLapso.setInit(data.notas[2])
+          const { nombre, apellido, notas } = data
+          const [initPrimerLapso, initSegundoLapso, initTercerLaso] = notas
+          setEstudiante(`${nombre} ${apellido}`)
+          primerLapso.setInit(initPrimerLapso)
+          segundoLapso.setInit(initSegundoLapso)
+          tercerLapso.setInit(initTercerLaso)
         })
     }
   }, [id])
@@ -78,13 +80,13 @@ const ModalNotas = ({ id, setRegistro, changeId, grupoId }) => {
       <div className="modal-dialog">
         <div className="modal-content">
           <div className="modal-header">
-            <h3 className="modal-title font-weight-bolder text-info text-gradient" id="staticBackdropLabel">Municipio</h3>
+            <h3 className="modal-title font-weight-bolder text-info text-gradient" id="staticBackdropLabel">Notas</h3>
             <button type="button" className="btn-close" data-bs-dismiss="modal" aria-label="Close" onClick={clean}></button>
           </div>
           <div className="modal-body">
             <form role="form text-left">
               <div className="row">
-                <label htmlFor="estudiante">Asitio: </label>
+                <label htmlFor="estudiante">Estudiante: </label>
                 <div className="input-group mb-3">
                   <input name="estudiante" id="estudiante" value={estudiante} className="form-control" readOnly />
                 </div>
@@ -100,8 +102,7 @@ const ModalNotas = ({ id, setRegistro, changeId, grupoId }) => {
                     <input {...segundoLapso} id="segundoLapso" className="form-control" />
                   </div>
                 </div>
-                <div className="row">
-                  <label htmlFor="asistio">Tercer Lapso: </label>
+                <div className="row"> <label htmlFor="asistio">Tercer Lapso: </label>
                   <div className="input-group mb-3">
                     <input {...tercerLapso} id="asistio" className="form-control" />
                   </div>
@@ -111,7 +112,7 @@ const ModalNotas = ({ id, setRegistro, changeId, grupoId }) => {
           </div>
           <div className="modal-footer">
             <button type="button" className="btn bg-gradient-warning" data-bs-dismiss="modal" onClick={clean}>Close</button>
-            <button type="submit" className="btn bg-gradient-info" onClick={handleSubmit}>Guardar</button>
+            <button type="submit" className="btn bg-gradient-info" data-bs-dismiss="modal" onClick={handleSubmit}>Guardar</button>
           </div>
         </div>
       </div>
@@ -121,8 +122,10 @@ const ModalNotas = ({ id, setRegistro, changeId, grupoId }) => {
 
 ModalNotas.propTypes = {
   id: PropTypes.number,
+  materia: PropTypes.number,
   setRegistro: PropTypes.func,
   changeId: PropTypes.func,
+  changeMateria: PropTypes.func,
   grupoId: PropTypes.number
 }
 

@@ -38,10 +38,11 @@ export const getGrupo = (id) => {
  * getNotas.
  *
  * @param {number|string} id
+ * @param {number|string} materia
  * @return {Promise}
  */
-export const getNotas = (id) => {
-  const options = getToken('GET', `http://localhost:8000/api/notas/notas/${id}`)
+export const getNotas = (id, materia) => {
+  const options = getToken('GET', `http://localhost:8000/api/notas/notas/${id}/${materia}`)
   return axios.request(options)
 }
 
@@ -49,10 +50,11 @@ export const getNotas = (id) => {
  * getNotasEstudiante.
  *
  * @param {number|string} id
+ * @param {number|string} materia
  * @return {Promise}
  */
-export const getNotasEstudiante = (id) => {
-  const options = getToken('GET', `http://localhost:8000/api/notas/estudiante/${id}`)
+export const getNotasEstudiante = (id, materia) => {
+  const options = getToken('GET', `http://localhost:8000/api/notas/estudiante/${id}/${materia}`)
   return axios.request(options)
 }
 

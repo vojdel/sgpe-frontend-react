@@ -1,5 +1,3 @@
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faPlus } from '@fortawesome/free-solid-svg-icons'
 import { useEffect, useState } from 'react'
 import { getAll } from '../../services/notas.js'
 import TablaNotasGrupo from './TablaNotasGrupo'
@@ -11,6 +9,7 @@ const Notas = () => {
       id: 0,
       periodo_escolar: 'Cargando',
       materia: ' Registros',
+      materia_id: 0,
       grado: '',
       seccion: ''
     }

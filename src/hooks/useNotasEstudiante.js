@@ -2,7 +2,7 @@ import { useState } from 'react'
 
 export const useNotasEstudiante = ({ type, name, lapso }) => {
   const init = {
-    id: 0, estudiante_id: 0, valor: 0, lapso: lapso
+    id: 0, estudiante_id: 0, valor: 0, lapso: lapso, materia: 0
   }
 
   const [field, setField] = useState(init)
@@ -29,7 +29,7 @@ export const useNotasEstudiante = ({ type, name, lapso }) => {
 
   const data = () => {
     return {
-      id: field.id, estudiante_id: field.estudiante_id, valor: field.valor, lapso: lapso
+      id: field.id, estudiante_id: field.estudiante_id, valor: field.valor, lapso: lapso, materia: field.materia
     }
   }
 

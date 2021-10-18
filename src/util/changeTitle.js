@@ -44,6 +44,12 @@ export const changeTitle = (ruta) => {
     case '/periodoescolar':
       result = 'Periodo Escolar'
       break
+    case '/notas':
+      result = 'Notas'
+      break
+    case '/notas/grupo/*/*':
+      result = 'Editar Notas'
+      break
   }
   return result
 }

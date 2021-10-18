@@ -11,11 +11,11 @@ const TablaNotasGrupo = ({ nombres, datas, changeRegistro, changeId }) => {
    *
    * @param {any} event
    * @param {string} id
+   * @param {string} materia
    */
-  const handleNotas = (event, id) => {
+  const handleNotas = (event, id, materia) => {
     event.preventDefault()
-    window.localStorage.setItem('notas_grupo', id)
-    history.push(`/notas/grupo/${id}`)
+    history.push(`/notas/grupo/${id}/${materia}`)
   }
 
   /**
@@ -55,39 +55,43 @@ const TablaNotasGrupo = ({ nombres, datas, changeRegistro, changeId }) => {
                       <div className="text-xs font-weight-bold mb-0 text-center">{data.id}</div>
                     </td>
                     <td>
-                      <div className="text-xs font-weight-bold mb-0">{data.periodo_escolar}</div>
+                      <div className="text-xs font-weight-bold mb-0">{data.anio_ini}-{data.anio_fin}</div>
                     </td>
                     <td>
                       <div className="text-xs font-weight-bold mb-0">{data.materia}</div>
                     </td>
                     <td>
-                      <div className="text-xs font-weight-bold mb-0">{data.grado}</div>
+                      <div className="text-xs font-weight-bold mb-0">{data.grados}</div>
                     </td>
                     <td>
-                      <div className="text-xs font-weight-bold mb-0">{data.seccion}</div>
+                      <div className="text-xs font-weight-bold mb-0">{data.secciones}</div>
                     </td>
-                    <td className="align-middle w-25 text-center">
-                      <button className="btn btn-icon btn-2 btn-warning" type="button" data-toggle="tooltip" data-original-title="Edit user" data-bs-toggle="modal" data-bs-target="#staticBackdrop" onClick={(event) => {
-                        event.preventDefault()
-                        changeId(data.id)
-                      }}>
-                        <span className="btn-inner--icon">
-                          <FontAwesomeIcon icon={faPenAlt} />
-                        </span>
-                      </button>
-                      <button className="btn btn-icon btn-2 btn-success mx-3" type="button"
-                        onClick={(event) => { handleNotas(event, data.id) }}>
-                        <span className="btn-inner--icon">
-                          <FontAwesomeIcon icon={faFolderOpen} />
-                        </span>
-                      </button>
-                      <button className="btn btn-icon btn-2 btn-danger mx-3" type="button"
-                        onClick={(event) => { handleDelete(event, data.id) }}>
-                        <span className="btn-inner--icon">
-                          <FontAwesomeIcon icon={faTrashAlt} />
-                        </span>
-                      </button>
-                    </td>
+                    {
+                      (data.id !== 0)
+                        ? <td className="align-middle w-25 text-center">
+                          <button className="btn btn-icon btn-2 btn-warning mb-0" type="button" data-toggle="tooltip" data-original-title="Edit user" data-bs-toggle="modal" data-bs-target="#staticBackdrop" onClick={(event) => {
+                            event.preventDefault()
+                            changeId(data.id)
+                          }}>
+                            <span className="btn-inner--icon">
+                              <FontAwesomeIcon icon={faPenAlt} />
+                            </span>
+                          </button>
+                          <button className="btn btn-icon btn-2 btn-success mx-3 mb-0" type="button"
+                            onClick={(event) => { handleNotas(event, data.id, data.materia_id) }}>
+                            <span className="btn-inner--icon">
+                              <FontAwesomeIcon icon={faFolderOpen} />
+                            </span>
+                          </button>
+                          <button className="btn btn-icon btn-2 btn-danger mx-3 mb-0" type="button"
+                            onClick={(event) => { handleDelete(event, data.id) }}>
+                            <span className="btn-inner--icon">
+                              <FontAwesomeIcon icon={faTrashAlt} />
+                            </span>
+                          </button>
+                        </td>
+                        : ''
+                    }
                   </tr>
                 )
               })

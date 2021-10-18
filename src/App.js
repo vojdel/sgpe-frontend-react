@@ -111,7 +111,7 @@ function App () {
               <Route path="/inscripcion/form" component={FormInscripcion} exact />
               <Route path="/asistencia" component={Asistencia} exact />
               <Route path="/notas" component={Notas} exact />
-              <Route path="/notas/grupo/:grupoId" component={NotasEstudiante} exact />
+              <Route path="/notas/grupo/:grupoId/:materiaId" component={NotasEstudiante} exact />
 
               <Route path="/logout" exact>
                 <Logout />
