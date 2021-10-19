@@ -1,14 +1,15 @@
-import './App.css'
 import 'bootstrap/dist/css/bootstrap.min.css'
 import React, { Suspense, lazy, useState } from 'react'
 import { Route, BrowserRouter as Router, Switch } from 'react-router-dom'
 import Siderbar from './components/layout/Siderbar'
 import Navbar from './components/layout/Navbar'
-import Footer from './components/layout/Footer'
+import './App.css'
+// import Footer from './components/layout/Footer'
 
 const Municipio = lazy(() => import('./components/Municipio/Municipio'))
 const Estado = lazy(() => import('./components/Estado/Estado'))
 const PageNotFound = lazy(() => import('./components/PageNoFound'))
+const Home = lazy(() => import('./components/Home'))
 const Dashboard = lazy(() => import('./components/Dashboard'))
 const Login = lazy(() => import('./components/Login/Login'))
 const SignUp = lazy(() => import('./components/Registrar/Registrar'))
@@ -20,6 +21,7 @@ const Cargo = lazy(() => import('./components/Cargo/Cargo'))
 const Grado = lazy(() => import('./components/Grado/Grado'))
 const Seccion = lazy(() => import('./components/Seccion/Seccion'))
 const Materia = lazy(() => import('./components/Materia/Materia'))
+const OcupacionLaboral = lazy(() => import('./components/OcupacionLaboral/OcupacionLaboral'))
 const Usuario = lazy(() => import('./components/Usuario/Usuario'))
 const Logout = lazy(() => import('./components/layout/logout'))
 const PeriodoEscolar = lazy(() => import('./components/PeriodoEscolar/PeriodoEscolar'))
@@ -89,7 +91,7 @@ function App () {
           {isLogin()}
           <Suspense fallback={<div className="spinner"></div>}>
             <Switch>
-              <Route path="/" component={Dashboard} exact />
+              <Route path="/" component={Home} exact />
               <Route path="/signin" exact>
                 <Login />
               </Route>
@@ -104,6 +106,7 @@ function App () {
               <Route path="/grado" component={Grado} exact />
               <Route path="/seccion" component={Seccion} exact />
               <Route path="/materia" component={Materia} exact />
+              <Route path="/ocupacionlaboral" component={OcupacionLaboral} exact />
               <Route path="/periodoescolar" component={PeriodoEscolar} exact />
               <Route path="/usuario" component={Usuario} exact />
               { /* Procesos */}
@@ -113,13 +116,13 @@ function App () {
               <Route path="/notas" component={Notas} exact />
               <Route path="/notas/grupo/:grupoId/:materiaId" component={NotasEstudiante} exact />
 
+              <Route path="/dashboard" component={Dashboard} exact />
               <Route path="/logout" exact>
                 <Logout />
               </Route>
               <Route component={PageNotFound} />
             </Switch>
           </Suspense>
-          <Footer />
         </main>
       </Router>
     </div>

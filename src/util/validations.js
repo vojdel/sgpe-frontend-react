@@ -73,6 +73,8 @@ export const cleanForm = (setData, initialData, setErrors, initialError, form) =
   setErrors(initialError)
   const formulario = document.querySelector('form').elements
   form.forEach(name => {
+    // console.clear()
+    console.log(name)
     if (formulario[name].classList.contains('is-valid') || formulario[name].classList.contains('is-invalid')) {
       formulario[name].classList.remove('is-invalid', 'is-valid')
     }

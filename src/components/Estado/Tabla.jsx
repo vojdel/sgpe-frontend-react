@@ -8,8 +8,8 @@ const Tabla = ({ nombres, datas, changeRegistro, changeId }) => {
     event.preventDefault()
     destroy(id, 'estado').then(data => {
       console.log(data)
-      getAll('estado').then(data => {
-        changeRegistro(data)
+      getAll('estado').then(response => {
+        changeRegistro(response.data)
       })
     })
   }

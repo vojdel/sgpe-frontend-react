@@ -90,7 +90,11 @@ const FormPersonal = ({ id, setRegistro, changeId }) => {
 
   useEffect(() => {
     if (id !== 0) {
-      getOne(id, 'empleado').then(data => setPersonal(data[0]))
+      getOne(id, 'empleado').then(data => {
+        setPersonal(data[0])
+        setValido(true)
+        setValidoNext(true)
+      })
     }
   }, [id])
 
@@ -215,12 +219,16 @@ const FormPersonal = ({ id, setRegistro, changeId }) => {
     hiddenContent.classList.add('d-none')
   }
 
-  useEffect(async () => {
+  const handleErrors = async () => {
     // const validacion = esValido(nameOfForm, errors)
     const validacionNext = await yup.object().shape(PersonalNextSchema).isValid(personal)
     setValidoNext(validacionNext)
     const validacion = await yup.object().shape(PersonalSchema).isValid(personal)
     setValido(validacion)
+  }
+
+  useEffect(() => {
+    handleErrors()
   }, [errors])
 
   return (
@@ -294,7 +302,7 @@ const FormPersonal = ({ id, setRegistro, changeId }) => {
                           })
                         }
                       </select>
-                        {errors.states ? <div className="invalid-feedback">{errors.states}</div> : null}
+                      {errors.states ? <div className="invalid-feedback">{errors.states}</div> : null}
                     </div>
                   </div>
                   <div className="col-md-6 col-12 d-inline-block">
@@ -319,11 +327,11 @@ const FormPersonal = ({ id, setRegistro, changeId }) => {
                 </div>
                 <div className="modal-footer">
                   <button type="button" className="btn bg-gradient-warning" data-bs-dismiss="modal" onClick={clean}>Close</button>
-    {
-      (validoNext)
-        ? <button type="button" className="btn bg-gradient-info" onClick={() => handleTabs('profile', 'home')} > Continuar</button>
-        : <button type="button" className="btn bg-gradient-info" disabled> Continuar</button>
-    }
+                  {
+                    (validoNext)
+                      ? <button type="button" className="btn bg-gradient-info" onClick={() => handleTabs('profile', 'home')} > Continuar</button>
+                      : <button type="button" className="btn bg-gradient-info" disabled> Continuar</button>
+                  }
                 </div>
               </div>
 

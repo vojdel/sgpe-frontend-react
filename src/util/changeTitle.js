@@ -38,11 +38,23 @@ export const changeTitle = (ruta) => {
     case '/materia':
       result = 'Materia'
       break
+    case '/ocupacionlaboral':
+      result = 'Ocupacion Laboral'
+      break
     case '/usuario':
       result = 'Usuario'
       break
     case '/periodoescolar':
       result = 'Periodo Escolar'
+      break
+    case '/inscripcion':
+      result = 'Inscripciones'
+      break
+    case '/inscripcion/form/':
+      result = 'Inscribiendo Estudiante'
+      break
+    case '/asistencia':
+      result = 'Asistencias'
       break
     case '/notas':
       result = 'Notas'

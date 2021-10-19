@@ -72,8 +72,8 @@ const FormInscripcion = () => {
   }
 
   const nameOfForm = [
-    'estudiante_id',
-    'representante_id',
+    'estudiante_cedula',
+    'representante_cedula',
     'empleado_id',
     'periodoEscolar',
     'seccion',
@@ -243,6 +243,7 @@ const FormInscripcion = () => {
   }
 
   const clean = () => {
+    handleTabs('inscripcion', 'estudiante')
     cleanForm(setInscripcion, initialInscripcion, setErrors, initialError, nameOfForm)
     window.localStorage.removeItem('inscripcion_id')
     setId(0)
@@ -253,7 +254,6 @@ const FormInscripcion = () => {
       setValidoNext(false)
       setValidoNextTwo(false)
     }, 1000)
-    handleTabs('inscripcion', 'estudiante')
   }
 
   const handleEstudiante = (event) => {
@@ -263,12 +263,19 @@ const FormInscripcion = () => {
       console.log(response.data)
       return response.data
     }).then(data => {
-      setInscripcion({
-        ...inscripcion,
-        estudiante_id: data.id,
-        estudiante: data
-      })
-      setValidoNext(true)
+      if (data) {
+        setInscripcion({
+          ...inscripcion,
+          estudiante_id: data.id,
+          estudiante: data
+        })
+        setValidoNext(true)
+      } else {
+        setErrors({
+          ...errors,
+          estudiante_id: 'No existe ningun estudiante con esa cedula'
+        })
+      }
     }).catch(error => {
       console.log({ error })
       setErrors({
@@ -285,12 +292,19 @@ const FormInscripcion = () => {
       console.log(response.data)
       return response.data
     }).then(data => {
-      setInscripcion({
-        ...inscripcion,
-        representante_id: data.id,
-        representante: data
-      })
-      setValidoNextTwo(true)
+      if (data) {
+        setInscripcion({
+          ...inscripcion,
+          representante_id: data.id,
+          representante: data
+        })
+        setValidoNextTwo(true)
+      } else {
+        setErrors({
+          ...errors,
+          representante_id: 'No existe ningun representante con esa cedula'
+        })
+      }
     }).catch(error => {
       console.log({ error })
       setErrors({
@@ -448,7 +462,7 @@ const FormInscripcion = () => {
                   <div className="col-8">
                     <label htmlFor="estudiante-descripcion" className="form-label">Descripción: </label>
                     <div className="input-group mb-3">
-                      <textarea className="form-control" id="estudiante-descripcion" placeholder="Escribe la Descripción aqui..." aria-label="Descripcion" aria-describedby="descripcion-addon" name="estudiante.descripcion" value={inscripcion.estudiante.descripcion} ></textarea>
+                      <textarea className="form-control" id="estudiante-descripcion" placeholder="Escribe la Descripción aqui..." aria-label="Descripcion" aria-describedby="descripcion-addon" name="estudiante.descripcion" value={inscripcion.estudiante.descripcion} readOnly ></textarea>
                     </div>
                   </div>
                   <div className="col-2">
@@ -490,7 +504,7 @@ const FormInscripcion = () => {
                   <div className="col-4">
                     <label className="form-label" htmlFor="seccion">Parentesco</label>
                     <div className="input-group mb-3">
-                      <select className="form-control" aria-label="emplaedo" id="seccion" aria-describedby="empleado-addon" name="parentesco" onChange={handleChange} value={inscripcion.parentesco} disabled={(inscripcion.representante_id === 0)}>
+                      <select className="form-control" aria-label="emplaedo" id="parentesco" aria-describedby="empleado-addon" name="parentesco" onChange={handleChange} value={inscripcion.parentesco} disabled={(inscripcion.representante_id === 0)}>
                         <option value="0">Seleccione El parentesco con el estudiante...</option>
                         {
                           parentescos.map((parentesco, index) => {

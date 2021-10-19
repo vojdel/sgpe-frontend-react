@@ -42,6 +42,7 @@ const FormSeccion = ({ id, setRegistro, changeId }) => {
           secciones: data.secciones,
           grado: data.grado
         })
+        setValido(true)
       })
     }
   }, [id])

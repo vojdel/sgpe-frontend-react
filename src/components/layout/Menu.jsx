@@ -9,6 +9,9 @@ import { meUser } from '../../services/login'
 const Menu = ({ handleSiderHidden, handleMenu, titulo }) => {
   const [userName, setUserName] = useState('')
   const history = useHistory()
+  const titulos = [
+    'Inscripciones', 'Inscribiendo Estudiante', 'Notas', 'Asistencias'
+  ]
   useEffect(() => {
     if (window.localStorage.getItem('loggedUser')) {
       meUser().then(data => {
@@ -32,10 +35,14 @@ const Menu = ({ handleSiderHidden, handleMenu, titulo }) => {
         <nav aria-label="breadcrumb">
           <ol className="breadcrumb bg-transparent mb-0 pb-0 pt-1 px-0 me-sm-6 me-5">
             <li className="breadcrumb-item text-sm">
-              <a href="#" className="opacity-5 text-white">Maestros</a>
+              <a href="#" className="opacity-5 text-white text-decoration-none font-weight-bolder">{
+                (titulos.includes(titulo))
+                  ? 'Procesos'
+                  : 'Maestros'
+              }</a>
             </li>
             <li className="breadcrumb-item text-sm">
-              <Link to="/dashboard" className="opacity-5 text-white active" aria-current="page">{titulo}</Link>
+              <Link to="/" className="opacity-5 text-white text-decoration-none active font-weight-bolder" aria-current="page">{titulo}</Link>
             </li>
           </ol>
           <h6 className="font-weight-bolder mb-0 text-white">{titulo}</h6>

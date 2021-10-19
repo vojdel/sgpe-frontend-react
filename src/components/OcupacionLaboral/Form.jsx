@@ -23,7 +23,10 @@ const Form = ({ id, setRegistro, changeId }) => {
 
   useEffect(() => {
     if (id !== 0) {
-      getOne(id, 'ocupacionlaboral').then(data => setOcupacionLaboral(data))
+      getOne(id, 'ocupacionlaboral').then(data => {
+        setOcupacionLaboral(data)
+        setValido(true)
+      })
     }
   }, [id])
 
@@ -31,9 +34,8 @@ const Form = ({ id, setRegistro, changeId }) => {
     * Manejar input ocupacionlaboral
     * @param {any} event
     * */
-  const handleOcupacionLaboral = ({ preventDefault, target }) => {
+  const handleOcupacionLaboral = ({ target }) => {
     const { name, value, classList } = target
-    preventDefault()
     setOcupacionLaboral({
       ...ocupacionLaboral,
       [name]: value
@@ -81,8 +83,9 @@ const Form = ({ id, setRegistro, changeId }) => {
   }
 
   const handleErrors = async () => {
-    const validacion = await OcupacionLaboralSchema.isValid(ocupacionLaboral)
+    const validacion = await OcupacionLaboralSchema.isValid(ocupacionLaboral.labor)
     setValido(validacion)
+    console.log(validacion)
   }
 
   useEffect(() => {

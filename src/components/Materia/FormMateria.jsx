@@ -28,6 +28,7 @@ const FormMateria = ({ id, setRegistro, changeId }) => {
           id: data.id,
           materia: data.nombre
         })
+        setValido(true)
       })
     }
   }, [id])

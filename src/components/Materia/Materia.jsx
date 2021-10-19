@@ -31,7 +31,14 @@ const Materia = () => {
         console.log(response.data)
         return response.data
       }).then(data => {
-        setMateria(data)
+        if (data.length !== 0) {
+          setMateria(data)
+        } else {
+          setMateria([{
+            id: 0,
+            nombre: 'No hay materias registradas'
+          }])
+        }
       })
       .catch(() => {
         setMateria([
@@ -48,7 +55,14 @@ const Materia = () => {
       console.log(response.data)
       return response.data
     }).then((data) => {
-      setMateria(data)
+      if (data.length !== 0) {
+        setMateria(data)
+      } else {
+        setMateria([{
+          id: 0,
+          nombre: 'No hay materias registradas'
+        }])
+      }
       console.log(data)
     }).catch(() => {
       setMateria([

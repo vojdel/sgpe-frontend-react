@@ -30,6 +30,7 @@ const FormCargo = ({ id, setRegistro, changeId }) => {
           id: data.id,
           cargos: data.cargos
         })
+        setValido(true)
       })
     }
   }, [id])

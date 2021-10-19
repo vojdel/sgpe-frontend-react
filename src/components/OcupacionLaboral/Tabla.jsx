@@ -6,10 +6,10 @@ import { getAll, destroy } from '../../services/service.js'
 const Tabla = ({ nombres, datas, changeRegistro, changeId }) => {
   const handleDelete = (event, id) => {
     event.preventDefault()
-    destroy(id, 'ocupacionlaboral').then(data => {
-      console.log(data)
-      getAll('ocupacionlaboral').then(data => {
-        changeRegistro(data)
+    destroy(id, 'ocupacionlaboral').then(response => {
+      console.log(response)
+      getAll('ocupacionlaboral').then(response => {
+        changeRegistro(response.data)
       })
     })
   }

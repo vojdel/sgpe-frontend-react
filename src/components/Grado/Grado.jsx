@@ -31,7 +31,16 @@ const Grado = () => {
         console.log(response.data)
         return response.data
       }).then(data => {
-        setGrado(data)
+        if (data.length !== 0) {
+          setGrado(data)
+        } else {
+          setGrado([
+            {
+              id: 0,
+              grados: 'No existen Registros'
+            }
+          ])
+        }
       })
       .catch(() => {
         setGrado([
@@ -48,7 +57,16 @@ const Grado = () => {
       console.log(response.data)
       return response.data
     }).then((data) => {
-      setGrado(data)
+      if (data.length !== 0) {
+        setGrado(data)
+      } else {
+        setGrado([
+          {
+            id: 0,
+            grados: 'No existen Registros'
+          }
+        ])
+      }
       console.log(data)
     }).catch(() => {
       setGrado([

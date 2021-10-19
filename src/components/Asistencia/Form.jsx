@@ -8,7 +8,7 @@ const Form = ({ asistencia, errors, empleados, valido, id, handleChange, handleS
           <div className="col-12 d-inline-block">
             <label className="form-label" htmlFor="empleado_id">Cedula</label>
             <div className="input-group mb-3">
-              <select className="form-control" aria-label="emplaedo" id="empleado_id" aria-describedby="empleado-addon" name="empleado_id" onChange={handleChange} value={asistencia.empleado_id}>
+              <select className="form-control" aria-label="emplaedo" id="empleado_id" aria-describedby="empleado-addon" name="empleado_id" onChange={handleChange} value={asistencia.empleado_id} disabled={(id !== 0)}>
                 <option value="0">Seleccione un Empleado...</option>
                 {
                   empleados.map((empleado, index) => {
@@ -26,7 +26,7 @@ const Form = ({ asistencia, errors, empleados, valido, id, handleChange, handleS
           <div className="col">
             <label>Fecha:</label>
             <div className="input-group mb-3">
-              <input type="date" className="form-control" placeholder="Escribe el states aqui..." aria-label="Estado" aria-describedby="states-addon" name="fecha" onChange={handleChange} value={asistencia.fecha} disabled={(id === 0)} />
+              <input type="date" className="form-control" aria-label="Estado" aria-describedby="states-addon" name="fecha" onChange={handleChange} value={asistencia.fecha} disabled={(id === 0)} />
             </div>
             {errors.fecha ? <div className="text-danger">{errors.fecha}</div> : null}
           </div>
@@ -45,7 +45,7 @@ const Form = ({ asistencia, errors, empleados, valido, id, handleChange, handleS
           <div className="col">
             <label>Motivo:</label>
             <div className="input-group mb-3">
-              <input type="text" className="form-control" placeholder="Escribe el states aqui..." aria-label="Estado" aria-describedby="states-addon" name="motivo" value={asistencia.motivo} onChange={handleChange} />
+              <input type="text" className="form-control" placeholder="Escribe el motivo de la inasistencia aqui..." aria-label="Estado" aria-describedby="states-addon" name="motivo" value={asistencia.motivo} onChange={handleChange} disabled={asistencia.asistio} />
             </div>
             {errors.motivo ? <div className="text-danger">{errors.motivo}</div> : null}
           </div>

@@ -31,7 +31,10 @@ const Form = ({ id, setRegistro, changeId }) => {
 
   useEffect(() => {
     if (id !== 0) {
-      getOne(id, 'municipio').then(data => setMunicipio(data[0]))
+      getOne(id, 'municipio').then(data => {
+        setMunicipio(data[0])
+        setValido(true)
+      })
     }
   }, [id])
 
@@ -129,8 +132,12 @@ const Form = ({ id, setRegistro, changeId }) => {
           <div className="modal-footer">
             <button type="button" className="btn bg-gradient-warning" data-bs-dismiss="modal" onClick={clean}>Close</button>
             {(valido)
-              ? <button type="submit" className="btn bg-gradient-info" onClick={handleSubmit}>Registrar</button>
-              : <button type="button" className="btn bg-gradient-info" disabled>Registrar</button>
+              ? <button type="submit" className="btn bg-gradient-info" onClick={handleSubmit}>
+                {(id === 0) ? 'Registrar' : 'Editar'}
+              </button>
+              : <button type="button" className="btn bg-gradient-info" disabled>
+                {(id === 0) ? 'Registrar' : 'Editar'}
+              </button>
             }
           </div>
         </div>

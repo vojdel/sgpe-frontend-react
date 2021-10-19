@@ -31,8 +31,19 @@ const Seccion = () => {
       .then(function (response) {
         console.log(response.data)
         return response.data
-      }).then(data => {
-        setSeccion(data)
+      })
+      .then(data => {
+        if (data.length !== 0) {
+          setSeccion(data)
+        } else {
+          setSeccion([
+            {
+              id: 1,
+              secciones: 'No existen ',
+              grados: 'Registros'
+            }
+          ])
+        }
       })
       .catch(() => {
         setSeccion([
@@ -50,7 +61,17 @@ const Seccion = () => {
       console.log(response.data)
       return response.data
     }).then((data) => {
-      setSeccion(data)
+      if (data.length !== 0) {
+        setSeccion(data)
+      } else {
+        setSeccion([
+          {
+            id: 1,
+            secciones: 'No existen ',
+            grados: 'Registros'
+          }
+        ])
+      }
       console.log(data)
     }).catch(() => {
       setSeccion([

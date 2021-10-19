@@ -11,7 +11,7 @@ const Estudiante = () => {
   const initialEstudiante = [
     {
       id: 0,
-      nombre: 'Jose Daniel Vasquez Pineda'
+      nombre: 'Cargando Registros'
     }
   ]
 

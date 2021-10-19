@@ -78,7 +78,10 @@ const FormRepresentante = ({ id, setRegistro, changeId }) => {
 
   useEffect(() => {
     if (id !== 0) {
-      getOne(id, 'representante').then(data => setRepresentante(data[0]))
+      getOne(id, 'representante').then(data => {
+        setRepresentante(data[0])
+        setValido(true)
+      })
     }
   }, [id])
 

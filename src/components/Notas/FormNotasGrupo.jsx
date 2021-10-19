@@ -46,7 +46,12 @@ const FormNotasGrupo = ({ id, setRegistro, changeId }) => {
 
   useEffect(() => {
     if (id !== 0) {
-      getGrupo(id).then(data => setNotas(data))
+      getGrupo(id).then(data => {
+        setNotas(data)
+      }).catch(err => {
+        console.log(err)
+        setNotas(initlaNotasGrupo)
+      })
     }
   }, [id])
 
@@ -110,9 +115,20 @@ const FormNotasGrupo = ({ id, setRegistro, changeId }) => {
 
   useEffect(() => {
     getAllEmpleados().then(response => setEmpleados(response.data))
-    getAllGrados().then(response => setGrados(response.data))
-    getAllPeriodoEscolares().then(response => setPeriodoEscolar(response.data))
-    getAllMateria().then(response => setMaterias(response.data))
+    getAllGrados().then(response => setGrados(response.data)).catch(() => setGrados([{ id: 0, grados: '' }]))
+    getAllPeriodoEscolares().then(response => setPeriodoEscolar(response.data)).catch(() => {
+      setPeriodoEscolar([{
+        id: 0,
+        anio_ini: '',
+        anio_fin: ''
+      }])
+    })
+    getAllMateria().then(response => setMaterias(response.data)).catch(() => {
+      setMaterias([{
+        id: 0,
+        nombre: ''
+      }])
+    })
   }, [])
 
   useEffect(() => {

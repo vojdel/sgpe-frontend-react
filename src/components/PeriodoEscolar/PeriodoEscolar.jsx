@@ -4,7 +4,6 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faPlus } from '@fortawesome/free-solid-svg-icons'
 import Form from './Form'
 import Tabla from './Tabla'
-import { isEmptyArray } from 'formik'
 
 const Municipio = () => {
   const nombres = ['id', 'Periodo Escolar', 'action']
@@ -29,13 +28,23 @@ const Municipio = () => {
         console.log(response.data)
         return response.data
       }).then(data => {
-        setPeriodoEscolar(data)
+        if (data.length !== 0) {
+          setPeriodoEscolar(data)
+        } else {
+          setPeriodoEscolar([
+            {
+              id: 0,
+              anio_ini: 'No hay',
+              anio_fin: 'Registros'
+            }
+          ])
+        }
       })
       .catch(() => {
         setPeriodoEscolar([
           {
             id: 0,
-            anio_ini: 'Cargando',
+            anio_ini: 'No hay',
             anio_fin: 'Registros'
           }
         ])
@@ -46,7 +55,7 @@ const Municipio = () => {
     getAll('periodoescolar').then((response) => {
       return response.data
     }).then((data) => {
-      if (!isEmptyArray(data)) {
+      if (data.length !== 0) {
         setPeriodoEscolar(data)
       } else {
         setPeriodoEscolar([{

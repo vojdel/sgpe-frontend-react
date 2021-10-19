@@ -11,10 +11,10 @@ const Inscripcion = () => {
   const initialInscritos = [
     {
       id: 0,
-      cedula: 27122644,
+      cedula: 0,
       nombre: 'Jose Daniel Vasquez Pineda',
-      grado: 6,
-      seccion: 'A'
+      grado: 0,
+      seccion: ''
     }
   ]
 
@@ -41,7 +41,7 @@ const Inscripcion = () => {
         setInscritos([
           {
             id: 0,
-            cedula: 27122644,
+            cedula: 0,
             nombre: 'No Existen registros',
             grado: 0,
             seccion: ''

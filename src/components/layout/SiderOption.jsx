@@ -2,7 +2,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { Link } from 'react-router-dom'
 import PropTypes from 'prop-types'
 
-const SiderOption = ({ nombre, collapseOption, icon, list, link }) => {
+const SiderOption = ({ nombre, collapseOption, icon, list, link, handleMenu }) => {
   const estilo = (list) ? 'nav-link ps-4 w-100 py-1' : 'nav-link'
 
   /**
@@ -19,6 +19,7 @@ const SiderOption = ({ nombre, collapseOption, icon, list, link }) => {
         disabled.classList.remove('active')
         active.classList.add('active')
       }
+      handleMenu()
     }
   }
 
@@ -52,7 +53,8 @@ SiderOption.propTypes = {
   collapseOption: PropTypes.string,
   icon: PropTypes.any,
   list: PropTypes.bool,
-  link: PropTypes.string
+  link: PropTypes.string,
+  handleMenu: PropTypes.func
 }
 
 export default SiderOption
