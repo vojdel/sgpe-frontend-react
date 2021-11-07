@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react'
 import { MunicipioSchema } from './MunicipioSchema'
 import { validaciones, esValido, cleanForm } from '../../util/validations.js'
 import PropTypes from 'prop-types'
-import { getAll, getOne, create, update } from '../../services/service.js'
+import { getOne, create, update } from '../../services/service.js'
 import { getAllEstado } from '../../services/cbbx'
 
 const Form = ({ id, setRegistro, changeId }) => {
@@ -43,17 +43,19 @@ const Form = ({ id, setRegistro, changeId }) => {
     * @param {any} event
     * */
   const handleChange = (event) => {
+    event.preventDefault()
+    const { name, value, classList } = event.target
     setMunicipio({
       ...municipio,
-      [event.target.name]: event.target.value
+      [name]: value
     })
-    validaciones(MunicipioSchema[event.target.name], event.target.name, event.target.value, errors, setErrors, event.target.classList)
+    validaciones(MunicipioSchema[name], name, value, errors, setErrors, classList)
     console.log(errors)
   }
 
   const clean = () => {
     cleanForm(setMunicipio, initialMunicipio, setErrors, initialError, ['state_id', 'municipalitys'])
-    changeId(0)
+    changeId()
     setTimeout(() => {
       setValido(false)
     }, 1000)
@@ -72,12 +74,9 @@ const Form = ({ id, setRegistro, changeId }) => {
       }).then(response => {
         clean()
         console.log(response)
-        getAll('municipio').then(response => {
-          console.log(response.data)
-          setRegistro(response.data)
-        }).finally(() => {
-          setValido(false)
-        })
+        console.log(response.data)
+        setRegistro()
+        setValido(false)
       })
     } else {
       update(id, 'municipio', {
@@ -86,10 +85,7 @@ const Form = ({ id, setRegistro, changeId }) => {
       }).then(response => {
         clean()
         console.log(response)
-        getAll('municipio').then(response => {
-          setRegistro(response.data)
-        })
-      }).finally(() => {
+        setRegistro()
         setValido(false)
       })
     }

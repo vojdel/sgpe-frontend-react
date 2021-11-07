@@ -63,8 +63,8 @@ export const getAllCargos = () => {
  * @description Hace una peticion para obtener todos los registros de grado
  * @returns {Promise} los estados
  */
-export const getAllEmpleados = () => {
-  const options = getToken('GET', 'http://localhost:8000/api/cbbx/empleado')
+export const getAllEmpleados = (users = false) => {
+  const options = getToken('GET', `http://localhost:8000/api/cbbx/empleado/users=${users}`)
   return axios.request(options)
 }
 

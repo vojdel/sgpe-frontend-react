@@ -1,16 +1,14 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faPenAlt, faTrashAlt } from '@fortawesome/free-solid-svg-icons'
 import PropTypes from 'prop-types'
-import { getAll, destroy } from '../../services/service.js'
+import { destroy } from '../../services/service.js'
 
-const Tabla = ({ nombres, datas, changeRegistro, changeId }) => {
+const Tabla = ({ nombres, datas, changeId, handleData }) => {
   const handleDelete = (event, id) => {
     event.preventDefault()
     destroy(id, 'estudiante').then(data => {
       console.log(data)
-      getAll('estudiante').then(response => {
-        changeRegistro(response.data)
-      })
+      handleData()
     })
   }
   return (
@@ -68,6 +66,7 @@ Tabla.propTypes = {
   nombres: PropTypes.array,
   datas: PropTypes.array,
   changeRegistro: PropTypes.func,
+  handleData: PropTypes.func,
   changeId: PropTypes.func
 }
 

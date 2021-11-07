@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react'
 import { PersonalSchema, PersonalNextSchema } from './PersonalSchema'
 import { validaciones, cleanForm } from '../../util/validations.js'
 import PropTypes from 'prop-types'
-import { getAll, getOne, create, update } from '../../services/service.js'
+import { getOne, create, update } from '../../services/service.js'
 import { getAllEstado, getAllMunicpios, getAllCargos } from '../../services/cbbx'
 import * as yup from 'yup'
 
@@ -117,23 +117,25 @@ const FormPersonal = ({ id, setRegistro, changeId }) => {
     * @param {any} event
     * */
   const handleChange = (event) => {
+    event.preventDefault()
+    const { name, value, classList } = event.target
     setPersonal({
       ...personal,
-      [event.target.name]: event.target.value
+      [name]: value
     })
     validaciones(
-      PersonalSchema[event.target.name],
-      event.target.name,
-      event.target.value,
+      PersonalSchema[name],
+      name,
+      value,
       errors,
       setErrors,
-      event.target.classList
+      classList
     )
   }
 
   const clean = () => {
     cleanForm(setPersonal, initialPersonal, setErrors, initialError, nameOfForm)
-    changeId(0)
+    changeId()
     setTimeout(() => {
       setValido(false)
     }, 1000)
@@ -163,12 +165,9 @@ const FormPersonal = ({ id, setRegistro, changeId }) => {
       }).then(response => {
         clean()
         console.log(response)
-        getAll('empleado').then(response => {
-          console.log(response.data)
-          setRegistro(response.data)
-        }).finally(() => {
-          setValido(false)
-        })
+        console.log(response.data)
+        setRegistro()
+        setValido(false)
       })
     } else {
       update(id, 'empleado', {
@@ -187,10 +186,7 @@ const FormPersonal = ({ id, setRegistro, changeId }) => {
       }).then(response => {
         clean()
         console.log(response)
-        getAll('empleado').then(response => {
-          setRegistro(response.data)
-        })
-      }).finally(() => {
+        setRegistro()
         setValido(false)
       })
     }

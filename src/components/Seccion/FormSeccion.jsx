@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react'
 import { SeccionSchema } from './SeccionSchema'
 import { validaciones, esValido, cleanForm } from '../../util/validations.js'
-import { getAll, getOne, create, update } from '../../services/service.js'
+import { getOne, create, update } from '../../services/service.js'
 import { getAllGrados } from '../../services/cbbx'
 import PropTypes from 'prop-types'
 
@@ -63,7 +63,7 @@ const FormSeccion = ({ id, setRegistro, changeId }) => {
 
   const clean = () => {
     cleanForm(setSeccion, initialSeccion, setErrors, initialError, ['secciones', 'grado'])
-    changeId(0)
+    changeId()
     setTimeout(() => {
       setValido(false)
     }, 1000)
@@ -82,11 +82,8 @@ const FormSeccion = ({ id, setRegistro, changeId }) => {
       }).then(data => {
         clean()
         console.log(data)
-        getAll('seccion').then(({ data }) => {
-          setRegistro(data)
-        }).finally(() => {
-          setValido(false)
-        })
+        setRegistro()
+        setValido(false)
       })
     } else {
       update(id, 'seccion', {
@@ -95,10 +92,7 @@ const FormSeccion = ({ id, setRegistro, changeId }) => {
       }).then(data => {
         clean()
         console.log(data)
-        getAll('seccion').then(({ data }) => {
-          setRegistro(data)
-        })
-      }).finally(() => {
+        setRegistro()
         setValido(false)
       })
     }

@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react'
 import { RepresentanteSchema } from './RepresentanteSchema'
 import { validaciones, esValido, cleanForm } from '../../util/validations.js'
 import PropTypes from 'prop-types'
-import { getAll, getOne, create, update } from '../../services/service.js'
+import { getOne, create, update } from '../../services/service.js'
 import { getAllEstado, getAllMunicpios, getAllOcupaciones } from '../../services/cbbx'
 
 /**
@@ -121,7 +121,7 @@ const FormRepresentante = ({ id, setRegistro, changeId }) => {
 
   const clean = () => {
     cleanForm(setRepresentante, initialRepresentante, setErrors, initialError, nameOfForm)
-    changeId(0)
+    changeId()
     setTimeout(() => {
       setValido(false)
     }, 1000)
@@ -146,12 +146,9 @@ const FormRepresentante = ({ id, setRegistro, changeId }) => {
       }).then(response => {
         clean()
         console.log(response)
-        getAll('representante').then(response => {
-          console.log(response.data)
-          setRegistro(response.data)
-        }).finally(() => {
-          setValido(false)
-        })
+        console.log(response.data)
+        setRegistro()
+        setValido(false)
       })
     } else {
       update(id, 'representante', {
@@ -166,10 +163,7 @@ const FormRepresentante = ({ id, setRegistro, changeId }) => {
       }).then(response => {
         clean()
         console.log(response)
-        getAll('representante').then(response => {
-          setRegistro(response.data)
-        })
-      }).finally(() => {
+        setRegistro()
         setValido(false)
       })
     }

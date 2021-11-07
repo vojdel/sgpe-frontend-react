@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react'
 import { CargoSchema } from './CargoSchema'
 import { validaciones, esValido, cleanForm } from '../../util/validations.js'
-import { getAll, getOne, create, update } from '../../services/service.js'
+import { getOne, create, update } from '../../services/service.js'
 import PropTypes from 'prop-types'
 
 /**
@@ -50,7 +50,7 @@ const FormCargo = ({ id, setRegistro, changeId }) => {
 
   const clean = () => {
     cleanForm(setCargo, initialCargo, setErrors, initialError, ['cargos'])
-    changeId(0)
+    changeId()
     setTimeout(() => {
       setValido(false)
     }, 1000)
@@ -68,11 +68,8 @@ const FormCargo = ({ id, setRegistro, changeId }) => {
       }).then(data => {
         clean()
         console.log(data)
-        getAll('cargo').then(({ data }) => {
-          setRegistro(data)
-        }).finally(() => {
-          setValido(false)
-        })
+        setRegistro()
+        setValido(false)
       })
     } else {
       update(id, 'cargo', {
@@ -80,10 +77,7 @@ const FormCargo = ({ id, setRegistro, changeId }) => {
       }).then(data => {
         clean()
         console.log(data)
-        getAll('cargo').then(({ data }) => {
-          setRegistro(data)
-        })
-      }).finally(() => {
+        setRegistro()
         setValido(false)
       })
     }

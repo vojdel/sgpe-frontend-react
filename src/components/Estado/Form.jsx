@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react'
 import { EstadoSchema } from './EstadoSchema'
 import { validaciones, esValido, cleanForm } from '../../util/validations.js'
 import PropTypes from 'prop-types'
-import { getAll, getOne, create, update } from '../../services/service.js'
+import { getOne, create, update } from '../../services/service.js'
 
 /**
  * Form.
@@ -38,17 +38,18 @@ const Form = ({ id, setRegistro, changeId }) => {
     * */
   const handleEstado = (event) => {
     event.preventDefault()
+    const { name, value, classList } = event.target
     setEstado({
       ...estado,
-      [event.target.name]: event.target.value
+      [name]: value
     })
-    validaciones(EstadoSchema[event.target.name], event.target.name, event.target.value, errors, setErrors, event.target.classList)
+    validaciones(EstadoSchema[name], name, value, errors, setErrors, classList)
     console.log(errors)
   }
 
   const clean = () => {
     cleanForm(setEstado, initialEstado, setErrors, initialError, ['states'])
-    changeId(0)
+    changeId()
   }
 
   /**
@@ -63,11 +64,8 @@ const Form = ({ id, setRegistro, changeId }) => {
       }).then(data => {
         clean()
         console.log(data)
-        getAll('estado').then(({ data }) => {
-          setRegistro(data)
-        }).finally(() => {
-          setValido(false)
-        })
+        setRegistro()
+        setValido(false)
       })
     } else {
       update(id, 'estado', {
@@ -75,10 +73,7 @@ const Form = ({ id, setRegistro, changeId }) => {
       }).then(data => {
         clean()
         console.log(data)
-        getAll('estado').then(({ data }) => {
-          setRegistro(data)
-        })
-      }).finally(() => {
+        setRegistro()
         setValido(false)
       })
     }

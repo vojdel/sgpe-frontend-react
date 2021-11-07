@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react'
 import { PeriodoEscolarSchema } from './PeriodoEscolarSchema'
 import { validaciones, cleanForm } from '../../util/validations.js'
 import PropTypes from 'prop-types'
-import { getAll, getOne, create, update } from '../../services/service.js'
+import { getOne, create, update } from '../../services/service.js'
 import { object } from 'yup'
 
 const Form = ({ id, setRegistro, changeId }) => {
@@ -47,7 +47,7 @@ const Form = ({ id, setRegistro, changeId }) => {
 
   const clean = () => {
     cleanForm(setPeriodoEscolar, initialPeriodoEscolar, setErrors, initialError, ['anio_ini', 'anio_fin'])
-    changeId(0)
+    changeId()
     setTimeout(() => {
       setValido(false)
     }, 1000)
@@ -63,21 +63,15 @@ const Form = ({ id, setRegistro, changeId }) => {
       create('periodoescolar', periodoEscolar).then(response => {
         clean()
         console.log(response)
-        getAll('periodoescolar').then(response => {
-          console.log(response.data)
-          setRegistro(response.data)
-        }).finally(() => {
-          setValido(false)
-        })
+        console.log(response.data)
+        setRegistro()
+        setValido(false)
       })
     } else {
       update(id, 'periodoescolar', periodoEscolar).then(response => {
         clean()
         console.log(response)
-        getAll('periodoescolar').then(response => {
-          setRegistro(response.data)
-        })
-      }).finally(() => {
+        setRegistro()
         setValido(false)
       })
     }

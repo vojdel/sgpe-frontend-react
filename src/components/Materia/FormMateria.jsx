@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react'
 import { MateriaSchema } from './MateriaSchema'
 import { validaciones, esValido, cleanForm } from '../../util/validations.js'
-import { getAll, getOne, create, update } from '../../services/service.js'
+import { getOne, create, update } from '../../services/service.js'
 import PropTypes from 'prop-types'
 /**
  * FormMateria.
@@ -53,7 +53,7 @@ const FormMateria = ({ id, setRegistro, changeId }) => {
 
   const clean = () => {
     cleanForm(setMateria, initialMateria, setErrors, initialError, ['materia'])
-    changeId(0)
+    changeId()
     setTimeout(() => {
       setValido(false)
     }, 1000)
@@ -71,11 +71,8 @@ const FormMateria = ({ id, setRegistro, changeId }) => {
       }).then(data => {
         clean()
         console.log(data)
-        getAll('materia').then(({ data }) => {
-          setRegistro(data)
-        }).finally(() => {
-          setValido(false)
-        })
+        setRegistro()
+        setValido(false)
       })
     } else {
       update(id, 'materia', {
@@ -83,10 +80,7 @@ const FormMateria = ({ id, setRegistro, changeId }) => {
       }).then(data => {
         clean()
         console.log(data)
-        getAll('materia').then(({ data }) => {
-          setRegistro(data)
-        })
-      }).finally(() => {
+        setRegistro()
         setValido(false)
       })
     }

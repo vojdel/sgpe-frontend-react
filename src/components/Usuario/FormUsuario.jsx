@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react'
 import { validaciones, cleanForm } from '../../util/validations.js'
-import { getAll, getOne, create, update } from '../../services/service.js'
+import { getOne, create, update } from '../../services/service.js'
 import { object } from 'yup'
 import { getAllEmpleados } from '../../services/cbbx'
 import PropTypes from 'prop-types'
@@ -66,7 +66,7 @@ const FormUsuario = ({ id, setRegistro, changeId }) => {
   }])
 
   useEffect(() => {
-    getAllEmpleados().then(response => {
+    getAllEmpleados(true).then(response => {
       console.log(response.data)
       setEmpleados(response.data)
     }).catch(() => {
@@ -84,9 +84,9 @@ const FormUsuario = ({ id, setRegistro, changeId }) => {
     if (id !== 0) {
       getOne(id, 'usuario').then(data => {
         setUsuario(data)
-        setValido(true)
-        setValidoNext(true)
       })
+      setValido(true)
+      setValidoNext(true)
     }
   }, [id])
 
@@ -132,7 +132,7 @@ const FormUsuario = ({ id, setRegistro, changeId }) => {
 
   const clean = () => {
     cleanForm(setUsuario, initialUsuario, setErrors, initialError, nameOfForm)
-    changeId(0)
+    changeId()
     setTimeout(() => {
       setValido(false)
     }, 1000)
@@ -156,12 +156,9 @@ const FormUsuario = ({ id, setRegistro, changeId }) => {
       }).then(response => {
         clean()
         console.log(response)
-        getAll('usuario').then(response => {
-          console.log(response.data)
-          setRegistro(response.data)
-        }).finally(() => {
-          setValido(false)
-        })
+        console.log(response.data)
+        setRegistro()
+        setValido(false)
       })
     } else {
       update(id, 'usuario', {
@@ -173,10 +170,7 @@ const FormUsuario = ({ id, setRegistro, changeId }) => {
       }).then(response => {
         clean()
         console.log(response)
-        getAll('usuario').then(response => {
-          setRegistro(response.data)
-        })
-      }).finally(() => {
+        setRegistro()
         setValido(false)
       })
     }
@@ -250,7 +244,16 @@ const FormUsuario = ({ id, setRegistro, changeId }) => {
                   <div className="col-12 d-inline-block">
                     <label className="form-label" htmlFor="empleado_id">Cedula</label>
                     <div className="input-group mb-3">
-                      <select className="form-control" aria-label="emplaedo" id="empleado_id" aria-describedby="empleado-addon" name="empleado_id" onChange={handleChange} value={usuario.empleado_id}>
+                      <select
+                        className="form-control"
+                        aria-label="emplaedo"
+                        id="empleado_id"
+                        aria-describedby="empleado-addon"
+                        name="empleado_id"
+                        onChange={handleChange}
+                        value={usuario.empleado_id}
+                        disabled={(id !== 0)}
+                      >
                         <option value="0">Seleccione un Empleado...</option>
                         {
                           empleados.map((empleado, index) => {
@@ -319,7 +322,7 @@ const FormUsuario = ({ id, setRegistro, changeId }) => {
                     <label>Contraseña</label>
                     <div className="input-group mb-3">
                       <input type="password" className="form-control" placeholder="********" aria-label="Contraseña" aria-describedby="password-addon" onChange={handleChange} name="passw" value={usuario.passw} />
-                      {errors.pass ? <div className="invalid-feedback">{errors.pass}</div> : null}
+                      {errors.passw ? <div className="invalid-feedback">{errors.passw}</div> : null}
                     </div>
                   </div>
                   <div className="col-md-6 col-12 d-inline-block">

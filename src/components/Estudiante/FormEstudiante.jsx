@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react'
 import { EstudianteSchema, EstudianteNextSchema } from './EstudianteSchema'
 import { validaciones, cleanForm } from '../../util/validations.js'
-import { getAll, getOne, create, update } from '../../services/service.js'
+import { getOne, create, update } from '../../services/service.js'
 import { getAllEstado, getAllMunicpios } from '../../services/cbbx'
 import { object } from 'yup'
 import PropTypes from 'prop-types'
@@ -146,7 +146,7 @@ const FormEstudiante = ({ id, setRegistro, changeId }) => {
 
   const clean = () => {
     cleanForm(setEstudiante, initialEstudiante, setErrors, initialError, nameOfForm)
-    changeId(0)
+    changeId()
     setTimeout(() => {
       setValido(false)
     }, 1000)
@@ -166,12 +166,8 @@ const FormEstudiante = ({ id, setRegistro, changeId }) => {
       }).then(response => {
         clean()
         console.log(response)
-        getAll('estudiante').then(response => {
-          console.log(response.data)
-          setRegistro(response.data)
-        }).finally(() => {
-          setValido(false)
-        })
+        setRegistro()
+        setValido(false)
       })
     } else {
       update(id, 'estudiante', {
@@ -180,10 +176,7 @@ const FormEstudiante = ({ id, setRegistro, changeId }) => {
       }).then(response => {
         clean()
         console.log(response)
-        getAll('representante').then(response => {
-          setRegistro(response.data)
-        })
-      }).finally(() => {
+        setRegistro()
         setValido(false)
       })
     }

@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react'
 import { OcupacionLaboralSchema } from './OcupacionLaboralSchema'
 import { validaciones, cleanForm } from '../../util/validations.js'
 import PropTypes from 'prop-types'
-import { getAll, getOne, create, update } from '../../services/service.js'
+import { getOne, create, update } from '../../services/service.js'
 
 /**
  * Form.
@@ -46,7 +46,7 @@ const Form = ({ id, setRegistro, changeId }) => {
 
   const clean = () => {
     cleanForm(setOcupacionLaboral, initialOcupacionLaboral, setErrors, initialError, ['labor'])
-    changeId(0)
+    changeId()
   }
 
   /**
@@ -61,11 +61,8 @@ const Form = ({ id, setRegistro, changeId }) => {
       }).then(data => {
         clean()
         console.log(data)
-        getAll('ocupacionlaboral').then(({ data }) => {
-          setRegistro(data)
-        }).finally(() => {
-          setValido(false)
-        })
+        setRegistro()
+        setValido(false)
       })
     } else {
       update(id, 'ocupacionlaboral', {
@@ -73,10 +70,7 @@ const Form = ({ id, setRegistro, changeId }) => {
       }).then(data => {
         clean()
         console.log(data)
-        getAll('ocupacionlaboral').then(({ data }) => {
-          setRegistro(data)
-        })
-      }).finally(() => {
+        setRegistro()
         setValido(false)
       })
     }
