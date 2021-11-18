@@ -1,5 +1,5 @@
-const FooterLogin = () =>{
-  return(
+const FooterLogin = () => {
+  return (
     <footer className="footer py-4 dixed-bootom">
       <div className="container">
         <div className="row">
@@ -17,4 +17,4 @@ const FooterLogin = () =>{
   )
 }
 
-export default FooterLogin;
+export default FooterLogin

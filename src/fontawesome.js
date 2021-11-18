@@ -1,5 +1,5 @@
 // import the library
-import { library } from '@fortawesome/fontawesome-svg-core';
+import { library } from '@fortawesome/fontawesome-svg-core'
 
 // import your icons
 import {
@@ -7,7 +7,7 @@ import {
   faHighlighter,
   faSearch,
   faHome
-} from '@fortawesome/free-solid-svg-icons';
+} from '@fortawesome/free-solid-svg-icons'
 
 library.add(
   faCode,
@@ -15,4 +15,4 @@ library.add(
   faSearch,
   faHome
   // more icons go here
-);
+)

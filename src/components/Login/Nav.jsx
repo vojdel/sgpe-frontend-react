@@ -1,5 +1,5 @@
-import {FontAwesomeIcon} from "@fortawesome/react-fontawesome"
-import { faChartPie, faHome, faKey, faUserCircle } from '@fortawesome/free-solid-svg-icons';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faHome } from '@fortawesome/free-solid-svg-icons'
 
 const Nav = () => {
   return (
@@ -19,27 +19,10 @@ const Nav = () => {
           <ul className="navbar-nav d-lg-block d-none">
             <li className="nav-item">Sistema de Gestion de Profesores y Estudiantes</li>
           </ul>
-          <ul className="navbar-nav mx-auto">
-            <li className="nav-item">
-              <a href="#" className="nav-link d-flex align-items-center me-2 activate" aria-current="page">
-                <FontAwesomeIcon icon={faChartPie} className="opacity-6 text-dark me-1" /> Dashboard
-                    </a>
-            </li>
-            <li className="nav-item">
-              <a href="#" className="nav-link me-2">
-                <FontAwesomeIcon icon={faUserCircle} /> Sign up
-                    </a>
-            </li>
-            <li className="nav-item">
-              <a href="#" className="nav-link me-2">
-                <FontAwesomeIcon icon={faKey} /> Sign in
-                    </a>
-            </li>
-          </ul>
         </div>
       </div>
     </nav>
   )
 }
 
-export default Nav;
+export default Nav

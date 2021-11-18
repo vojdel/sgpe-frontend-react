@@ -1,9 +1,9 @@
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import {faDribbble, faGithub, faInstagram, faTwitter} from "@fortawesome/free-brands-svg-icons";
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faDribbble, faGithub, faInstagram, faTwitter } from '@fortawesome/free-brands-svg-icons'
 
 const FooterLogout = () => {
-  return(
-    <footer classname="footer py-5">
+  return (
+    <footer className="footer py-5">
 <div className="container">
   <div className="row">
     <div className="col-lg-8 mb-4 mx-auto text-center">
@@ -41,4 +41,4 @@ const FooterLogout = () => {
   )
 }
 
-export default FooterLogout;
+export default FooterLogout

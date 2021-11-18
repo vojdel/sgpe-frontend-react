@@ -1,7 +1,18 @@
-import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
-import {faPenAlt, faTrashAlt} from "@fortawesome/free-solid-svg-icons"
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faPenAlt, faTrashAlt } from '@fortawesome/free-solid-svg-icons'
+import PropTypes from 'prop-types'
+import { getAll, destroy } from '../../services/service.js'
 
-const TablaEstado = ({nombres, datas}) => {
+const TablaSeccion = ({ nombres, datas, changeRegistro, changeId }) => {
+  const handleDelete = (event, id) => {
+    event.preventDefault()
+    destroy(id, 'seccion').then(data => {
+      console.log(data)
+      getAll('seccion').then(response => {
+        changeRegistro(response.data)
+      })
+    })
+  }
   return (
     <div className="card my-5 mt-0">
       <div className="table-responsive">
@@ -24,15 +35,19 @@ const TablaEstado = ({nombres, datas}) => {
                       <div className="text-xs font-weight-bold mb-0 text-center">{data.id}</div>
                     </td>
                     <td>
-                      <div className="text-xs font-weight-bold mb-0">{data.estado}</div>
+                      <div className="text-xs font-weight-bold mb-0">{data.grados}</div>
+                    </td>
+                    <td>
+                      <div className="text-xs font-weight-bold mb-0">{data.secciones}</div>
                     </td>
                     <td className="align-middle w-25 text-center">
-                      <button className="btn btn-icon btn-2 btn-warning" type="button" data-toggle="tooltip" data-original-title="Edit user" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
+                      <button className="btn btn-icon btn-2 btn-warning" type="button" data-toggle="tooltip" data-original-title="Edit user" data-bs-toggle="modal" data-bs-target="#staticBackdrop" onClick={() => changeId(data.id)} >
                         <span className="btn-inner--icon">
                           <FontAwesomeIcon icon={faPenAlt} />
                         </span>
                       </button>
-                      <button className="btn btn-icon btn-2 btn-danger mx-3" type="button">
+                      <button className="btn btn-icon btn-2 btn-danger mx-3" type="button"
+                        onClick={(event) => { handleDelete(event, data.id) }}>
                         <span className="btn-inner--icon">
                           <FontAwesomeIcon icon={faTrashAlt} />
                         </span>
@@ -48,4 +63,12 @@ const TablaEstado = ({nombres, datas}) => {
     </div >
   )
 }
-export default TablaEstado
+
+TablaSeccion.propTypes = {
+  nombres: PropTypes.array,
+  datas: PropTypes.array,
+  changeRegistro: PropTypes.func,
+  changeId: PropTypes.func
+}
+
+export default TablaSeccion
