@@ -6,7 +6,7 @@ import { getToken } from '../util/getToken'
  * @type {Function}
  * @description Hace una peticion para obtener todos los registros
  * @param {string} ruta
- * @returns {Promise} los estados
+ * @gromise} los estados
  */
 export const getAll = (ruta) => {
   const options = getToken('GET', `http://localhost:8000/api/${ruta}`)
@@ -37,10 +37,10 @@ export const search = (ruta, busqueda) => {
  */
 export const getOne = (id, ruta) => {
   const options = getToken('GET', `http://localhost:8000/api/${ruta}/${id}`)
-  return axios.request(options).then(function (response) {
+  return axios.request(options).then((response) => {
     console.log(response.data)
     return response.data
-  }).catch(function (error) {
+  }).catch((error) => {
     console.error(error)
     return error
   })
@@ -58,9 +58,9 @@ export const getOne = (id, ruta) => {
 export const create = (ruta, data) => {
   const options = getToken('POST', `http://localhost:8000/api/${ruta}`)
   options.data = data
-  return axios.request(options).then(function (response) {
+  return axios.request(options).then((response) => {
     console.log(response.data)
-  }).catch(function (error) {
+  }).catch((error) => {
     console.error(error)
   })
 }
@@ -78,10 +78,10 @@ export const create = (ruta, data) => {
 export const update = (id, ruta, data) => {
   const options = getToken('PUT', `http://localhost:8000/api/${ruta}/${id}`)
   options.data = data
-  return axios.request(options).then(function (response) {
+  return axios.request(options).then((response) => {
     console.log(response.data)
     return response.data
-  }).catch(function (error) {
+  }).catch((error) => {
     console.error(error)
     return error
   })
@@ -98,11 +98,40 @@ export const update = (id, ruta, data) => {
  */
 export const destroy = (id, ruta) => {
   const options = getToken('DELETE', `http://localhost:8000/api/${ruta}/${id}`)
-  return axios.request(options).then(function (response) {
+  return axios.request(options).then((response) => {
     console.log(response.data)
     return response.data
-  }).catch(function (error) {
+  }).catch((error) => {
     console.error(error)
     return error
   })
+}
+
+/**
+ * download.
+ *
+ * @type {Function}
+ * @description Descarga un archivo
+ * @param {number} id
+ * @param {string} ruta
+ * @return {Promise}
+ */
+export const download = (id, ruta) => {
+  const options = getToken('GET', `http://localhost:8000/api/${ruta}/${id}`)
+  return axios.request(options)
+}
+
+/**
+ * gragicoAnio.
+ *
+ * @type {Function}
+ * @description Descarga un archivo
+ * @param {string} ruta
+ * @param {array} data
+ * @return {Promise}
+ */
+export const graficoAnio = (ruta, data) => {
+  const options = getToken('POST', `http://localhost:8000/api/${ruta}`)
+  options.data = data
+  return axios.request(options)
 }

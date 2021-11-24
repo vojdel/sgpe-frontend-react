@@ -1,5 +1,5 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faAddressBook, faChild, faHome, faMale, faChalkboard, faChalkboardTeacher, faMapMarkedAlt, faSchool, faTimes, faUserAlt, faUserTie, faUser, faBars, faDoorClosed } from '@fortawesome/free-solid-svg-icons'
+import { faAddressBook, faChild, faHome, faMale, faChalkboard, faSave, faChalkboardTeacher, faMapMarkedAlt, faSchool, faTimes, faUserAlt, faUserTie, faUser, faBars, faDoorClosed } from '@fortawesome/free-solid-svg-icons'
 import SiderOption from './SiderOption'
 import PropTypes from 'prop-types'
 import { useLocation } from 'react-router-dom'
@@ -10,12 +10,16 @@ const Siderbar = ({ estilo, handleMenu }) => {
   let url
   const menuLateral = document.querySelector('#sidenav-main')
 
+  const tipoUser = window.localStorage.getItem('loggedUser')
+  const [tipo, setTipo]
+
   useEffect(() => {
     url = ruta.pathname
     console.log(url)
     if (url === '/signin' && menuLateral) {
       menuLateral.classList.add('d-none')
     }
+    tipo = JSON.parse(tipoUser).tipo
   }, [ruta])
 
   if (url !== '/signin') {
@@ -73,7 +77,8 @@ const Siderbar = ({ estilo, handleMenu }) => {
               <li className="nav-item mt-3">
                 <h6 className="ps-4 ms-2 text-uppercase text-xs font-weight-bolder opacity-6 text-white">Account Pages</h6>
               </li>
-              <SiderOption nombre="Profile" icon={faUserAlt} link="/" handleMenu={handleMenu} />
+              <SiderOption nombre="Respaldo" icon={faSave} link="/backup" handleMenu={handleMenu} />
+              <SiderOption nombre="Perfil" icon={faUserAlt} link="/" handleMenu={handleMenu} />
               <SiderOption nombre="Logout" icon={faDoorClosed} link="/logout" handleMenu={handleMenu} />
             </ul >
           </div >

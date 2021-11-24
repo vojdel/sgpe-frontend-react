@@ -14,7 +14,7 @@ export const login = ({ email, password }, resetiar, route) => {
     url: 'http://localhost:8000/api/auth/login',
     headers: { 'Content-Type': 'application/json', 'X-Requested-With': 'XMLHttpRequest' },
     data: { email: email[0], password: password[0] }
-  }).then(function (response) {
+  }).then((response) => {
     console.log(response.data)
     return response.data
   }).then(data => {
@@ -49,7 +49,7 @@ export const logout = (ruta) => {
       'X-Requested-With': 'XMLHttpRequest',
       Authorization: `Bearer ${token.access_token}`
     }
-  }).then(function (response) {
+  }).then((response) => {
     console.log(response.data)
     window.localStorage.removeItem('loggedUser')
     ruta('/signin')
