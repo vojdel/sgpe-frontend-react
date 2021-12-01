@@ -8,6 +8,9 @@ export const changeTitle = (ruta) => {
   let result = 'Home'
 
   switch (ruta) {
+    case '/' :
+      result = 'Dashboard'
+      break
     case '/estado':
       result = 'Estado'
       break

@@ -36,37 +36,23 @@ const Dashboard = () => {
   }
 
   useEffect(() => {
-    // setData({
-    // labels: ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'],
-    // datasets: [{
-    // label: '# de Asistencias',
-    // data: ['10', '20', '30', '15', '7', '25', '17', '19', '9', '11', '22', '28'],
-    // backgroundColor: 'blue',
-    // borderColor: 'blue',
-    // borderWidth: 1
-    // }, {
-    // label: '# de Inasistencias',
-    // data: ['14', '21', '20', '13', '6', '15', '27', '29', '8', '21', '32', '18'],
-    // backgroundColor: 'red',
-    // borderColor: 'red',
-    // borderWidth: 1
-    // }]
-    // })
     handleDataAnio()
   }, [])
 
   return (
     <div className="row w-100 justify-content-md-center">
       <div className="row m-3 ps-5 d-flex justify-content-between">
-        <div className="col-4 card my-3 ps-5 d-flex align-item-center">
+        <div className="col-3 card my-3 p-5 d-flex align-item-center text-center">
           <h3>Inscripcones</h3>
           <span>{numeros.inscripciones}</span>
         </div>
-        <div className="col-4 card my-3 ps-5 d-flex align-item-center">
+        <div className="col-3 card my-3 py-5 d-flex align-item-center text-center">
           <h3>Asistencias</h3>
-          <span>{numeros.asistencia} A | {numeros.inasistencia} I</span>
+          <span>{numeros.asistencia} <span className="text-sm">Asistencias</span>
+            | {numeros.inasistencia} <span className="text-sm">Inasistencias</span>
+          </span>
         </div>
-        <div className="col-4 card my-3 ps-5 d-flex align-item-center">
+        <div className="col-3 card my-3 p-5 d-flex align-item-center text-center">
           <h3>Usuarios</h3>
           <span>{numeros.usuarios}</span>
         </div>

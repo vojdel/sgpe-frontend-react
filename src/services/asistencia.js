@@ -11,7 +11,7 @@ import { getToken } from '../util/getToken'
  * @return {Promise}
  */
 export const getAll = (start, end, month, year) => {
-  const options = getToken('GET', `http://localhost:8000/api/asistencia/start=${start}&end=${end}&month=${month}&year=${year}`)
+  const options = getToken('GET', `/api/asistencia/start=${start}&end=${end}&month=${month}&year=${year}`)
   return axios.request(options)
 }
 
@@ -22,7 +22,7 @@ export const getAll = (start, end, month, year) => {
  * @return {Promise}
  */
 export const getEmpleados = (edit) => {
-  const options = getToken('GET', `http://localhost:8000/api/asistencia/empleado/${edit}`)
+  const options = getToken('GET', `/api/asistencia/empleado/${edit}`)
   return axios.request(options)
 }
 
@@ -33,7 +33,7 @@ export const getEmpleados = (edit) => {
  * @return {Promise}
  */
 export const getAllDays = (fecha) => {
-  const options = getToken('GET', `http://localhost:8000/api/asistencia/allday/${fecha}`)
+  const options = getToken('GET', `/api/asistencia/allday/${fecha}`)
   return axios.request(options)
 }
 
@@ -44,7 +44,7 @@ export const getAllDays = (fecha) => {
  * @return {Promise}
  */
 export const getOne = (id) => {
-  const options = getToken('GET', `http://localhost:8000/api/asistencia/${id}`)
+  const options = getToken('GET', `/api/asistencia/${id}`)
   return axios.request(options)
 }
 
@@ -55,7 +55,7 @@ export const getOne = (id) => {
  * @return {Promise}
  */
 export const create = (data) => {
-  const options = getToken('POST', 'http://localhost:8000/api/asistencia/')
+  const options = getToken('POST', '/api/asistencia/')
   options.data = data
 
   return axios.request(options)
@@ -69,7 +69,7 @@ export const create = (data) => {
  * @return {Promise}
  */
 export const update = (id, data) => {
-  const options = getToken('PUT', `http://localhost:8000/api/asistencia/${id}`)
+  const options = getToken('PUT', `/api/asistencia/${id}`)
   options.data = data
 
   return axios.request(options)
@@ -82,6 +82,6 @@ export const update = (id, data) => {
  * @return {Promise}
  */
 export const destroy = (id) => {
-  const options = getToken('DELETE', `http://localhost:8000/api/asistencia/${id}`)
+  const options = getToken('DELETE', `/api/asistencia/${id}`)
   return axios.request(options)
 }

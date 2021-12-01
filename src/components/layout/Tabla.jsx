@@ -22,9 +22,9 @@ const Tabla = ({ nombres, datas, campos, handleDelete, handleId, handlePaginacio
           <table className="table algin-items-center mb-0">
             <thead>
               <tr>
-                {nombres.map((nombre) => {
+                {nombres.map((nombre, index) => {
                   return (
-                    <th className="text-center text-uppercase text-xxs font-weight-bolder" key="index">{nombre}</th>
+                    <th className="text-center text-uppercase text-xxs font-weight-bolder" key={ index }>{nombre}</th>
                   )
                 })}
               </tr>

@@ -6,12 +6,13 @@ import axios from 'axios'
  * @param {{email: string, password: string}} credentials
  * @param {function} resetiar
  * @param {function} route
+ * @param {function} loginIn
  * @return {Promise}
  */
-export const login = ({ email, password }, resetiar, route) => {
+export const login = ({ email, password }, resetiar, route, loginIn) => {
   return axios.request({
     method: 'POST',
-    url: 'http://localhost:8000/api/auth/login',
+    url: '/api/auth/login',
     headers: { 'Content-Type': 'application/json', 'X-Requested-With': 'XMLHttpRequest' },
     data: { email: email[0], password: password[0] }
   }).then((response) => {
@@ -24,6 +25,11 @@ export const login = ({ email, password }, resetiar, route) => {
     resetiar({
       email: '',
       password: ''
+    })
+    console.log(data)
+    loginIn({
+      username: data.username,
+      typeUser: data.tipo
     })
     route('/')
   })
@@ -43,7 +49,7 @@ export const logout = (ruta) => {
 
   return axios.request({
     method: 'POST',
-    url: 'http://localhost:8000/api/auth/me',
+    url: '/api/auth/me',
     headers: {
       'Content-Type': 'application/json',
       'X-Requested-With': 'XMLHttpRequest',
@@ -70,13 +76,13 @@ export const meUser = () => {
 
   return axios.request({
     method: 'POST',
-    url: 'http://localhost:8000/api/auth/me',
+    url: '/api/auth/me',
     headers: {
       'Content-Type': 'application/json',
       'X-Requested-With': 'XMLHttpRequest',
       Authorization: `Bearer ${token.access_token}`
     }
-  }).then(function (response) {
+  }).then((response) => {
     console.log(response.data)
     return response.data
   })

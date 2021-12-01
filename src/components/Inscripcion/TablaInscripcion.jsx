@@ -28,9 +28,9 @@ const TablaInscripcion = ({ nombres, datas, changeRegistro }) => {
         <table className="table algin-items-center mb-0">
           <thead>
             <tr>
-              {nombres.map((nombre) => {
+              {nombres.map((nombre, index) => {
                 return (
-                  <th className="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7" key="index" >{nombre}</th>
+                  <th className="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7" key={ index } >{nombre}</th>
                 )
               })}
             </tr>

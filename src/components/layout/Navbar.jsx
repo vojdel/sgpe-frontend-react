@@ -1,28 +1,29 @@
 import { useLocation, useHistory } from 'react-router-dom'
-import { useEffect } from 'react'
+import { useContext, useEffect } from 'react'
 import PropTypes from 'prop-types'
 import { changeTitle } from '../../util/changeTitle'
 import Menu from './Menu'
 import NavLogin from '../Login/Nav'
+import { AuthContext } from '../../context/AuthContext'
 
 const Navbar = ({ handleSiderHidden, handleMenu }) => {
   const ruta = useLocation()
-  let titulo = changeTitle(ruta.pathname)
+  let titulo = ''
   const history = useHistory()
+  const { auth } = useContext(AuthContext)
 
   useEffect(() => {
-    const loggedUserJson = window.localStorage.getItem('loggedUser')
-    console.log(JSON.parse(loggedUserJson))
-    if (!loggedUserJson) {
+    if (typeof auth === 'boolean' && auth === false) {
       history.push('/signin')
     }
   }, [])
 
   useEffect(() => {
     titulo = changeTitle(ruta.pathname)
+    console.log(ruta.pathname)
   }, [ruta])
 
-  if (ruta.pathname !== '/signin') {
+  if (ruta.pathname === '/') {
     return < Menu handleSiderHidden={handleSiderHidden} handleMenu={handleMenu} titulo={titulo} />
   } else {
     return <NavLogin />

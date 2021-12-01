@@ -1,7 +1,8 @@
 import Nav from './Nav.jsx'
 import { login } from '../../services/login'
-import { useEffect, useState } from 'react'
+import { useEffect, useState, useContext } from 'react'
 import { useHistory } from 'react-router-dom'
+import { AuthContext } from '../../context/AuthContext'
 
 const Login = () => {
   const [form, setForm] = useState({
@@ -10,6 +11,7 @@ const Login = () => {
   })
   const [error, setError] = useState('')
   const history = useHistory()
+  const { auth, logged } = useContext(AuthContext)
 
   /**
     * Manejar input of Form
@@ -24,8 +26,7 @@ const Login = () => {
   }
 
   useEffect(() => {
-    const loggedUserJson = window.localStorage.getItem('loggedUser')
-    if (loggedUserJson) {
+    if (typeof auth === 'boolean' && auth) {
       history.push('/')
     }
   }, [])
@@ -36,7 +37,7 @@ const Login = () => {
     * */
   const handleLogin = (event) => {
     event.preventDefault()
-    login(form, setForm, history.push).catch(e => {
+    login(form, setForm, history.push, logged).catch(e => {
       console.log(e)
       console.log(e.error)
       setError('correo o contraseña invalidos')

@@ -15,7 +15,7 @@ export const getToken = (method, url) => {
     headers: {
       Accept: 'application/json',
       'X-Requested-With': 'XMLHttpRequest',
-      Authorization: `Bearer ${token.access_token}`
+      Authorization: (loggedToken) ? `Bearer ${token.access_token}` : null
     }
   }
   return options

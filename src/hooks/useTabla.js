@@ -100,6 +100,10 @@ export const useTabla = ({ tabla, init, error }) => {
   useEffect(() => {
     handleData()
     setPaginacion(initialPaginacion)
+
+    return () => {
+      setData(init)
+    }
   }, [])
 
   useEffect(() => {

@@ -8,7 +8,7 @@ import { getToken } from '../util/getToken'
  * @returns {Promise} los estados
  */
 export const getAllEstado = () => {
-  const options = getToken('GET', 'http://localhost:8000/api/cbbx/estado')
+  const options = getToken('GET', '/api/cbbx/estado')
   return axios.request(options)
 }
 
@@ -20,7 +20,7 @@ export const getAllEstado = () => {
  * @returns {Promise} los estados
  */
 export const getAllMunicpios = (id) => {
-  const options = getToken('GET', `http://localhost:8000/api/cbbx/municipio/${id}`)
+  const options = getToken('GET', `/api/cbbx/municipio/${id}`)
   return axios.request(options)
 }
 
@@ -31,7 +31,7 @@ export const getAllMunicpios = (id) => {
  * @returns {Promise} los estados
  */
 export const getAllGrados = () => {
-  const options = getToken('GET', 'http://localhost:8000/api/cbbx/grado')
+  const options = getToken('GET', '/api/cbbx/grado')
   return axios.request(options)
 }
 
@@ -42,7 +42,7 @@ export const getAllGrados = () => {
  * @returns {Promise} los estados
  */
 export const getAllOcupaciones = () => {
-  const options = getToken('GET', 'http://localhost:8000/api/cbbx/ocupacionlaboral')
+  const options = getToken('GET', '/api/cbbx/ocupacionlaboral')
   return axios.request(options)
 }
 
@@ -53,7 +53,7 @@ export const getAllOcupaciones = () => {
  * @returns {Promise} los estados
  */
 export const getAllCargos = () => {
-  const options = getToken('GET', 'http://localhost:8000/api/cbbx/cargo')
+  const options = getToken('GET', '/api/cbbx/cargo')
   return axios.request(options)
 }
 
@@ -64,7 +64,7 @@ export const getAllCargos = () => {
  * @returns {Promise} los estados
  */
 export const getAllEmpleados = (users = false) => {
-  const options = getToken('GET', `http://localhost:8000/api/cbbx/empleado/users=${users}`)
+  const options = getToken('GET', `/api/cbbx/empleado/users=${users}`)
   return axios.request(options)
 }
 
@@ -76,7 +76,7 @@ export const getAllEmpleados = (users = false) => {
  * @returns {Promise} los estados
  */
 export const getAllSecciones = (id) => {
-  const options = getToken('GET', 'http://localhost:8000/api/cbbx/seccion/' + id)
+  const options = getToken('GET', '/api/cbbx/seccion/' + id)
   return axios.request(options)
 }
 
@@ -87,7 +87,7 @@ export const getAllSecciones = (id) => {
  * @returns {Promise} los estados
  */
 export const getAllPeriodoEscolares = () => {
-  const options = getToken('GET', 'http://localhost:8000/api/cbbx/periodoescolar')
+  const options = getToken('GET', '/api/cbbx/periodoescolar')
   return axios.request(options)
 }
 
@@ -98,7 +98,7 @@ export const getAllPeriodoEscolares = () => {
  * @returns {Promise} los Parentesco posibles
  */
 export const getAllParentescos = () => {
-  const options = getToken('GET', 'http://localhost:8000/api/cbbx/parentescos')
+  const options = getToken('GET', '/api/cbbx/parentescos')
   return axios.request(options)
 }
 
@@ -109,6 +109,6 @@ export const getAllParentescos = () => {
  * @returns {Promise} los Parentesco posibles
  */
 export const getAllMateria = () => {
-  const options = getToken('GET', 'http://localhost:8000/api/cbbx/materia')
+  const options = getToken('GET', '/api/cbbx/materia')
   return axios.request(options)
 }
