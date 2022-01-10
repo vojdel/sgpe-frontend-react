@@ -2,11 +2,17 @@ import { createContext, useReducer } from 'react'
 import { authReducer } from '../reducers/authReducer'
 
 const loggedUser = window.localStorage.getItem('loggedUser')
+const logged = JSON.parse(loggedUser) || { username: '', tipo: 0 }
+let isAuth = false
+
+if (loggedUser) {
+  isAuth = !!loggedUser
+}
 
 const initialState = {
-  state: (loggedUser),
-  username: '',
-  typeUser: ''
+  auth: isAuth,
+  username: logged.username,
+  typeUser: logged.tipo
 }
 
 export const AuthContext = createContext(initialState)

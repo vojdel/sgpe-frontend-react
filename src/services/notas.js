@@ -7,7 +7,7 @@ import { getToken } from '../util/getToken'
  * @return {Promise}
  */
 export const getAll = () => {
-  const options = getToken('GET', '/api/notas')
+  const options = getToken('GET', 'http://127.0.0.1:8000/api/notas')
   return axios.request(options)
 }
 
@@ -19,7 +19,7 @@ export const getAll = () => {
  * @return {Promise}
  */
 export const getSearch = (periodo, seccion) => {
-  const options = getToken('GET', `/api/notas/periodo=${periodo}&seccion=${seccion}`)
+  const options = getToken('GET', `http://127.0.0.1:8000/api/notas/periodo=${periodo}&seccion=${seccion}`)
   return axios.request(options)
 }
 
@@ -30,7 +30,7 @@ export const getSearch = (periodo, seccion) => {
  * @return {Promise}
  */
 export const getGrupo = (id) => {
-  const options = getToken('GET', `/api/notas/${id}`)
+  const options = getToken('GET', `http://127.0.0.1:8000/api/notas/${id}`)
   return axios.request(options)
 }
 
@@ -42,7 +42,7 @@ export const getGrupo = (id) => {
  * @return {Promise}
  */
 export const getNotas = (id, materia) => {
-  const options = getToken('GET', `/api/notas/notas/${id}/${materia}`)
+  const options = getToken('GET', `http://127.0.0.1:8000/api/notas/notas/${id}/${materia}`)
   return axios.request(options)
 }
 
@@ -54,7 +54,7 @@ export const getNotas = (id, materia) => {
  * @return {Promise}
  */
 export const getNotasEstudiante = (id, materia) => {
-  const options = getToken('GET', `/api/notas/estudiante/${id}/${materia}`)
+  const options = getToken('GET', `http://127.0.0.1:8000/api/notas/estudiante/${id}/${materia}`)
   return axios.request(options)
 }
 
@@ -65,7 +65,7 @@ export const getNotasEstudiante = (id, materia) => {
  * @return {Promise}
  */
 export const createNotaGrupo = (data) => {
-  const options = getToken('POST', '/api/notas/')
+  const options = getToken('POST', 'http://127.0.0.1:8000/api/notas/')
   options.data = data
   return axios.request(options)
 }
@@ -77,7 +77,7 @@ export const createNotaGrupo = (data) => {
  * @return {Promise}
  */
 export const createNotaEstudiante = (data) => {
-  const options = getToken('POST', '/api/notas/valor')
+  const options = getToken('POST', 'http://127.0.0.1:8000/api/notas/valor')
   options.data = data
   return axios.request(options)
 }
@@ -90,7 +90,7 @@ export const createNotaEstudiante = (data) => {
  * @return {Promise}
  */
 export const updateNotasGrupo = (id, data) => {
-  const options = getToken('PUT', `/api/notas/${id}`)
+  const options = getToken('PUT', `http://127.0.0.1:8000/api/notas/${id}`)
   options.data = data
   return axios.request(options)
 }
@@ -103,7 +103,7 @@ export const updateNotasGrupo = (id, data) => {
  * @return {Promise}
  */
 export const updateNotasEstudiante = (id, data) => {
-  const options = getToken('PUT', `/api/notas/uptadenotas/${id}`)
+  const options = getToken('PUT', `http://127.0.0.1:8000/api/notas/uptadenotas/${id}`)
   options.data = data
   return axios.request(options)
 }
@@ -115,6 +115,6 @@ export const updateNotasEstudiante = (id, data) => {
  * @return {Promise}
  */
 export const destroy = (id) => {
-  const options = getToken('DELETE', `/api/notas/${id}`)
+  const options = getToken('DELETE', `http://127.0.0.1:8000/api/notas/${id}`)
   return axios.request(options)
 }

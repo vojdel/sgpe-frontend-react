@@ -1,26 +1,21 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faAddressBook, faChild, faHome, faMale, faChalkboard, faSave, faChalkboardTeacher, faMapMarkedAlt, faSchool, faTimes, faUserAlt, faUserTie, faUser, faBars, faDoorClosed } from '@fortawesome/free-solid-svg-icons'
+import { faHome, faSave, faTimes, faUserAlt, faBars, faDoorClosed } from '@fortawesome/free-solid-svg-icons'
 import SiderOption from './SiderOption'
 import PropTypes from 'prop-types'
-import { useLocation } from 'react-router-dom'
 import { useContext, useEffect } from 'react'
 import { AuthContext } from '../../context/AuthContext'
+import { listaMaestro, listaProcesos } from '../../util/roles'
 
 const Siderbar = ({ estilo, handleMenu }) => {
-  const ruta = useLocation()
   const menuLateral = document.querySelector('#sidenav-main')
-  const { auth } = useContext(AuthContext)
-
-  // const tipoUser = window.localStorage.getItem('loggedUser')
-  // const [tipo, setTipo]
+  const { auth, typeUser } = useContext(AuthContext)
+  const tipo = typeUser ?? 0
 
   useEffect(() => {
     if (!auth && menuLateral) {
       menuLateral.classList.add('d-none')
     }
-    // const tipo = JSON.parse(tipoUser).tipo
-    // console.log(tipo)
-  }, [ruta.pathname])
+  }, [auth])
 
   return (
     <aside className={estilo} id="sidenav-main" style={{ background: '#000000' }}>
@@ -40,43 +35,32 @@ const Siderbar = ({ estilo, handleMenu }) => {
         <hr className="horizontal dark mt-0" />
         <div className="collapse navbar-collapse w-auto h-auto" id="sidenav-collapse-main">
           <ul className="navbar-nav">
-            <li className="nav-item mt-3">
-              <h6 className="ps-4 ms-2 text-uppercase text-xs font-weight-bolder opacity-6 text-white">Maestros</h6>
-            </li>
-            <SiderOption nombre="Dirección" collapseOption="collapseDireccion" icon={faAddressBook} />
-            <ul className="navbar-nav collapse" id="collapseDireccion">
-              <SiderOption nombre="Estado" icon={faMapMarkedAlt} list={true} link="/estado" handleMenu={handleMenu} />
-              <SiderOption nombre="Municipio" icon={faMapMarkedAlt} list={true} link="/municipio" handleMenu={handleMenu} />
-            </ul>
-            <SiderOption nombre="Escuela" collapseOption="collapseEscuela" icon={faSchool} />
-            <ul className="navbar-nav collapse" id="collapseEscuela">
-              <SiderOption nombre="Grado" icon={faSchool} list={true} link="/grado" handleMenu={handleMenu} />
-              {
-                // <SiderOption nombre="Salon" icon={faSchool} list={true} link="/salon" />
-              }
-              <SiderOption nombre="Seccion" icon={faSchool} list={true} link="/seccion" handleMenu={handleMenu} />
-              <SiderOption nombre="Periodo Escolar" icon={faSchool} list={true} link="/periodoescolar" handleMenu={handleMenu} />
-              <SiderOption nombre="Materia" icon={faSchool} list={true} link="/materia" handleMenu={handleMenu} />
-            </ul>
-            <SiderOption nombre="Personas" collapseOption="collapsePersona" icon={faMale} />
-            <ul className="navbar-nav collapse" id="collapsePersona">
-              <SiderOption nombre="Estudiante" icon={faChild} list={true} link="/estudiante" handleMenu={handleMenu} />
-              <SiderOption nombre="Personal" icon={faUserTie} list={true} link="/personal" handleMenu={handleMenu} />
-              <SiderOption nombre="Ocupación Laboral" icon={faUserTie} list={true} link="/ocupacionlaboral" handleMenu={handleMenu} />
-              <SiderOption nombre="Representante" icon={faUserTie} list={true} link="/representante" handleMenu={handleMenu} />
-              <SiderOption nombre="Cargo" icon={faUserTie} list={true} link="/cargo" handleMenu={handleMenu} />
-              <SiderOption nombre="Usuarios" icon={faUser} list={true} link="/usuario" handleMenu={handleMenu} />
-            </ul>
+            {tipo !== 2
+              ? <li className="nav-item mt-3">
+                <h6 className="ps-4 ms-2 text-uppercase text-xs font-weight-bolder opacity-6 text-white">Maestros</h6>
+              </li>
+              : null
+            }
+            {listaMaestro.filter(maestro => maestro.can === tipo || tipo === 1).map((maestro, index) => (
+              <div key={index} >
+                <SiderOption nombre={maestro.name} collapseOption={maestro.collapse} icon={maestro.icon} />
+                <ul className="navbar-nav collapse" id={maestro.collapse}>
+                  {maestro.list.filter(m => m.can === tipo || tipo === 1).map((m, index) => (
+                    <SiderOption nombre={m.name} icon={m.icon} list={true} link={m.link} handleMenu={handleMenu} key={index + 50} />
+                  ))}
+                </ul>
+              </div>
+            ))}
             <li className="nav-item mt-3">
               <h6 className="ps-4 ms-2 text-uppercase text-xs font-weight-bolder opacity-6 text-white">Procesos</h6>
             </li>
-            <SiderOption nombre="Inscripción" icon={faChalkboard} list={true} link="/inscripcion" handleMenu={handleMenu} />
-            <SiderOption nombre="Asistencias" icon={faChalkboardTeacher} list={true} link="/asistencia" handleMenu={handleMenu} />
-            <SiderOption nombre="Notas" icon={faChalkboardTeacher} list={true} link="/notas" handleMenu={handleMenu} />
+            {listaProcesos.filter(proceso => proceso.can === tipo || tipo === 1).map((proceso, index) => (
+              <SiderOption nombre={proceso.name} icon={proceso.icon} link={proceso.link} handleMenu={handleMenu} className="ms-0" key={index + 100} />
+            ))}
             <li className="nav-item mt-3">
               <h6 className="ps-4 ms-2 text-uppercase text-xs font-weight-bolder opacity-6 text-white">Account Pages</h6>
             </li>
-            <SiderOption nombre="Respaldo" icon={faSave} link="/backup" handleMenu={handleMenu} />
+            {tipo === 1 ? <SiderOption nombre="Respaldo" icon={faSave} link="/backup" handleMenu={handleMenu} /> : null}
             <SiderOption nombre="Perfil" icon={faUserAlt} link="/" handleMenu={handleMenu} />
             <SiderOption nombre="Logout" icon={faDoorClosed} link="/logout" handleMenu={handleMenu} />
           </ul >

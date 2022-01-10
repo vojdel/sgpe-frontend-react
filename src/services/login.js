@@ -12,7 +12,7 @@ import axios from 'axios'
 export const login = ({ email, password }, resetiar, route, loginIn) => {
   return axios.request({
     method: 'POST',
-    url: '/api/auth/login',
+    url: 'http://127.0.0.1:8000/api/auth/login',
     headers: { 'Content-Type': 'application/json', 'X-Requested-With': 'XMLHttpRequest' },
     data: { email: email[0], password: password[0] }
   }).then((response) => {
@@ -49,7 +49,7 @@ export const logout = (ruta) => {
 
   return axios.request({
     method: 'POST',
-    url: '/api/auth/me',
+    url: 'http://127.0.0.1:8000/api/auth/me',
     headers: {
       'Content-Type': 'application/json',
       'X-Requested-With': 'XMLHttpRequest',
@@ -76,7 +76,7 @@ export const meUser = () => {
 
   return axios.request({
     method: 'POST',
-    url: '/api/auth/me',
+    url: 'http://127.0.0.1:8000/api/auth/me',
     headers: {
       'Content-Type': 'application/json',
       'X-Requested-With': 'XMLHttpRequest',

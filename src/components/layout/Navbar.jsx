@@ -23,7 +23,7 @@ const Navbar = ({ handleSiderHidden, handleMenu }) => {
     console.log(ruta.pathname)
   }, [ruta])
 
-  if (ruta.pathname === '/') {
+  if (auth !== false) {
     return < Menu handleSiderHidden={handleSiderHidden} handleMenu={handleMenu} titulo={titulo} />
   } else {
     return <NavLogin />

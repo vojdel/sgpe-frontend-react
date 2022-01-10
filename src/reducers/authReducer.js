@@ -1,5 +1,5 @@
-const loggedUser = window.localStorage.getItem('loggedUser')
-const logged = JSON.parse(loggedUser)
+const loggedUser = window.localStorage.getItem('loggedUser') || null
+const logged = JSON.parse(loggedUser) || { username: '', tipo: 0 }
 
 /**
  * authReducer.

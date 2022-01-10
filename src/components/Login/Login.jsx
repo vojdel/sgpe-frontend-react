@@ -18,7 +18,6 @@ const Login = () => {
     * @param {any} event
     * */
   const handleChange = (event) => {
-    event.preventDefault()
     setForm({
       ...form,
       [event.target.name]: [event.target.value]

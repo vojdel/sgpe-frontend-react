@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react'
 import { getAll, destroy, search } from '../services/service.js'
+import toast from 'react-hot-toast'
 
 export const useTabla = ({ tabla, init, error }) => {
   const initialPaginacion = {
@@ -34,12 +35,14 @@ export const useTabla = ({ tabla, init, error }) => {
           setData(error)
           setPaginacion(initialPaginacion)
         }
+        toast.success('El Registro se completo!!')
         window.document.body.style.cursor = 'initial'
       })
       .catch(() => {
         setData(error)
         setPaginacion(initialPaginacion)
         window.document.body.style.cursor = 'initial'
+        toast.error('Error al registrar.')
       })
   }
 

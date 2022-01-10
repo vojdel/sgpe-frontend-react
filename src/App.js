@@ -5,6 +5,7 @@ import Siderbar from './components/layout/Siderbar'
 import Navbar from './components/layout/Navbar'
 import './App.css'
 import { AuthContext } from './context/AuthContext'
+import toast, { Toaster } from 'react-hot-toast'
 // import Footer from './components/layout/Footer'
 
 const Municipio = lazy(() => import('./components/Municipio/Municipio'))
@@ -75,12 +76,17 @@ function App() {
 
   useEffect(() => {
     authenticated()
+    toast('Hello User!!', { icon: '👏' })
   }, [])
 
   console.log(context)
   return (
     <div className="g-sidenav-show bg-gray-100 min-vw-100">
       <Router>
+        <Toaster
+          position="top-right"
+          reverseOrder={false}
+        />
         <main
           className="main-content border-radius-lg min-vh-100"
           style={{ marginLeft: '0px' }}>
