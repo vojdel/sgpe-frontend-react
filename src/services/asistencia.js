@@ -1,5 +1,6 @@
 import axios from 'axios'
 import { getToken } from '../util/getToken'
+import { URL_API } from '../util/config'
 
 /**
  * getAll.
@@ -11,7 +12,7 @@ import { getToken } from '../util/getToken'
  * @return {Promise}
  */
 export const getAll = (start, end, month, year) => {
-  const options = getToken('GET', `http://127.0.0.1:8000/api/asistencia/start=${start}&end=${end}&month=${month}&year=${year}`)
+  const options = getToken('GET', `${URL_API}/api/asistencia/start=${start}&end=${end}&month=${month}&year=${year}`)
   return axios.request(options)
 }
 
@@ -22,7 +23,7 @@ export const getAll = (start, end, month, year) => {
  * @return {Promise}
  */
 export const getEmpleados = (edit) => {
-  const options = getToken('GET', `http://127.0.0.1:8000/api/asistencia/empleado/${edit}`)
+  const options = getToken('GET', `${URL_API}/api/asistencia/empleado/${edit}`)
   return axios.request(options)
 }
 
@@ -33,7 +34,7 @@ export const getEmpleados = (edit) => {
  * @return {Promise}
  */
 export const getAllDays = (fecha) => {
-  const options = getToken('GET', `http://127.0.0.1:8000/api/asistencia/allday/${fecha}`)
+  const options = getToken('GET', `${URL_API}/api/asistencia/allday/${fecha}`)
   return axios.request(options)
 }
 
@@ -44,7 +45,7 @@ export const getAllDays = (fecha) => {
  * @return {Promise}
  */
 export const getOne = (id) => {
-  const options = getToken('GET', `http://127.0.0.1:8000/api/asistencia/${id}`)
+  const options = getToken('GET', `${URL_API}/api/asistencia/${id}`)
   return axios.request(options)
 }
 
@@ -55,7 +56,7 @@ export const getOne = (id) => {
  * @return {Promise}
  */
 export const create = (data) => {
-  const options = getToken('POST', 'http://127.0.0.1:8000/api/asistencia/')
+  const options = getToken('POST', `${URL_API}/api/asistencia/`)
   options.data = data
 
   return axios.request(options)
@@ -69,7 +70,7 @@ export const create = (data) => {
  * @return {Promise}
  */
 export const update = (id, data) => {
-  const options = getToken('PUT', `http://127.0.0.1:8000/api/asistencia/${id}`)
+  const options = getToken('PUT', `${URL_API}/api/asistencia/${id}`)
   options.data = data
 
   return axios.request(options)
@@ -82,6 +83,6 @@ export const update = (id, data) => {
  * @return {Promise}
  */
 export const destroy = (id) => {
-  const options = getToken('DELETE', `http://127.0.0.1:8000/api/asistencia/${id}`)
+  const options = getToken('DELETE', `${URL_API}/api/asistencia/${id}`)
   return axios.request(options)
 }

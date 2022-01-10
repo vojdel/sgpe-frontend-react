@@ -1,5 +1,6 @@
 import axios from 'axios'
 import { getToken } from '../util/getToken'
+import { URL_API } from '../util/config'
 
 /**
  * getEstudiante.
@@ -9,7 +10,7 @@ import { getToken } from '../util/getToken'
  * @returns {Promise} El estudiante
  */
 export const getEstudiante = (cedula) => {
-  const options = getToken('GET', `http://127.0.0.1:8000/api/inscripcion/estudiante/${cedula}`)
+  const options = getToken('GET', `${URL_API}/api/inscripcion/estudiante/${cedula}`)
   return axios.request(options)
 }
 
@@ -21,6 +22,6 @@ export const getEstudiante = (cedula) => {
  * @returns {Promise} El Representante
  */
 export const getRepresentante = (cedula) => {
-  const options = getToken('GET', `http://127.0.0.1:8000/api/inscripcion/representante/${cedula}`)
+  const options = getToken('GET', `${URL_API}/api/inscripcion/representante/${cedula}`)
   return axios.request(options)
 }

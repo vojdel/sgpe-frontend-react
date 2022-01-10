@@ -1,5 +1,6 @@
 import axios from 'axios'
 import { getToken } from '../util/getToken'
+import { URL_API } from '../util/config'
 
 /**
  * getAll.
@@ -9,7 +10,7 @@ import { getToken } from '../util/getToken'
  * @return {Promise} los estados
  */
 export const getAll = (ruta) => {
-  const options = getToken('GET', `http://127.0.0.1:8000/api/${ruta}`)
+  const options = getToken('GET', `${URL_API}/api/${ruta}`)
   return axios.request(options)
 }
 
@@ -22,7 +23,7 @@ export const getAll = (ruta) => {
  * @return {Promise} los estados
  */
 export const search = (ruta, busqueda) => {
-  const options = getToken('GET', `http://127.0.0.1:8000/api/${ruta}/busqueda=${busqueda}`)
+  const options = getToken('GET', `${URL_API}/api/${ruta}/busqueda=${busqueda}`)
   return axios.request(options)
 }
 
@@ -36,7 +37,7 @@ export const search = (ruta, busqueda) => {
  * @return {Promise}
  */
 export const getOne = (id, ruta) => {
-  const options = getToken('GET', `http://127.0.0.1:8000/api/${ruta}/${id}`)
+  const options = getToken('GET', `${URL_API}/api/${ruta}/${id}`)
   return axios.request(options).then((response) => {
     console.log(response.data)
     return response.data
@@ -56,7 +57,7 @@ export const getOne = (id, ruta) => {
  * @return {Promise}
  */
 export const create = (ruta, data) => {
-  const options = getToken('POST', `http://127.0.0.1:8000/api/${ruta}`)
+  const options = getToken('POST', `${URL_API}/api/${ruta}`)
   options.data = data
   return axios.request(options).then((response) => {
     console.log(response.data)
@@ -76,7 +77,7 @@ export const create = (ruta, data) => {
  * @return {Promise}
  */
 export const update = (id, ruta, data) => {
-  const options = getToken('PUT', `http://127.0.0.1:8000/api/${ruta}/${id}`)
+  const options = getToken('PUT', `${URL_API}/api/${ruta}/${id}`)
   options.data = data
   return axios.request(options).then((response) => {
     console.log(response.data)
@@ -97,7 +98,7 @@ export const update = (id, ruta, data) => {
  * @return {Promise}
  */
 export const destroy = (id, ruta) => {
-  const options = getToken('DELETE', `http://127.0.0.1:8000/api/${ruta}/${id}`)
+  const options = getToken('DELETE', `${URL_API}/api/${ruta}/${id}`)
   return axios.request(options).then((response) => {
     console.log(response.data)
     return response.data
@@ -117,7 +118,7 @@ export const destroy = (id, ruta) => {
  * @return {Promise}
  */
 export const download = (id, ruta) => {
-  const options = getToken('GET', `http://127.0.0.1:8000/api/${ruta}/${id}`)
+  const options = getToken('GET', `${URL_API}/api/${ruta}/${id}`)
   return axios.request(options)
 }
 
@@ -131,7 +132,7 @@ export const download = (id, ruta) => {
  * @return {Promise}
  */
 export const graficoAnio = (ruta, data) => {
-  const options = getToken('POST', `http://127.0.0.1:8000/api/${ruta}`)
+  const options = getToken('POST', `${URL_API}/api/${ruta}`)
   options.data = data
   return axios.request(options)
 }

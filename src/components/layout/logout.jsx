@@ -20,7 +20,6 @@ const Logout = () => {
 
   return (
     <div>
-      <h2>Gracias por usar esta aplicación</h2>
     </div>
   )
 }
