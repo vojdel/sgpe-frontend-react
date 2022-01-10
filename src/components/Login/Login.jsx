@@ -88,7 +88,7 @@ const Login = () => {
                       <div className="card-footer text-center pt-0 px-lg-2 px-1 border-white">
                         <p className="mb-4 text-sm mx-auto">¿No te acuerdas tu contraseña?
                           <br />
-                          <Link to="/recuperarcontrasena" className="text-info text-gradient font-weight-bold">Recuperar Contraseña</Link>
+                          <Link to="/verificarcorreo" className="text-info text-gradient font-weight-bold">Recuperar Contraseña</Link>
                         </p>
                       </div>
                     </div>

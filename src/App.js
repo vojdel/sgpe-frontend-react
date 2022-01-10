@@ -33,6 +33,7 @@ const Asistencia = lazy(() => import('./components/Asistencia/Asistencia'))
 const Notas = lazy(() => import('./components/Notas/Notas'))
 const NotasEstudiante = lazy(() => import('./components/Notas/NotasEstudiantes'))
 const Backup = lazy(() => import('./components/Backup/Backup'))
+const VerificarCorreo = lazy(() => import('./components/RecuperarContrasena/VerificarCorreo'))
 const RecuperarContrasena = lazy(() => import('./components/RecuperarContrasena'))
 
 // eslint-disable-next-line space-before-function-paren
@@ -105,7 +106,11 @@ function App() {
                 return auth ? <Redirect to="/" /> : <Login />
               }} exact>
               </Route>
-              <Route path="/recuperarcontrasena" render={() => {
+              <Route path="/verificarcorreo" render={() => {
+                return auth ? <Redirect to="/" /> : <VerificarCorreo />
+              }} exact>
+              </Route>
+              <Route path="/recuperarcontrasena/:id" render={() => {
                 return auth ? <Redirect to="/" /> : <RecuperarContrasena />
               }} exact>
               </Route>
