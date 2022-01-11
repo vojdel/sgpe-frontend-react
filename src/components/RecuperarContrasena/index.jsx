@@ -1,10 +1,16 @@
 import { useHistory, useParams } from 'react-router-dom'
 import axios from 'axios'
 import { URL_API } from '../../util/config'
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import toast from 'react-hot-toast'
 
 const RecuperarContrasena = () => {
+  const INITIAL_ERRORS = {
+    respuesta: '',
+    password: '',
+    password2: ''
+  }
+
   const history = useHistory()
   const { id } = useParams()
 
@@ -14,6 +20,7 @@ const RecuperarContrasena = () => {
     password: '',
     password2: ''
   })
+  const [errors, setErrors] = useState(INITIAL_ERRORS)
 
   const handleChange = (event) => {
     event.preventDefault()
@@ -28,24 +35,39 @@ const RecuperarContrasena = () => {
     event.preventDefault()
     if (verificar.password !== verificar.password2) {
       toast.error('Deben coincidir las Contraseñas')
+      setErrors('Deben coincidir las Contraseñas')
       return 0
     }
-    if (verificar.pregunta === '' || verificar.respuesta === '') {
-      toast.error('Deben coincidir las Contraseñas')
+    if (verificar.respuesta === '') {
+      toast.error('Las Campos Respuesta es obligatorio')
+      setErrors(INITIAL_ERRORS)
       return 0
     }
-    axios.post(URL_API + '/api/auth/nuevacontraseña/' + id, verificar)
-      .then(response => response.data)
-      .then(data => {
-        history.push('/signin')
+
+    setErrors(INITIAL_ERRORS)
+
+    axios.post(URL_API + '/api/auth/recuperarcontrasena/' + id, verificar)
+      .then(() => {
+        window.localStorage.removeItem('questOfUser')
         toast.success('Se creo una nueva Contraseña')
-        console.log(data)
+        history.push('/signin')
       })
       .catch(err => {
-        console.log(err)
+        const errores = err.response.data.errors
         toast.error('No se pudo crear una nueva contraseña')
+        setErrors({ ...errors, ...errores })
       })
   }
+
+  useEffect(() => {
+    const pregunta = window.localStorage.getItem('questOfUser') || null
+
+    if (!pregunta) {
+      history.push('/verificarcorreo')
+    }
+
+    setVerificar({ ...verificar, pregunta: pregunta })
+  }, [])
 
   return (
     <div className="container d-flex justify-content-center align-items-center">
@@ -56,22 +78,25 @@ const RecuperarContrasena = () => {
             <div className="mb-3">
               <label className="form-label" htmlFor="pregunta">Pregunta de Seguridad:</label>
               <input className="form-control" type="text" id="pregunta" placeholder="ejmplo: ¿Mi color favorito?"
-                value={verificar.pregunta} onChange={handleChange} />
+                value={verificar.pregunta} disabled />
             </div>
             <div className="mb-3">
               <label className="form-label" htmlFor="respuesta">Respuesta:</label>
-              <input className="form-control" type="text" id="respuesta" placeholder="ejemplo: Azul"
+              <input className="form-control" type="text" id="respuesta" name="respuesta" placeholder="ejemplo: Azul"
                 value={verificar.respuesta} onChange={handleChange} />
+              {errors.respuesta ? <div>{errors.respuesta}</div> : null}
             </div>
             <div className="mb-3">
               <label className="form-label" htmlFor="contrasena">Nueva Contraseña</label>
-              <input className="form-control" type="password" id="contrasena"
+              <input className="form-control" type="password" id="contrasena" name="password"
                 value={verificar.password} onChange={handleChange} />
+              {errors.password ? <div>{errors.password}</div> : null}
             </div>
             <div className="mb-3">
               <label className="form-label" htmlFor="contrasena2">Repetir Nueva Contraseña</label>
-              <input className="form-control" type="password" id="contrasena2"
+              <input className="form-control" type="password" id="contrasena2" name="password2"
                 value={verificar.password2} onChange={handleChange} />
+              {errors.password2 ? <div>{errors.password2}</div> : null}
             </div>
             <div className="d-flex justify-content-end">
               <button type="submit" className="btn btn-primary d-flex justify-content-end"

@@ -106,11 +106,11 @@ function App() {
                 return auth ? <Redirect to="/" /> : <Login />
               }} exact>
               </Route>
-              <Route path="/verificarcorreo" render={() => {
+              <Route path="/verificarcorreo" exact render={() => {
                 return auth ? <Redirect to="/" /> : <VerificarCorreo />
               }} exact>
               </Route>
-              <Route path="/recuperarcontrasena/:id" render={() => {
+              <Route path="/recuperarcontrasena/:id" exact render={() => {
                 return auth ? <Redirect to="/" /> : <RecuperarContrasena />
               }} exact>
               </Route>

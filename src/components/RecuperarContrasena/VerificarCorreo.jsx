@@ -2,6 +2,7 @@ import { useHistory } from 'react-router-dom'
 import axios from 'axios'
 import { URL_API } from '../../util/config'
 import { useState } from 'react'
+import toast from 'react-hot-toast'
 
 const VerificarCorreo = () => {
   const history = useHistory()
@@ -19,9 +20,16 @@ const VerificarCorreo = () => {
     axios.post(URL_API + '/api/auth/verificarcorreo', { email: email })
       .then(response => response.data)
       .then(data => {
+        toast.success('Correo verificado')
+        window.localStorage.setItem('questOfUser', data.pregunta)
         history.push('/recuperarcontrasena/' + data.id)
       })
-      .catch(err => setError(err))
+      .catch(err => {
+        // console.log({ err })
+        const { msg } = err.response.data
+        setError(msg)
+        toast.error('Correo Invalido')
+      })
   }
 
   return (
@@ -34,7 +42,7 @@ const VerificarCorreo = () => {
               <label className="form-label" htmlFor="email">Correo:</label>
               <input className="form-control" type="email" id="email" name="email" value={email} onChange={handleChange}
                 placeholder="correo@correo.com" aria-describedby="emailHelp" />
-              <span className="text-sm text-muted">{{ error }}</span>
+              <span className="text-sm text-muted" style={{ color: '#f10' }}>{error}</span>
               <div id="emailHelp" className="form-text">
                 Debe escribir el correo electronico para poder recuperar la contraseña
               </div>
