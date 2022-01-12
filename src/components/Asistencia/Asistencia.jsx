@@ -9,6 +9,7 @@ import { faPlus } from '@fortawesome/free-solid-svg-icons'
 import ModalAsistencia from './ModalAsistencia'
 import { getAll } from '../../services/asistencia.js'
 import { Modal } from 'bootstrap'
+import { URL_API } from '../../util/config'
 
 const Asistencia = () => {
   const [event, setEvent] = useState([])
@@ -68,6 +69,7 @@ const Asistencia = () => {
     <div className="row w-100 justify-content-md-center">
       <div className="row my-3 ps-5 justify-content-end bg-white">
         <div className="col-md-1 text-end">
+          <a href={URL_API + '/api/reporte/asistencia/' + moment().year + 'emplaedo=0'} className="btn btn-success"></a>
           <button type="button" className="btn bg-gradient-info btn-block" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
             <FontAwesomeIcon icon={faPlus} className="text-white" />
           </button>

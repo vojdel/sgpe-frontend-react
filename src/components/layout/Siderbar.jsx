@@ -62,13 +62,13 @@ const Siderbar = ({ estilo, handleMenu }) => {
             </li>
             <SiderOption nombre="Inscripciones" icon={faFilePdf} link="/" handleMenu={handleMenu} />
             <SiderOption nombre="Notas" icon={faFilePdf} link="/" handleMenu={handleMenu} />
-            <SiderOption nombre="Asistencia" icon={faFilePdf} faFilePdf link="/" handleMenu={handleMenu} />
             <li className="nav-item mt-3">
               <h6 className="ps-4 ms-2 text-uppercase text-xs font-weight-bolder opacity-6 text-white">Account Pages</h6>
             </li>
             {tipo === 1 ? <SiderOption nombre="Respaldo" icon={faSave} link="/backup" handleMenu={handleMenu} /> : null}
-            <SiderOption nombre="Perfil" icon={faUserAlt} link="/" handleMenu={handleMenu} />
-            <SiderOption nombre="Logout" icon={faDoorClosed} link="/logout" handleMenu={handleMenu} />
+            {//<SiderOption nombre="Configuaricones" icon={faSave} faFilePdf link="/" handleMenu={handleMenu} />}
+              {//<SiderOption nombre="Perfil" icon={faUserAlt} link="/" handleMenu={handleMenu} />}
+            < SiderOption nombre="Logout" icon={faDoorClosed} link="/logout" handleMenu={handleMenu} />
           </ul >
         </div >
       </div >
