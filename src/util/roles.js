@@ -30,7 +30,7 @@ export const listaMaestro = [
     can: 3,
     list: [
       { name: 'Estudiante', icon: faChild, link: '/estudiante', can: 3 },
-      { name: 'Personal', icon: faUserTie, link: '/ocupacionlaboral', can: 1 },
+      { name: 'Personal', icon: faUserTie, link: '/personal', can: 1 },
       { name: 'Ocupación Laboral', icon: faUserTie, link: '/ocupacionlaboral', can: 1 },
       { name: 'Representante', icon: faUserTie, link: '/representante', can: 1 },
       { name: 'Cargo', icon: faUserTie, link: '/cargo', can: 1 },

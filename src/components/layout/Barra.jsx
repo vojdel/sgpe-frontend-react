@@ -1,8 +1,9 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faPlus, faArrowLeft } from '@fortawesome/free-solid-svg-icons'
 import PropTypes from 'prop-types'
+import { URL_API } from '../../util/config'
 
-const Barra = ({ buscando, busqueda, limit, handleChange, handleSearch, handleButtonBack, handleLimit }) => {
+const Barra = ({ buscando, busqueda, limit, handleChange, handleSearch, handleButtonBack, handleLimit, reporte }) => {
   return (
     <>
       {(buscando)
@@ -15,12 +16,12 @@ const Barra = ({ buscando, busqueda, limit, handleChange, handleSearch, handleBu
       }
       <div
         className={(buscando)
-          ? 'col-md-8 bg-white border-radius-lg d-flex me-2'
-          : 'col-md-9 bg-white border-radius-lg d-flex me-2'}>
+          ? 'col-md-7 bg-white border-radius-lg d-flex me-2'
+          : 'col-md-8 bg-white border-radius-lg d-flex me-2'}>
         <input type="text" className="form-control border-0 ps-3" placeholder="Type here..." value={busqueda} onChange={handleChange} />
         <button className="btn bg-gradient-primary my-1 me-1" onClick={handleSearch}>Search</button>
       </div>
-      <div className="col-md-1 col-12">
+      <div className="col-md-1 col-11">
         <select className="form-select" value={limit} onChange={handleLimit}>
           <option value="10">10</option>
           <option value="25">25</option>
@@ -28,8 +29,11 @@ const Barra = ({ buscando, busqueda, limit, handleChange, handleSearch, handleBu
           <option value="100">100</option>
         </select>
       </div>
-      <div className="col-md-1 text-end">
-        <button type="button" className="btn bg-gradient-info btn-block" data-bs-toggle="modal" data-bs-target="#staticBackdrop" style={{ cursor: 'copy' }}>
+      <div className="col-md-2 d-flex justify-content-between">
+        <a className="btn btn-primary fw-bold"
+          href={URL_API + '/api/reporte/' + reporte} title="Exportar pdf">Exportar</a>
+        <button type="button" className="btn bg-gradient-info btn-block" data-bs-toggle="modal"
+          data-bs-target="#staticBackdrop" style={{ cursor: 'copy' }} title="Crear Registro">
           <FontAwesomeIcon icon={faPlus} className="text-white" />
         </button>
       </div>
@@ -40,11 +44,12 @@ const Barra = ({ buscando, busqueda, limit, handleChange, handleSearch, handleBu
 Barra.propTypes = {
   buscando: PropTypes.bool.isRequired,
   busqueda: PropTypes.string.isRequired,
-  limit: PropTypes.string.isRequired,
+  limit: PropTypes.number.isRequired,
   handleChange: PropTypes.func.isRequired,
   handleSearch: PropTypes.func.isRequired,
   handleLimit: PropTypes.func.isRequired,
-  handleButtonBack: PropTypes.func.isRequired
+  handleButtonBack: PropTypes.func.isRequired,
+  reporte: PropTypes.string.isRequired
 }
 
 export default Barra

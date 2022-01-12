@@ -31,8 +31,7 @@ const Inscripcion = () => {
   const handleSearch = (event) => {
     event.preventDefault()
     search('inscripcion', busqueda)
-      .then(function (response) {
-        console.log(response.data)
+      .then((response) => {
         return response.data
       }).then(data => {
         setInscritos(data)
@@ -54,7 +53,6 @@ const Inscripcion = () => {
     getAll('inscripcion').then((response) => {
       return response.data
     }).then((data) => {
-      console.log(data)
       if (data.length !== 0) {
         setInscritos(data)
       } else {

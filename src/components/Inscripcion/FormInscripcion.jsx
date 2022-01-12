@@ -7,6 +7,7 @@ import { object } from 'yup'
 import { getAllEmpleados, getAllGrados, getAllSecciones, getAllPeriodoEscolares, getAllParentescos } from '../../services/cbbx'
 import { getEstudiante, getRepresentante } from '../../services/inscripciones'
 import { InscripcionSchema, InscripcionNextSchema, InscripcionNextTwoSchema } from './InscripcionSchema'
+import toast from 'react-hot-toast'
 
 const FormInscripcion = () => {
   const history = useHistory()
@@ -130,7 +131,6 @@ const FormInscripcion = () => {
       }
     }, 1000)
     getAllPeriodoEscolares().then(response => {
-      console.log(response.data)
       setPeriodoEscolar(response.data)
     }).catch(() => {
       setPeriodoEscolar([{
@@ -140,7 +140,6 @@ const FormInscripcion = () => {
       }])
     })
     getAllGrados().then(response => {
-      console.log(response.data)
       setGrados(response.data)
     }).catch(() => {
       setGrados([{
@@ -149,7 +148,6 @@ const FormInscripcion = () => {
       }])
     })
     getAllParentescos().then(response => {
-      console.log(response.data)
       setParentescos(response.data)
     }).catch(() => {
       setParentescos([{
@@ -158,7 +156,6 @@ const FormInscripcion = () => {
       }])
     })
     getAllEmpleados().then(response => {
-      console.log(response.data)
       setEmpleados(response.data)
     }).catch(() => {
       setEmpleados([{
@@ -176,7 +173,6 @@ const FormInscripcion = () => {
       getAllSecciones(inscripcion.grado).then(response => {
         setSecciones(response.data)
       }).catch(errors => {
-        console.log({ errors })
         setSecciones([{
           id: 0,
           secciones: ''
@@ -222,8 +218,6 @@ const FormInscripcion = () => {
       setErrors,
       classList
     )
-
-    console.log(`${name}: ${value}`)
   }
 
   const handleChangeCedula = ({ target }) => {
@@ -232,8 +226,6 @@ const FormInscripcion = () => {
       ...inscripcion,
       [name]: value
     })
-    console.log(`${name}: ${value}`)
-    console.log(inscripcion)
   }
 
   const salir = (event) => {
@@ -260,7 +252,6 @@ const FormInscripcion = () => {
     event.preventDefault()
 
     getEstudiante(inscripcion.estudiante_cedula).then(response => {
-      console.log(response.data)
       return response.data
     }).then(data => {
       if (data) {
@@ -289,7 +280,6 @@ const FormInscripcion = () => {
     event.preventDefault()
 
     getRepresentante(inscripcion.representante_cedula).then(response => {
-      console.log(response.data)
       return response.data
     }).then(data => {
       if (data) {
@@ -326,7 +316,8 @@ const FormInscripcion = () => {
         seccion: inscripcion.seccion,
         parentesco: inscripcion.parentesco
       }).then(response => {
-        console.log(response)
+        toast.success('Se creó la inscripcion de: ' + inscripcion.estudiante.nombre + ' ' + inscripcion.estudiante.apellido)
+        handleTabs('estudiante', 'inscripcion')
         clean()
       })
     } else {
@@ -339,7 +330,8 @@ const FormInscripcion = () => {
         seccion: inscripcion.seccion,
         parentesco: inscripcion.parentesco
       }).then(response => {
-        console.log(response)
+        toast.success('Se modificó la inscripcion de: ' + inscripcion.estudiante.nombre + ' ' + inscripcion.estudiante.apellido)
+        handleTabs('estudiante', 'inscripcion')
         clean()
       })
     }

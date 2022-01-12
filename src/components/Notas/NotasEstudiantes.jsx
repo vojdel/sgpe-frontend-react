@@ -3,6 +3,7 @@ import { getNotas } from '../../services/notas.js'
 import TablaNotasEstudiante from './TablaNotasEstudiante'
 import ModalNotas from './ModalNotas'
 import { useParams, useHistory } from 'react-router-dom'
+import toast from 'react-hot-toast'
 
 const NotasEstudiantes = () => {
   const initialNotas = {
@@ -37,8 +38,8 @@ const NotasEstudiantes = () => {
   const [materia, setMateria] = useState(0)
 
   useEffect(() => {
-    console.log(grupoId, materiaId)
     getNotas(grupoId, materiaId).then(response => {
+      toast.success('Se cargaron las notas de la evaluación')
       setNotas(response.data)
     })
   }, [])

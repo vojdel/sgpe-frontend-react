@@ -3,6 +3,7 @@ import { EstadoSchema } from './EstadoSchema'
 import { validaciones, esValido, cleanForm } from '../../util/validations.js'
 import PropTypes from 'prop-types'
 import { getOne, create, update } from '../../services/service.js'
+import toast from 'react-hot-toast'
 
 /**
  * Form.
@@ -62,6 +63,7 @@ const Form = ({ id, setRegistro, changeId }) => {
       create('estado', {
         estado: estado.states
       }).then(data => {
+        toast.success('Se creó el registro: ' + estado.states)
         clean()
         console.log(data)
         setRegistro()
@@ -71,6 +73,7 @@ const Form = ({ id, setRegistro, changeId }) => {
       update(id, 'estado', {
         estado: estado.states
       }).then(data => {
+        toast.success('Se modificó el registro ' + estado.states)
         clean()
         console.log(data)
         setRegistro()

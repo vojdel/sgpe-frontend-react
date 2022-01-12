@@ -50,6 +50,7 @@ const Materia = () => {
           handleSearch={handleSearch}
           handleButtonBack={handleButtonBack}
           handleLimit={handleLimit}
+          reporte={'materia'}
         />
         <FormMateria
           id={id}

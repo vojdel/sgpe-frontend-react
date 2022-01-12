@@ -3,6 +3,7 @@ import { GradoSchema } from './GradoSchema'
 import { validaciones, esValido, cleanForm } from '../../util/validations.js'
 import { getOne, create, update } from '../../services/service.js'
 import PropTypes from 'prop-types'
+import toast from 'react-hot-toast'
 
 /**
  * FormGrado.
@@ -60,8 +61,8 @@ const FormGrado = ({ id, setRegistro, changeId }) => {
       create('grado', {
         grado: grado.grados
       }).then(data => {
+        toast.success('Se creó el registro: ' + grado.grados)
         clean()
-        console.log(data)
         setRegistro()
         setValido(false)
       })
@@ -69,6 +70,7 @@ const FormGrado = ({ id, setRegistro, changeId }) => {
       update(id, 'grado', {
         grado: grado.grados
       }).then(data => {
+        toast.success('Se modificó el registro ' + grado.grados)
         clean()
         console.log(data)
         setRegistro()

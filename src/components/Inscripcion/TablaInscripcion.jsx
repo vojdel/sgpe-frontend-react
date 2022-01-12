@@ -3,6 +3,7 @@ import { faPenAlt, faTrashAlt } from '@fortawesome/free-solid-svg-icons'
 import PropTypes from 'prop-types'
 import { getAll, destroy } from '../../services/service.js'
 import { useHistory } from 'react-router-dom'
+import toast from 'react-hot-toast'
 
 const TablaInscripcion = ({ nombres, datas, changeRegistro }) => {
   const history = useHistory()
@@ -10,7 +11,7 @@ const TablaInscripcion = ({ nombres, datas, changeRegistro }) => {
   const handleDelete = (event, id) => {
     event.preventDefault()
     destroy(id, 'inscripcion').then(data => {
-      console.log(data)
+      toast.success('Se elimino la inscripción')
       getAll('inscripcion').then(response => {
         changeRegistro(response.data)
       })
@@ -30,7 +31,7 @@ const TablaInscripcion = ({ nombres, datas, changeRegistro }) => {
             <tr>
               {nombres.map((nombre, index) => {
                 return (
-                  <th className="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7" key={ index } >{nombre}</th>
+                  <th className="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7" key={index} >{nombre}</th>
                 )
               })}
             </tr>

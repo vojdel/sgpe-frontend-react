@@ -22,10 +22,10 @@ const Asistencia = () => {
    * @param {any} arg
    */
   const handleDateClick = (arg) => {
-    console.log({ arg })
     setFecha(arg.dateStr)
     const modal = new Modal(document.getElementById('staticBackdrop'))
     modal.show()
+    console.log(arg.dateStr)
   }
 
   const calendarToday = () => {
@@ -45,14 +45,12 @@ const Asistencia = () => {
     const end = parseInt(moment(date.startStr).add(1, 'month').endOf('month').format('DD'))
     const mes = moment(date.startStr).add(1, 'month').format('MM')
     const year = (parseInt(moment(date.start).add(1, 'month').format('YYYY')))
-    console.log(date)
     getAll(
       '01',
       end,
       mes,
       year
     ).then(response => {
-      console.log(response)
       setEvent(response.data)
     })
   }

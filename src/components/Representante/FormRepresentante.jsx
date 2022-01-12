@@ -4,6 +4,7 @@ import { validaciones, esValido, cleanForm } from '../../util/validations.js'
 import PropTypes from 'prop-types'
 import { getOne, create, update } from '../../services/service.js'
 import { getAllEstado, getAllMunicpios, getAllOcupaciones } from '../../services/cbbx'
+import toast from 'react-hot-toast'
 
 /**
  * FormRepresentante.
@@ -57,7 +58,6 @@ const FormRepresentante = ({ id, setRegistro, changeId }) => {
 
   useEffect(() => {
     getAllEstado().then(response => {
-      console.log(response.data)
       setEstados(response.data)
     }).catch(() => {
       setEstados([{
@@ -66,7 +66,6 @@ const FormRepresentante = ({ id, setRegistro, changeId }) => {
       }])
     })
     getAllOcupaciones().then(response => {
-      console.log(response.data)
       setOcupaciones(response.data)
     }).catch(() => {
       setOcupaciones([{
@@ -88,7 +87,6 @@ const FormRepresentante = ({ id, setRegistro, changeId }) => {
   useEffect(() => {
     if (representante.states !== 0) {
       getAllMunicpios(representante.states).then(response => {
-        console.log(response.data)
         setMunicipios(response.data)
       }).catch(() => {
         setMunicipios([{
@@ -144,9 +142,8 @@ const FormRepresentante = ({ id, setRegistro, changeId }) => {
         municipio: representante.municipality,
         ocupacion_laboral: representante.ocupacion_laboral
       }).then(response => {
+        toast.success('Se creó el registro: ' + representante.nombre + ' ' + representante.apellido)
         clean()
-        console.log(response)
-        console.log(response.data)
         setRegistro()
         setValido(false)
       })
@@ -161,8 +158,8 @@ const FormRepresentante = ({ id, setRegistro, changeId }) => {
         municipio: representante.municipality,
         ocupacion_laboral: representante.ocupacion_laboral
       }).then(response => {
+        toast.success('Se modificó el registro: ' + representante.nombre + ' ' + representante.apellido)
         clean()
-        console.log(response)
         setRegistro()
         setValido(false)
       })

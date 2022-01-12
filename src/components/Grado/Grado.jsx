@@ -50,6 +50,7 @@ const Grado = () => {
           handleSearch={handleSearch}
           handleButtonBack={handleButtonBack}
           handleLimit={handleLimit}
+          reporte={'grado'}
         />
         <FormGrado
           id={id}
@@ -60,7 +61,7 @@ const Grado = () => {
       <Tabla
         nombres={nombres}
         datas={data}
-        campos={['id', 'states']}
+        campos={['id', 'grados']}
         handleDelete={handleDelete}
         handleId={handleId}
         handlePaginacion={handlePaginacion}

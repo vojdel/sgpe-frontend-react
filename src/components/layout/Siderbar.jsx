@@ -1,5 +1,5 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faHome, faSave, faTimes, faUserAlt, faBars, faDoorClosed } from '@fortawesome/free-solid-svg-icons'
+import { faHome, faSave, faTimes, faUserAlt, faBars, faDoorClosed, faFilePdf } from '@fortawesome/free-solid-svg-icons'
 import SiderOption from './SiderOption'
 import PropTypes from 'prop-types'
 import { useContext, useEffect } from 'react'
@@ -57,6 +57,12 @@ const Siderbar = ({ estilo, handleMenu }) => {
             {listaProcesos.filter(proceso => proceso.can === tipo || tipo === 1).map((proceso, index) => (
               <SiderOption nombre={proceso.name} icon={proceso.icon} link={proceso.link} handleMenu={handleMenu} className="ms-0" key={index + 100} />
             ))}
+            <li className="nav-item mt-3">
+              <h6 className="ps-4 ms-2 text-uppercase text-xs font-weight-bolder opacity-6 text-white">Reportes</h6>
+            </li>
+            <SiderOption nombre="Inscripciones" icon={faFilePdf} link="/" handleMenu={handleMenu} />
+            <SiderOption nombre="Notas" icon={faFilePdf} link="/" handleMenu={handleMenu} />
+            <SiderOption nombre="Asistencia" icon={faFilePdf} faFilePdf link="/" handleMenu={handleMenu} />
             <li className="nav-item mt-3">
               <h6 className="ps-4 ms-2 text-uppercase text-xs font-weight-bolder opacity-6 text-white">Account Pages</h6>
             </li>

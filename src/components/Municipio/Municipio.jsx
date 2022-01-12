@@ -48,6 +48,7 @@ const Municipio = () => {
           handleSearch={handleSearch}
           handleButtonBack={handleButtonBack}
           handleLimit={handleLimit}
+          reporte={'municipio'}
         />
         <Form
           id={id}

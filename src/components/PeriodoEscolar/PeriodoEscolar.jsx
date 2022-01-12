@@ -48,6 +48,7 @@ const PeriodoEscolar = () => {
           handleSearch={handleSearch}
           handleButtonBack={handleButtonBack}
           handleLimit={handleLimit}
+          reporte={'periodoescolar'}
         />
         <Form
           id={id}

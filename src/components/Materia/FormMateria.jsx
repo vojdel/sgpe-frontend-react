@@ -3,6 +3,8 @@ import { MateriaSchema } from './MateriaSchema'
 import { validaciones, esValido, cleanForm } from '../../util/validations.js'
 import { getOne, create, update } from '../../services/service.js'
 import PropTypes from 'prop-types'
+import toast from 'react-hot-toast'
+
 /**
  * FormMateria.
  * @returns Modal de Materia
@@ -69,8 +71,8 @@ const FormMateria = ({ id, setRegistro, changeId }) => {
       create('materia', {
         materia: materia.materia
       }).then(data => {
+        toast.success('Se creó el registro: ' + materia.materia)
         clean()
-        console.log(data)
         setRegistro()
         setValido(false)
       })
@@ -78,8 +80,8 @@ const FormMateria = ({ id, setRegistro, changeId }) => {
       update(id, 'materia', {
         materia: materia.materia
       }).then(data => {
+        toast.success('Se modificó el registro: ' + materia.materia)
         clean()
-        console.log(data)
         setRegistro()
         setValido(false)
       })

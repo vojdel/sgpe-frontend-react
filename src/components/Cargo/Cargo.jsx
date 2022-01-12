@@ -50,6 +50,7 @@ const Cargo = () => {
           handleSearch={handleSearch}
           handleButtonBack={handleButtonBack}
           handleLimit={handleLimit}
+          reporte={'cargo'}
         />
         <FormCargo
           id={id}

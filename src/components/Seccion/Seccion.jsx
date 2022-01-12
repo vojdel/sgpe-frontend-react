@@ -52,6 +52,7 @@ const Seccion = () => {
           handleSearch={handleSearch}
           handleButtonBack={handleButtonBack}
           handleLimit={handleLimit}
+          reporte={'seccion'}
         />
         <FormSeccion
           id={id}

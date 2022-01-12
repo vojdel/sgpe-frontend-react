@@ -50,6 +50,7 @@ const Representante = () => {
           handleSearch={handleSearch}
           handleButtonBack={handleButtonBack}
           handleLimit={handleLimit}
+          reporte={'representante'}
         />
         <FormRepresentante
           id={id}

@@ -5,6 +5,7 @@ import PropTypes from 'prop-types'
 import { getAll, getGrupo, createNotaGrupo, updateNotasGrupo } from '../../services/notas.js'
 import { getAllGrados, getAllSecciones, getAllEmpleados, getAllMateria, getAllPeriodoEscolares } from '../../services/cbbx.js'
 import { object } from 'yup'
+import toast from 'react-hot-toast'
 
 /**
  * Form.
@@ -50,6 +51,7 @@ const FormNotasGrupo = ({ id, setRegistro, changeId }) => {
         setNotas(data)
       }).catch(err => {
         console.log(err)
+        toast.error('Error con la Evaluación')
         setNotas(initlaNotasGrupo)
       })
     }
@@ -66,7 +68,6 @@ const FormNotasGrupo = ({ id, setRegistro, changeId }) => {
       [name]: value
     })
     validaciones(NotasGrupoSchema[name], name, value, errors, setErrors, classList)
-    console.log(errors)
   }
 
   const clean = () => {
@@ -83,8 +84,8 @@ const FormNotasGrupo = ({ id, setRegistro, changeId }) => {
     event.preventDefault()
     if (id === 0) {
       createNotaGrupo(notas).then(data => {
+        toast.success('Se creo la Evaluación')
         clean()
-        console.log(data)
         getAll().then(({ data }) => {
           setRegistro(data)
         }).finally(() => {
@@ -93,8 +94,8 @@ const FormNotasGrupo = ({ id, setRegistro, changeId }) => {
       })
     } else {
       updateNotasGrupo(id, notas).then(data => {
+        toast.success('Se modificó la Evaluación')
         clean()
-        console.log(data)
         getAll().then(({ data }) => {
           setRegistro(data)
         })

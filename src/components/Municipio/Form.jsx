@@ -4,6 +4,7 @@ import { validaciones, esValido, cleanForm } from '../../util/validations.js'
 import PropTypes from 'prop-types'
 import { getOne, create, update } from '../../services/service.js'
 import { getAllEstado } from '../../services/cbbx'
+import toast from 'react-hot-toast'
 
 const Form = ({ id, setRegistro, changeId }) => {
   const initialMunicipio = {
@@ -72,9 +73,8 @@ const Form = ({ id, setRegistro, changeId }) => {
         estado_id: municipio.state_id,
         municipio: municipio.municipalitys
       }).then(response => {
+        toast.success('Se creó el registro: ' + municipio.municipalitys)
         clean()
-        console.log(response)
-        console.log(response.data)
         setRegistro()
         setValido(false)
       })
@@ -83,8 +83,8 @@ const Form = ({ id, setRegistro, changeId }) => {
         estado_id: municipio.state_id,
         municipio: municipio.municipalitys
       }).then(response => {
+        toast.success('Se modificó el registro: ' + municipio.municipalitys)
         clean()
-        console.log(response)
         setRegistro()
         setValido(false)
       })

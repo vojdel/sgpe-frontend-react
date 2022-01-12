@@ -7,7 +7,7 @@ const Tabla = ({ nombres, datas, campos, handleDelete, handleId, handlePaginacio
     const result = []
     for (let i = 1; i <= paginacion.last; i++) {
       result.push(<li className={(page === i) ? 'page-item active' : 'page-item'}>
-        <a className="page-link" onClick={(event) => {
+        <a key={i + 100} className="page-link" onClick={(event) => {
           handlePaginacion(event, i)
         }}>{i}</a>
       </li>)
@@ -24,7 +24,7 @@ const Tabla = ({ nombres, datas, campos, handleDelete, handleId, handlePaginacio
               <tr>
                 {nombres.map((nombre, index) => {
                   return (
-                    <th className="text-center text-uppercase text-xxs font-weight-bolder" key={ index }>{nombre}</th>
+                    <th className="text-center text-uppercase text-xxs font-weight-bolder" key={index}>{nombre}</th>
                   )
                 })}
               </tr>
@@ -33,28 +33,27 @@ const Tabla = ({ nombres, datas, campos, handleDelete, handleId, handlePaginacio
               {
                 datas.map((data, index) => {
                   return (
-                    <tr key={index} style={{ borderWidth: '1px 0px' }}>
+                    <tr key={index + 2} style={{ borderWidth: '1px 0px' }}>
                       {
                         campos.map((campo, index) => {
-                          return (<td key={index}>
-                            <div className="text-xs font-weight-bold text-center mb-0">{data[campo]}</div>
-                          </td>)
+                          return (<td key={index + 10}>
+                                    <div className="text-xs font-weight-bold text-center mb-0">{data[campo]}</div>
+                                  </td>)
                         })
                       }
                       <td className="align-middle w-25 text-center p-0">
-                        <button className="btn btn-icon btn-2 btn-warning my-1" type="button" data-toggle="tooltip" data-original-title="Edit user" data-bs-toggle="modal" data-bs-target="#staticBackdrop" onClick={(event) => {
-                          handleId(event, data.id)
-                        }}>
-                          <span className="btn-inner--icon">
-                            <FontAwesomeIcon icon={faPenAlt} />
-                          </span>
-                        </button>
-                        <button className="btn btn-icon btn-2 btn-danger mx-3 my-1" type="button"
-                          onClick={(event) => { handleDelete(event, data.id) }}>
-                          <span className="btn-inner--icon">
-                            <FontAwesomeIcon icon={faTrashAlt} />
-                          </span>
-                        </button>
+                            <button className="btn btn-icon btn-2 btn-warning my-1" type="button" data-toggle="tooltip"
+                              data-original-title="Edit user" data-bs-toggle="modal" data-bs-target="#staticBackdrop"
+                              onClick={(event) => { handleId(event, data.id) }}>
+                              <span className="btn-inner--icon">
+                                <FontAwesomeIcon icon={faPenAlt} />
+                              </span>
+                            </button><button className="btn btn-icon btn-2 btn-danger mx-3 my-1" type="button"
+                              onClick={(event) => { handleDelete(event, data.id) }}>
+                                <span className="btn-inner--icon">
+                                  <FontAwesomeIcon icon={faTrashAlt} />
+                                </span>
+                              </button>
                       </td>
                     </tr>
                   )

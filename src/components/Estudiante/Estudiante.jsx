@@ -50,6 +50,7 @@ const Estudiante = () => {
           handleSearch={handleSearch}
           handleButtonBack={handleButtonBack}
           handleLimit={handleLimit}
+          reporte={'estudiante'}
         />
         <FormEstudiante
           id={id}

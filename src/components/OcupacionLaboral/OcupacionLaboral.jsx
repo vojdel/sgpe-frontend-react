@@ -50,6 +50,7 @@ const Estado = () => {
           handleSearch={handleSearch}
           handleButtonBack={handleButtonBack}
           handleLimit={handleLimit}
+          reporte={'ocupacionlaboral'}
         />
         <Form
           id={id}

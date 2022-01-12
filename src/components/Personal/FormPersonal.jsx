@@ -5,6 +5,7 @@ import PropTypes from 'prop-types'
 import { getOne, create, update } from '../../services/service.js'
 import { getAllEstado, getAllMunicpios, getAllCargos } from '../../services/cbbx'
 import * as yup from 'yup'
+import toast from 'react-hot-toast'
 
 /**
  * FormPersonal.
@@ -69,7 +70,6 @@ const FormPersonal = ({ id, setRegistro, changeId }) => {
 
   useEffect(() => {
     getAllEstado().then(response => {
-      console.log(response.data)
       setEstados(response.data)
     }).catch(() => {
       setEstados([{
@@ -78,7 +78,6 @@ const FormPersonal = ({ id, setRegistro, changeId }) => {
       }])
     })
     getAllCargos().then(response => {
-      console.log(response.data)
       setCargos(response.data)
     }).catch(() => {
       setCargos([{
@@ -163,9 +162,8 @@ const FormPersonal = ({ id, setRegistro, changeId }) => {
         tit_postgrad: personal.tit_postgrad,
         cargo: personal.cargo
       }).then(response => {
+        toast.success('Se creó el registro: ' + personal.nombre + ' ' + personal.apellido)
         clean()
-        console.log(response)
-        console.log(response.data)
         setRegistro()
         setValido(false)
       })
@@ -184,8 +182,8 @@ const FormPersonal = ({ id, setRegistro, changeId }) => {
         tit_postgrad: personal.tit_postgrad,
         cargo: personal.cargo
       }).then(response => {
+        toast.success('Se modificó el registro: ' + personal.nombre + ' ' + personal.apellido)
         clean()
-        console.log(response)
         setRegistro()
         setValido(false)
       })

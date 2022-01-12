@@ -5,6 +5,7 @@ import { object } from 'yup'
 import { getAllEmpleados } from '../../services/cbbx'
 import PropTypes from 'prop-types'
 import { UsuarioSchema, UsuarioNextSchema, UsuarioWithoutPasswordSchema } from './UsuarioSchema.js'
+import toast from 'react-hot-toast'
 
 /**
  * FormUsuario.
@@ -67,7 +68,6 @@ const FormUsuario = ({ id, setRegistro, changeId }) => {
 
   useEffect(() => {
     getAllEmpleados(true).then(response => {
-      console.log(response.data)
       setEmpleados(response.data)
     }).catch(() => {
       setEmpleados([{
@@ -100,9 +100,6 @@ const FormUsuario = ({ id, setRegistro, changeId }) => {
       const empleadoSelect = empleados.filter(empleado => {
         return empleado.id === parseInt(value)
       })
-      console.log(empleadoSelect)
-      console.log(empleados)
-      console.log(value)
       setUsuario({
         ...usuario,
         empleado_id: value,
@@ -127,7 +124,6 @@ const FormUsuario = ({ id, setRegistro, changeId }) => {
       setErrors,
       classList
     )
-    console.log(`${name}: ${value}`)
   }
 
   const clean = () => {
@@ -154,9 +150,8 @@ const FormUsuario = ({ id, setRegistro, changeId }) => {
         respuesta: usuario.respuesta,
         empleado_id: usuario.empleado_id
       }).then(response => {
+        toast.success('Se creó el registro: ' + usuario.empleado.name + ' ' + usuario.empleado.apellido)
         clean()
-        console.log(response)
-        console.log(response.data)
         setRegistro()
         setValido(false)
       })
@@ -168,8 +163,8 @@ const FormUsuario = ({ id, setRegistro, changeId }) => {
         respuesta: usuario.respuesta,
         empleado_id: usuario.empleado_id
       }).then(response => {
+        toast.success('Se modificó el registro: ' + usuario.empleado.name + ' ' + usuario.empleado.apellido)
         clean()
-        console.log(response)
         setRegistro()
         setValido(false)
       })

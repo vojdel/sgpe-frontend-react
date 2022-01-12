@@ -50,6 +50,7 @@ const Usuario = () => {
           handleSearch={handleSearch}
           handleButtonBack={handleButtonBack}
           handleLimit={handleLimit}
+          reporte={'usuario'}
         />
         <FormUsuario
           id={id}

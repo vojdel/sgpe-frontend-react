@@ -3,6 +3,7 @@ import { CargoSchema } from './CargoSchema'
 import { validaciones, esValido, cleanForm } from '../../util/validations.js'
 import { getOne, create, update } from '../../services/service.js'
 import PropTypes from 'prop-types'
+import toast from 'react-hot-toast'
 
 /**
  * FormCargo.
@@ -66,8 +67,8 @@ const FormCargo = ({ id, setRegistro, changeId }) => {
       create('cargo', {
         cargo: cargo.cargos
       }).then(data => {
+        toast.success('Se creó el registro: ' + cargo.cargos)
         clean()
-        console.log(data)
         setRegistro()
         setValido(false)
       })
@@ -75,8 +76,8 @@ const FormCargo = ({ id, setRegistro, changeId }) => {
       update(id, 'cargo', {
         cargo: cargo.cargos
       }).then(data => {
+        toast.success('Se modificó el registro: ' + cargo.cargos)
         clean()
-        console.log(data)
         setRegistro()
         setValido(false)
       })

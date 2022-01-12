@@ -50,6 +50,7 @@ const Personal = () => {
           handleSearch={handleSearch}
           handleButtonBack={handleButtonBack}
           handleLimit={handleLimit}
+          reporte={'empleado'}
         />
         <FormPersonal
           id={id}
@@ -66,7 +67,7 @@ const Personal = () => {
         handlePaginacion={handlePaginacion}
         page={page}
         paginacion={paginacion}
-    />
+      />
     </div>
   )
 }

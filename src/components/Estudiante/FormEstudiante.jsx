@@ -5,6 +5,7 @@ import { getOne, create, update } from '../../services/service.js'
 import { getAllEstado, getAllMunicpios } from '../../services/cbbx'
 import { object } from 'yup'
 import PropTypes from 'prop-types'
+import toast from 'react-hot-toast'
 
 /**
  * FormEstudiante.
@@ -88,7 +89,6 @@ const FormEstudiante = ({ id, setRegistro, changeId }) => {
 
   useEffect(() => {
     getAllEstado().then(response => {
-      console.log(response.data)
       setEstados(response.data)
     }).catch(() => {
       setEstados([{
@@ -111,7 +111,6 @@ const FormEstudiante = ({ id, setRegistro, changeId }) => {
   useEffect(() => {
     if (estudiante.states !== 0) {
       getAllMunicpios(estudiante.states).then(response => {
-        console.log(response.data)
         setMunicipios(response.data)
       }).catch(() => {
         setMunicipios([{
@@ -164,8 +163,8 @@ const FormEstudiante = ({ id, setRegistro, changeId }) => {
         ...estudiante,
         municipio: estudiante.municipality
       }).then(response => {
+        toast.success('Se creó el registro: ' + estudiante.nombre + ' ' + estudiante.apellido)
         clean()
-        console.log(response)
         setRegistro()
         setValido(false)
       })
@@ -174,8 +173,8 @@ const FormEstudiante = ({ id, setRegistro, changeId }) => {
         ...estudiante,
         municipio: estudiante.municipality
       }).then(response => {
+        toast.success('Se modificó el registro: ' + estudiante.nombre + ' ' + estudiante.apellido)
         clean()
-        console.log(response)
         setRegistro()
         setValido(false)
       })

@@ -20,6 +20,7 @@ export const useTabla = ({ tabla, init, error }) => {
   const [id, setId] = useState(0)
   const [buscando, setBuscando] = useState(false)
   const [busqueda, setBusqueda] = useState('')
+  const [start, setStart] = useState(true)
 
   const handleData = () => {
     window.document.body.style.cursor = 'progress'
@@ -28,21 +29,20 @@ export const useTabla = ({ tabla, init, error }) => {
         return response.data
       }).then((data) => {
         console.log(data)
-        if (data.meta.all !== 0) {
-          setData(data.data)
-          setPaginacion(data.meta)
-        } else {
-          setData(error)
-          setPaginacion(initialPaginacion)
-        }
-        toast.success('El Registro se completo!!')
+        //  if (data.meta.all !== 0) {
+        setData(data.data)
+        setPaginacion(data.meta)
+        //  } else {
+        //  setData(error)
+        //  setPaginacion(initialPaginacion)
+        //  }
         window.document.body.style.cursor = 'initial'
       })
       .catch(() => {
         setData(error)
         setPaginacion(initialPaginacion)
         window.document.body.style.cursor = 'initial'
-        toast.error('Error al registrar.')
+        toast.error('Error no hay registros.')
       })
   }
 
@@ -50,8 +50,9 @@ export const useTabla = ({ tabla, init, error }) => {
     event.preventDefault()
     destroy(id, tabla).then(data => {
       console.log(data)
+      toast.success('Se elmimino el registro.')
       handleData()
-    })
+    }).catch(() => toast.error('No se pudo eliminar el registro'))
   }
 
   const handlePaginacion = (event, pagina) => {
@@ -80,6 +81,7 @@ export const useTabla = ({ tabla, init, error }) => {
         setPaginacion(initialPaginacion)
       })
       .catch(() => {
+        toast.error('No se encontro el registro')
         setData(error)
         setPaginacion(initialPaginacion)
       })
@@ -103,6 +105,7 @@ export const useTabla = ({ tabla, init, error }) => {
   useEffect(() => {
     handleData()
     setPaginacion(initialPaginacion)
+    setStart(false)
 
     return () => {
       setData(init)
@@ -110,7 +113,9 @@ export const useTabla = ({ tabla, init, error }) => {
   }, [])
 
   useEffect(() => {
-    handleData()
+    if (!start) {
+      handleData()
+    }
   }, [page, limit])
 
   return {

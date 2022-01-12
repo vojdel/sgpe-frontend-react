@@ -3,6 +3,7 @@ import { OcupacionLaboralSchema } from './OcupacionLaboralSchema'
 import { validaciones, cleanForm } from '../../util/validations.js'
 import PropTypes from 'prop-types'
 import { getOne, create, update } from '../../services/service.js'
+import toast from 'react-hot-toast'
 
 /**
  * Form.
@@ -41,7 +42,6 @@ const Form = ({ id, setRegistro, changeId }) => {
       [name]: value
     })
     validaciones(OcupacionLaboralSchema, name, value, errors, setErrors, classList)
-    console.log(errors)
   }
 
   const clean = () => {
@@ -59,8 +59,8 @@ const Form = ({ id, setRegistro, changeId }) => {
       create('ocupacionlaboral', {
         labor: ocupacionLaboral.labor
       }).then(data => {
+        toast.success('Se creó el registro: ' + ocupacionLaboral.labor)
         clean()
-        console.log(data)
         setRegistro()
         setValido(false)
       })
@@ -68,8 +68,8 @@ const Form = ({ id, setRegistro, changeId }) => {
       update(id, 'ocupacionlaboral', {
         labor: ocupacionLaboral.labor
       }).then(data => {
+        toast.success('Se modificó el registro: ' + ocupacionLaboral.labor)
         clean()
-        console.log(data)
         setRegistro()
         setValido(false)
       })
@@ -79,7 +79,6 @@ const Form = ({ id, setRegistro, changeId }) => {
   const handleErrors = async () => {
     const validacion = await OcupacionLaboralSchema.isValid(ocupacionLaboral.labor)
     setValido(validacion)
-    console.log(validacion)
   }
 
   useEffect(() => {

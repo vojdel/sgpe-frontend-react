@@ -4,6 +4,7 @@ import { validaciones, esValido, cleanForm } from '../../util/validations.js'
 import { getOne, create, update } from '../../services/service.js'
 import { getAllGrados } from '../../services/cbbx'
 import PropTypes from 'prop-types'
+import toast from 'react-hot-toast'
 
 /**
  * FormSeccion.
@@ -58,7 +59,6 @@ const FormSeccion = ({ id, setRegistro, changeId }) => {
       [name]: value
     })
     validaciones(SeccionSchema[name], name, value, errors, setErrors, classList)
-    console.log(seccion)
   }
 
   const clean = () => {
@@ -80,8 +80,8 @@ const FormSeccion = ({ id, setRegistro, changeId }) => {
         grado: seccion.grado,
         seccion: seccion.secciones
       }).then(data => {
+        toast.success('Se creó el registro: ' + seccion.secciones)
         clean()
-        console.log(data)
         setRegistro()
         setValido(false)
       })
@@ -90,8 +90,8 @@ const FormSeccion = ({ id, setRegistro, changeId }) => {
         grado: seccion.grado,
         seccion: seccion.secciones
       }).then(data => {
+        toast.success('Se modificó el registro: ' + seccion.secciones)
         clean()
-        console.log(data)
         setRegistro()
         setValido(false)
       })
@@ -123,13 +123,13 @@ const FormSeccion = ({ id, setRegistro, changeId }) => {
                     })
                   }
                 </select>
-                {errors.grado ? <div className="invalid-feedback">{errors.grado}</div> : null}
               </div>
+              {errors.grado ? <div className="invalid-feedback">{errors.grado}</div> : null}
               <label>Seccion</label>
               <div className="input-group mb-3">
                 <input type="text" className="form-control" placeholder="Escribe el seccion aqui..." aria-label="Seccion" aria-describedby="seccion-addon" name="secciones" onChange={handleChange} value={seccion.secciones} />
-                {errors.secciones ? <div className="text-danger">{errors.secciones}</div> : null}
               </div>
+              {errors.secciones ? <div className="text-danger">{errors.secciones}</div> : null}
             </form>
           </div>
           <div className="modal-footer">

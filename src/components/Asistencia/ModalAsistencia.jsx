@@ -7,10 +7,11 @@ import moment from 'moment'
 import { object } from 'yup'
 import Form from './Form.jsx'
 import Tabla from './Tabla.jsx'
+import toast from 'react-hot-toast'
 
 const ModalAsistencia = ({ setRegistro, tipo, setTipo, fecha, setFecha, calendarToday }) => {
   const initialAsistencia = {
-    fecha: moment().format('YYYY-MM-DD'),
+    fecha: fecha,
     motivo: '',
     asistio: false,
     empleado_id: 0,
@@ -30,7 +31,7 @@ const ModalAsistencia = ({ setRegistro, tipo, setTipo, fecha, setFecha, calendar
   }
 
   const nameOfForm = [
-    'fecha', 'motivo', 'asistio', 'empleado_id'
+    'empleado_id', 'fecha', 'asistio', 'motivo'
   ]
 
   const initialData = [
@@ -56,7 +57,6 @@ const ModalAsistencia = ({ setRegistro, tipo, setTipo, fecha, setFecha, calendar
 
   const handleEmpleados = (edit) => {
     getEmpleados(edit).then(response => {
-      console.log(response.data)
       setEmpleados(response.data)
     }).catch(() => {
       setEmpleados([{
@@ -94,9 +94,6 @@ const ModalAsistencia = ({ setRegistro, tipo, setTipo, fecha, setFecha, calendar
       setErrors,
       classList
     )
-    console.log(`${name}: ${value}`)
-    console.clear()
-    console.log(asistencia)
   }
 
   const clean = () => {
@@ -127,15 +124,14 @@ const ModalAsistencia = ({ setRegistro, tipo, setTipo, fecha, setFecha, calendar
         motivo: asistencia.motivo,
         empleado_id: asistencia.empleado_id
       }).then(response => {
+        toast.success('Se creó el registro')
         clean()
-        console.log(response)
         getAll(
           date.startOf('month').format('DD'),
           date.endOf('month').format('DD'),
           date.format('MM'),
           date.format('YY')
         ).then(response => {
-          console.log(response.data)
           setRegistro(response.data)
         }).finally(() => {
           setValido(false)
@@ -149,8 +145,8 @@ const ModalAsistencia = ({ setRegistro, tipo, setTipo, fecha, setFecha, calendar
         motivo: asistencia.motivo,
         empleado_id: asistencia.empleado_id
       }).then(response => {
+        toast.success('Se modificó el registro')
         clean()
-        console.log(response)
         getAll(
           date.startOf('month').format('DD'),
           date.endOf('month').format('DD'),
@@ -161,7 +157,6 @@ const ModalAsistencia = ({ setRegistro, tipo, setTipo, fecha, setFecha, calendar
         })
       }).finally(() => {
         getAllDays(fecha).then(response => {
-          console.log(response.data)
           if (response.data.length >= 1) {
             setDatas(response.data)
           } else {
@@ -179,7 +174,6 @@ const ModalAsistencia = ({ setRegistro, tipo, setTipo, fecha, setFecha, calendar
   const handleErrors = async () => {
     const validacion = await object().shape(AsistenciaSchema).isValid(asistencia)
     setValido(validacion)
-    console.log(valido)
   }
 
   useEffect(() => {
@@ -189,7 +183,6 @@ const ModalAsistencia = ({ setRegistro, tipo, setTipo, fecha, setFecha, calendar
   const handleDelete = (event, id) => {
     event.preventDefault()
     destroy(id).then(data => {
-      console.log(data)
       const date = moment()
       getAll(
         date.startOf('month').format('DD'),
@@ -198,7 +191,6 @@ const ModalAsistencia = ({ setRegistro, tipo, setTipo, fecha, setFecha, calendar
         date.format('YY')
       ).then(response => {
         getAllDays(fecha).then(response => {
-          console.log(response.data)
           if (response.data.length >= 1) {
             setDatas(response.data)
           } else {
@@ -216,7 +208,6 @@ const ModalAsistencia = ({ setRegistro, tipo, setTipo, fecha, setFecha, calendar
   useEffect(() => {
     if (fecha !== null) {
       getAllDays(fecha).then(response => {
-        console.log(response.data)
         if (response.data.length >= 1) {
           setDatas(response.data)
         } else {

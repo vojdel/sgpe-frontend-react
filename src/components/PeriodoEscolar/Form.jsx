@@ -4,6 +4,7 @@ import { validaciones, cleanForm } from '../../util/validations.js'
 import PropTypes from 'prop-types'
 import { getOne, create, update } from '../../services/service.js'
 import { object } from 'yup'
+import toast from 'react-hot-toast'
 
 const Form = ({ id, setRegistro, changeId }) => {
   const anio = new Date().getFullYear()
@@ -61,16 +62,17 @@ const Form = ({ id, setRegistro, changeId }) => {
     event.preventDefault()
     if (id === 0) {
       create('periodoescolar', periodoEscolar).then(response => {
+        // console.log(response)
+        // console.log(response.data)
+        toast.success('Se creó el registro: ' + periodoEscolar.anio_ini + '.' + periodoEscolar.anio_fin)
         clean()
-        console.log(response)
-        console.log(response.data)
         setRegistro()
         setValido(false)
       })
     } else {
       update(id, 'periodoescolar', periodoEscolar).then(response => {
+        toast.success('Se modificó el registro: ' + periodoEscolar.anio_ini + '.' + periodoEscolar.anio_fin)
         clean()
-        console.log(response)
         setRegistro()
         setValido(false)
       })

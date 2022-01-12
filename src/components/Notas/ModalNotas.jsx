@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react'
 import PropTypes from 'prop-types'
 import { useNotasEstudiante } from '../../hooks/useNotasEstudiante'
 import { getNotasEstudiante, getNotas, createNotaEstudiante, updateNotasEstudiante } from '../../services/notas'
+import toast from 'react-hot-toast'
 
 const ModalNotas = ({ id, materia, setRegistro, changeId, changeMateria, grupoId }) => {
   const [estudiante, setEstudiante] = useState('')
@@ -15,7 +16,6 @@ const ModalNotas = ({ id, materia, setRegistro, changeId, changeMateria, grupoId
     * */
   const handleSubmit = (event) => {
     event.preventDefault()
-    console.log(primerLapso.data())
     if (primerLapso.data().id === 0 && segundoLapso.data().id === 0 && tercerLapso.data().id === 0) {
       createNotaEstudiante({
         notas: [
@@ -24,10 +24,9 @@ const ModalNotas = ({ id, materia, setRegistro, changeId, changeMateria, grupoId
           tercerLapso.data()
         ]
       }).then(response => {
+        toast.success('Se añadio la nota')
         clean()
-        console.log(response)
         getNotas(grupoId, materia).then(response => {
-          console.log(response.data)
           setRegistro(response.data)
         })
       })
@@ -39,8 +38,8 @@ const ModalNotas = ({ id, materia, setRegistro, changeId, changeMateria, grupoId
           tercerLapso.data()
         ]
       }).then(response => {
+        toast.success('Se modificó la nota')
         clean()
-        console.log(response)
         getNotas(grupoId, materia).then(response => {
           setRegistro(response.data)
         })
@@ -60,11 +59,9 @@ const ModalNotas = ({ id, materia, setRegistro, changeId, changeMateria, grupoId
     if (id !== 0) {
       getNotasEstudiante(id, materia)
         .then(response => {
-          console.log(response)
           return response.data
         })
         .then(data => {
-          console.log(data)
           const { nombre, apellido, notas } = data
           const [initPrimerLapso, initSegundoLapso, initTercerLaso] = notas
           setEstudiante(`${nombre} ${apellido}`)
