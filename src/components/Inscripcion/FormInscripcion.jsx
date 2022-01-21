@@ -14,7 +14,7 @@ const FormInscripcion = () => {
 
   const initialInscripcion = {
     estudiante_id: 0,
-    estudiante_cedula: 0,
+    estudiante_cedula: null,
     estudiante: {
       cedula: 0,
       nombre: '',
@@ -24,7 +24,7 @@ const FormInscripcion = () => {
       direccion: '',
       states: '',
       municipality: '',
-      fecha_nacimiento: `${new Date().getFullYear()}-${new Date().getMonth()}-${new Date().getDate()}`,
+      fecha_nacimiento: '00-00-0000',
       lugar_nacimiento: '',
       descripcion: '',
       estatura: '',
@@ -37,7 +37,7 @@ const FormInscripcion = () => {
       repite: false
     },
     representante_id: 0,
-    representante_cedula: 0,
+    representante_cedula: null,
     representante: {
       cedula: 0,
       nombre: '',
@@ -172,7 +172,7 @@ const FormInscripcion = () => {
     if (inscripcion.grado !== 0) {
       getAllSecciones(inscripcion.grado).then(response => {
         setSecciones(response.data)
-      }).catch(errors => {
+      }).catch(() => {
         setSecciones([{
           id: 0,
           secciones: ''
@@ -315,9 +315,10 @@ const FormInscripcion = () => {
         grado: inscripcion.grado,
         seccion: inscripcion.seccion,
         parentesco: inscripcion.parentesco
-      }).then(response => {
-        toast.success('Se creó la inscripcion de: ' + inscripcion.estudiante.nombre + ' ' + inscripcion.estudiante.apellido)
+      }).then(() => {
         handleTabs('estudiante', 'inscripcion')
+        history.push('/inscripcion/form')
+        toast.success('Se creó la inscripcion de: ' + inscripcion.estudiante.nombre + ' ' + inscripcion.estudiante.apellido)
         clean()
       })
     } else {
@@ -329,9 +330,9 @@ const FormInscripcion = () => {
         grado: inscripcion.grado,
         seccion: inscripcion.seccion,
         parentesco: inscripcion.parentesco
-      }).then(response => {
-        toast.success('Se modificó la inscripcion de: ' + inscripcion.estudiante.nombre + ' ' + inscripcion.estudiante.apellido)
+      }).then(() => {
         handleTabs('estudiante', 'inscripcion')
+        toast.success('Se modificó la inscripcion de: ' + inscripcion.estudiante.nombre + ' ' + inscripcion.estudiante.apellido)
         clean()
       })
     }
@@ -363,10 +364,19 @@ const FormInscripcion = () => {
             </div>
             <div className="col-12">
               <nav style={{ marginBottom: '-1.59em' }}>
-                <div className="nav nav-tabs justify-content-center" id="nav-tab" role="tablist">
-                  <a className="nav-link active text-center w-25" id="nav-estudiante-tab" data-toggle="tab" href="#" role="tab" aria-controls="nav-estudiante" aria-selected="true">Estudiante</a>
-                  <a className="nav-link text-center w-25" id="nav-representante-tab" data-toggle="tab" href="#" role="tab" aria-controls="nav-representante" aria-selected="false">Representante</a>
-                  <a className="nav-link text-center w-25" id="nav-inscripcion-tab" data-toggle="tab" href="#" role="tab" aria-controls="nav-inscripcion" aria-selected="false">Inscripción</a>
+                <div className="nav nav-tabs justify-content-between" id="nav-tab" role="tablist">
+                  <a className="nav-link active text-center" style="width: 33.3333%" id="nav-estudiante-tab"
+                    data-toggle="tab" href="#" role="tab" aria-controls="nav-estudiante" aria-selected="true">
+                    Estudiante
+                  </a>
+                  <a className="nav-link text-center" style="width: 33.3333%" id="nav-representante-tab"
+                    data-toggle="tab" href="#" role="tab" aria-controls="nav-representante" aria-selected="false">
+                    Representante
+                  </a>
+                  <a className="nav-link text-center" style="width: 33.3333%" id="nav-inscripcion-tab"
+                    data-toggle="tab" href="#" role="tab" aria-controls="nav-inscripcion" aria-selected="false">
+                    Inscripción
+                  </a>
                 </div>
               </nav>
             </div>
@@ -376,7 +386,8 @@ const FormInscripcion = () => {
 
               {/* Estudiante */}
 
-              <div className="tab-pane show active" id="nav-estudiante" role="tabpanel" aria-labelledby="nav-estudiante-tab" style={{ minHeight: '550px' }}>
+              <div className="tab-pane show active" id="nav-estudiante" role="tabpanel"
+                aria-labelledby="nav-estudiante-tab" style={{ minHeight: '550px' }}>
                 <div className="row">
                   <h2 className="text-center">Estudiante</h2>
                 </div>
@@ -384,86 +395,76 @@ const FormInscripcion = () => {
                   <div className="col-5 d-inline-block">
                     <div className="input-group my-4">
                       <label htmlFor="estudianteCedula" className="input-group-text">Cedula: </label>
-                      <input type="text" id="estudianteCedula" className="form-control mb-2" placeholder="Escriba la cedula del Estudiante" aria-label="Recipient's username" aria-describedby="button-addon2" name="estudiante_cedula" onChange={handleChangeCedula} value={inscripcion.estudiante_cedula} />
-                      <button className="btn btn-outline-secondary mb-2" type="button" id="button-addon2" onClick={handleEstudiante}>Buscar</button>
+                      <input type="text" id="estudianteCedula" className="form-control mb-2"
+                        placeholder="Escriba la cedula del Estudiante" aria-label="Recipient's username"
+                        aria-describedby="button-addon2" name="estudiante_cedula" onChange={handleChangeCedula}
+                        value={inscripcion.estudiante_cedula} />
+                      <button className="btn btn-outline-secondary mb-2" type="button" id="button-addon2"
+                        onClick={handleEstudiante}>Buscar</button>
                     </div>
                     {errors.estudiante_id ? <div className="invalid-feedback">{errors.estudiante_id}</div> : null}
                   </div>
                 </div>
                 <div className="row">
-                  <div className="col-4">
-                    <label htmlFor="estudiante-nombre" className="form-label">Nombre: </label>
-                    <input type="text" name="estudiante.nombre" id="estudiante-nombre" className="form-control-plaintext" value={inscripcion.estudiante.nombre} readOnly />
-                  </div>
-                  <div className="col-4">
-                    <label htmlFor="estudiante-apellido" className="form-label">Apellido: </label>
-                    <input type="text" name="estudiante.apellido" id="estudiante-apellido" className="form-control-plaintext" value={inscripcion.estudiante.apellido} readOnly />
-                  </div>
-                  <div className="col-4">
-                    <label htmlFor="estudiante-sex" className="form-label">Sexo: </label>
-                    <input type="text" name="estudiante.sex" id="estudiante-sex" className="form-control-plaintext" value={inscripcion.estudiante.sex} readOnly />
-                  </div>
-                </div>
-                <div className="row">
-                  <div className="col-4">
-                    <label htmlFor="estudiante-states" className="form-label">Estado: </label>
-                    <input type="text" name="estudiante.states" id="estudiante-states" className="form-control-plaintext" value={inscripcion.estudiante.states} readOnly />
-                  </div>
-                  <div className="col-4">
-                    <label htmlFor="estudiante-municipality" className="form-label">Municipio: </label>
-                    <input type="text" name="estudiante.municipality" id="estudiante-municipality" className="form-control-plaintext" value={inscripcion.estudiante.municipality} readOnly />
-                  </div>
-                  <div className="col-4">
-                    <label htmlFor="estudiante-direccion" className="form-label">Dirección: </label>
-                    <input type="text" name="estudiante.direccion" id="estudiante-direccion" className="form-control-plaintext" value={inscripcion.estudiante.direccion} readOnly />
-                  </div>
-                </div>
-                <div className="row">
-                  <div className="col-4">
-                    <label htmlFor="estudiante-telefono" className="form-label">Telefono: </label>
-                    <input type="text" name="estudiante.telefono" id="estudiante-telefono" className="form-control-plaintext" value={inscripcion.estudiante.telefono} readOnly />
-                  </div>
-                  <div className="col-4">
-                    <label htmlFor="estudiante-fecha_nacimiento" className="form-label">Fecha de Nacimiento: </label>
-                    <input type="date" name="estudiante.fecha_nacimiento" id="estudiante-fecha_nacimiento" className="form-control-plaintext" value={inscripcion.estudiante.fecha_nacimiento} readOnly />
-                  </div>
-                  <div className="col-4">
-                    <label htmlFor="estudiante-lugar_nacimiento" className="form-label">Lugar de Nacimiento: </label>
-                    <input type="text" name="estudiante.lugar_nacimiento" id="estudiante-lugar_nacimiento" className="form-control-plaintext" value={inscripcion.estudiante.lugar_nacimiento} readOnly />
-                  </div>
-                </div>
-                <div className="row">
-                  <div className="col-3">
-                    <label htmlFor="estudiante-estatura" className="form-label">Estatura: </label>
-                    <input type="text" name="estudiante.estatura" id="estudiante-estatura" className="form-control-plaintext" value={inscripcion.estudiante.estatura} readOnly />
-                  </div>
-                  <div className="col-3">
-                    <label htmlFor="estudiante-peso" className="form-label">Peso: </label>
-                    <input type="date" name="estudiante.peso" id="estudiante-peso" className="form-control-plaintext" value={inscripcion.estudiante.peso} readOnly />
-                  </div>
-                  <div className="col-3">
-                    <label htmlFor="estudiante-talla" className="form-label">Talla: </label>
-                    <input type="text" name="estudiante.talla" id="estudiante-talla" className="form-control-plaintext" value={inscripcion.estudiante.talla} readOnly />
-                  </div>
-                  <div className="col-3">
-                    <label htmlFor="estudiante-t_sangre" className="form-label">Tipo de Sangre: </label>
-                    <input type="text" name="estudiante.t_sangre" id="estudiante-t_sangre" className="form-control-plaintext" value={inscripcion.estudiante.t_sangre} readOnly />
-                  </div>
-                </div>
-                <div className="row">
-                  <div className="col-8">
-                    <label htmlFor="estudiante-descripcion" className="form-label">Descripción: </label>
-                    <div className="input-group mb-3">
-                      <textarea className="form-control" id="estudiante-descripcion" placeholder="Escribe la Descripción aqui..." aria-label="Descripcion" aria-describedby="descripcion-addon" name="estudiante.descripcion" value={inscripcion.estudiante.descripcion} readOnly ></textarea>
-                    </div>
-                  </div>
-                  <div className="col-2">
-                    <label htmlFor="estudiante-beca" className="form-label">Beca: </label>
-                    <input type="checkbox" name="estudiante.beca" id="estudiante-beca" className="form-control-plaintext" checked={inscripcion.estudiante.beca} readOnly />
-                  </div>
-                  <div className="col-2">
-                    <label htmlFor="estudiante-repite" className="form-label">Repite: </label>
-                    <input type="checkbox" name="estudiante.repite" id="estudiante-repite" className="form-control-plaintext" checked={inscripcion.estudiante.repite} readOnly />
+                  <div className="col">
+                    {(inscripcion.estudiante_id !== 0)
+                      ? <table className="table table-responsive table-hover table-bordered border-dark">
+                        <colgroup>
+                          <col width="200" />
+                          <col width="200" />
+                          <col width="200" />
+                          <col width="200" />
+                          <col width="200" />
+                          <col width="200" />
+                          <col width="200" />
+                          <col width="200" />
+                        </colgroup>
+                        <tbody>
+                          <tr>
+                            <td
+                              className="px-3 py-3 text-center text-uppercase text-xxs font-weight-bolder table-active">
+                              Nombre:
+                            </td>
+                            <td colSpan="2" className="text-center text-xxs px-3 py-3">{inscripcion.estudiante.nombre}</td>
+                            <td className="px-3 py-3 text-center text-uppercase text-xxs font-weight-bolder table-active">Apellido:</td>
+                            <td colSpan="2" className="text-center text-xxs px-3 py-3">{inscripcion.estudiante.apellido}</td>
+                            <td className="px-3 py-3 text-center text-uppercase text-xxs font-weight-bolder table-active">Sexo:</td>
+                            <td className="text-center text-xxs px-3 py-3">{inscripcion.estudiante.sex}</td>
+                          </tr>
+                          <tr>
+                            <td className="px-3 py-3 text-center text-uppercase text-xxs font-weight-bolder table-active">Estado:</td>
+                            <td className="text-center text-xxs px-3 py-3">{inscripcion.estudiante.states}</td>
+                            <td className="px-3 py-3 text-center text-uppercase text-xxs font-weight-bolder table-active">Municipio:</td>
+                            <td className="text-center text-xxs px-3 py-3">{inscripcion.estudiante.municipality}</td>
+                            <td className="px-3 py-3 text-center text-uppercase text-xxs font-weight-bolder table-active">Dirección:</td>
+                            <td colSpan="3" className="text-center text-xxs px-3 py-3">{inscripcion.estudiante.direccion}</td>
+                          </tr>
+                          <tr>
+                            <td className="px-3 py-3 text-center text-uppercase text-xxs font-weight-bolder table-active">Telefono:</td>
+                            <td className="text-center text-xxs px-3 py-3">{inscripcion.estudiante.telefono}</td>
+                            <td className="px-3 py-3 text-center text-uppercase text-xxs font-weight-bolder table-active">Fecha de Nacimiento:</td>
+                            <td className="text-center text-xxs px-3 py-3">{inscripcion.estudiante.fecha_nacimiento}</td>
+                            <td className="px-3 py-3 text-center text-uppercase text-xxs font-weight-bolder table-active">Lugar de Nacimiento:</td>
+                            <td colSpan="3" className="text-center text-xxs px-3 py-3">{inscripcion.estudiante.lugar_nacimiento}</td>
+                          </tr>
+                          <tr>
+                            <td className="px-3 py-3 text-center text-uppercase text-xxs font-weight-bolder table-active">Estatura:</td>
+                            <td className="text-center text-xxs px-3 py-3">{inscripcion.estudiante.estatura}</td>
+                            <td className="px-3 py-3 text-center text-uppercase text-xxs font-weight-bolder table-active">Peso</td>
+                            <td className="text-center text-xxs px-3 py-3">{inscripcion.estudiante.peso}</td>
+                            <td className="px-3 py-3 text-center text-uppercase text-xxs font-weight-bolder table-active">Talla:</td>
+                            <td className="text-center text-xxs px-3 py-3">{inscripcion.estudiante.talla}</td>
+                            <td className="px-3 py-3 text-center text-uppercase text-xxs font-weight-bolder table-active">Tipo de Sangre:</td>
+                            <td className="text-center text-xxs px-3 py-3">{inscripcion.estudiante.t_sangre}</td>
+                          </tr>
+                          <tr>
+                            <td className="px-3 py-3 text-center text-uppercase text-xxs font-weight-bolder table-active">Descripción:</td>
+                            <td colSpan="7" className="px-3 py-3 text-center text-xxs">{inscripcion.estudiante.descripcion}</td>
+                          </tr>
+                        </tbody>
+                      </table>
+
+                      : <div></div>}
                   </div>
                 </div>
                 <div className="row">
@@ -511,41 +512,46 @@ const FormInscripcion = () => {
                   </div>
                 </div>
                 <div className="row">
-                  <div className="col-4">
-                    <label htmlFor="representante-nombre" className="form-label">Nombre: </label>
-                    <input type="text" name="representante.nombre" id="representante-nombre" className="form-control-plaintext" value={inscripcion.representante.nombre} readOnly />
-                  </div>
-                  <div className="col-4">
-                    <label htmlFor="representante-apellido" className="form-label">Apellido: </label>
-                    <input type="text" name="representante.apellido" id="representante-apellido" className="form-control-plaintext" value={inscripcion.representante.apellido} readOnly />
-                  </div>
-                  <div className="col-4">
-                    <label htmlFor="representante-sex" className="form-label">Sexo: </label>
-                    <input type="text" name="representante.sex" id="representante-sex" className="form-control-plaintext" value={inscripcion.representante.sex} readOnly />
-                  </div>
-                </div>
-                <div className="row">
-                  <div className="col-4">
-                    <label htmlFor="representante-states" className="form-label">Estado: </label>
-                    <input type="text" name="representante.states" id="representante-states" className="form-control-plaintext" value={inscripcion.representante.states} readOnly />
-                  </div>
-                  <div className="col-4">
-                    <label htmlFor="representante-municipality" className="form-label">Municipio: </label>
-                    <input type="text" name="representante.municipality" id="representante-municipality" className="form-control-plaintext" value={inscripcion.representante.municipality} readOnly />
-                  </div>
-                  <div className="col-4">
-                    <label htmlFor="representante-direccion" className="form-label">Dirección: </label>
-                    <input type="text" name="representante.direccion" id="representante-direccion" className="form-control-plaintext" value={inscripcion.representante.direccion} readOnly />
-                  </div>
-                </div>
-                <div className="row">
-                  <div className="col-6">
-                    <label htmlFor="representante-telefono" className="form-label">Telefono: </label>
-                    <input type="text" name="representante.telefono" id="representante-telefono" className="form-control-plaintext" value={inscripcion.representante.telefono} readOnly />
-                  </div>
-                  <div className="col-6">
-                    <label htmlFor="representante-ocupacion_laboral" className="form-label">Ocupación Laboral: </label>
-                    <input type="text" name="representante.ocupacion_laboral" id="representante-ocupacion_laboral" className="form-control-plaintext" value={inscripcion.representante.ocupacion_laboral} readOnly />
+                  <div className="col">
+                    {(inscripcion.representante_id !== 0)
+                      ? <table className="table table-responsive table-hover table-bordered border-dark">
+                        <colgroup>
+                          <col width="200" />
+                          <col width="200" />
+                          <col width="200" />
+                          <col width="200" />
+                          <col width="200" />
+                          <col width="200" />
+                          <col width="200" />
+                          <col width="200" />
+                        </colgroup>
+                        <tbody>
+                          <tr>
+                            <td className="px-3 py-3 text-center text-uppercase text-xxs font-weight-bolder table-active">Nombre:</td>
+                            <td colSpan="2" className="text-center text-xxs px-3 py-3">{inscripcion.representante.nombre}</td>
+                            <td className="px-3 py-3 text-center text-uppercase text-xxs font-weight-bolder table-active">Apellido:</td>
+                            <td colSpan="2" className="text-center text-xxs px-3 py-3">{inscripcion.representante.apellido}</td>
+                            <td className="px-3 py-3 text-center text-uppercase text-xxs font-weight-bolder table-active">Sexo:</td>
+                            <td className="text-center text-xxs px-3 py-3">{inscripcion.representante.sex}</td>
+                          </tr>
+                          <tr>
+                            <td className="px-3 py-3 text-center text-uppercase text-xxs font-weight-bolder table-active">Estado:</td>
+                            <td className="text-center text-xxs px-3 py-3">{inscripcion.representante.states}</td>
+                            <td className="px-3 py-3 text-center text-uppercase text-xxs font-weight-bolder table-active">Municipio:</td>
+                            <td className="text-center text-xxs px-3 py-3">{inscripcion.representante.municipality}</td>
+                            <td className="px-3 py-3 text-center text-uppercase text-xxs font-weight-bolder table-active">Dirección:</td>
+                            <td colSpan="3" className="text-center text-xxs px-3 py-3">{inscripcion.representante.direccion}</td>
+                          </tr>
+                          <tr>
+                            <td className="px-3 py-3 text-center text-uppercase text-xxs font-weight-bolder table-active">Telefono:</td>
+                            <td className="text-center text-xxs px-3 py-3">{inscripcion.representante.telefono}</td>
+                            <td className="px-3 py-3 text-center text-uppercase text-xxs font-weight-bolder table-active">Ocupación Laboral:</td>
+                            <td colSpan="5" className="text-center text-xxs px-3 py-3">{inscripcion.representante.ocupacion_laboral}</td>
+                          </tr>
+                        </tbody>
+                      </table>
+
+                      : <div></div>}
                   </div>
                 </div>
                 <div className="row">

@@ -20,16 +20,16 @@ const TablaNotasEstudiante = ({ nombres, datas, grupo, changeId, changeMateria }
         <table className="table algin-items-center mb-0">
           <thead>
             <tr className="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
-              <td>Materia: {grupo.materia}</td>
-              <td>Grado: {grupo.grado}</td>
-              <td>Sección: {grupo.seccion}</td>
-              <td>Periodo Escolar: {grupo.periodo_escolar}</td>
-              <td>Maestro: {grupo.empleado}</td>
+              <td className="px-3 py-3">Materia: {grupo.materia}</td>
+              <td className="px-3 py-3">Grado: {grupo.grado}</td>
+              <td className="px-3 py-3">Sección: {grupo.seccion}</td>
+              <td className="px-3 py-3">Periodo Escolar: {grupo.periodo_escolar}</td>
+              <td className="px-3 py-3">Maestro: {grupo.empleado}</td>
             </tr>
             <tr>
               {nombres.map((nombre, index) => {
                 return (
-                  <th className="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7" key={index} >{nombre}</th>
+                  <th className="text-center text-uppercase text-xxs font-weight-bolder opacity-7 table-active" key={index} >{nombre}</th>
                 )
               })}
             </tr>
@@ -40,19 +40,19 @@ const TablaNotasEstudiante = ({ nombres, datas, grupo, changeId, changeMateria }
                 return (
                   <tr key={index} onClick={() => handleSetId(data.id, data.materia)}>
                     <td>
-                      <div className="text-xs font-weight-bold mb-0 text-center">{data.nombre} - {data.apellido}</div>
+                      <div className="text-xs font-weight-bold mb-0 text-center px-3 py-3">{data.nombre} - {data.apellido}</div>
                     </td>
                     <td>
-                      <div className="text-xs font-weight-bold mb-0 text-center">{data.primerLapso || 0}</div>
+                      <div className="text-xs font-weight-bold mb-0 text-center px-3 py-3">{data.primerLapso || 0}</div>
                     </td>
                     <td>
-                      <div className="text-xs font-weight-bold mb-0 text-center">{data.segundoLapso || 0}</div>
+                      <div className="text-xs font-weight-bold mb-0 text-center px-3 py-3">{data.segundoLapso || 0}</div>
                     </td>
                     <td>
-                      <div className="text-xs font-weight-bold mb-0 text-center">{data.tercerLapso || 0}</div>
+                      <div className="text-xs font-weight-bold mb-0 text-center px-3 py-3">{data.tercerLapso || 0}</div>
                     </td>
                     <td>
-                      <div className="text-xs font-weight-bold mb-0 text-center">
+                      <div className="text-xs font-weight-bold mb-0 text-center px-3 py-3">
                         {(parseInt(data.primerLapso || 0) + parseInt(data.segundoLapso || 0) + parseInt(data.tercerLapso || 0))}
                       </div>
                     </td>

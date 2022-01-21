@@ -59,7 +59,7 @@ const Municipio = () => {
       <Tabla
         nombres={nombres}
         datas={data}
-        campos={['id', 'municipalitys']}
+        campos={['id', 'states', 'municipalitys']}
         handleDelete={handleDelete}
         handleId={handleId}
         handlePaginacion={handlePaginacion}

@@ -1,5 +1,6 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faHome, faSave, faTimes, faUserAlt, faBars, faDoorClosed, faFilePdf } from '@fortawesome/free-solid-svg-icons'
+// faUserAlt
+import { faHome, faSave, faTimes, faBars, faDoorClosed, faFilePdf } from '@fortawesome/free-solid-svg-icons'
 import SiderOption from './SiderOption'
 import PropTypes from 'prop-types'
 import { useContext, useEffect } from 'react'
@@ -66,9 +67,10 @@ const Siderbar = ({ estilo, handleMenu }) => {
               <h6 className="ps-4 ms-2 text-uppercase text-xs font-weight-bolder opacity-6 text-white">Account Pages</h6>
             </li>
             {tipo === 1 ? <SiderOption nombre="Respaldo" icon={faSave} link="/backup" handleMenu={handleMenu} /> : null}
-            {//<SiderOption nombre="Configuaricones" icon={faSave} faFilePdf link="/" handleMenu={handleMenu} />}
-              {//<SiderOption nombre="Perfil" icon={faUserAlt} link="/" handleMenu={handleMenu} />}
-            < SiderOption nombre="Logout" icon={faDoorClosed} link="/logout" handleMenu={handleMenu} />
+            <SiderOption nombre="Logout" icon={faDoorClosed} link="/logout" handleMenu={handleMenu} />
+            {// <SiderOption nombre="Configuaricones" icon={faSave} faFilePdf link="/" handleMenu={handleMenu} />
+              // <SiderOption nombre="Perfil" icon={faUserAlt} link="/" handleMenu={handleMenu} />
+            }
           </ul >
         </div >
       </div >

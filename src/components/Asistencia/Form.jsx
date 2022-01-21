@@ -26,7 +26,7 @@ const Form = ({ asistencia, errors, empleados, valido, id, handleChange, handleS
           <div className="col">
             <label>Fecha:</label>
             <div className="input-group mb-3">
-              <input type="date" className="form-control" aria-label="Estado" aria-describedby="states-addon" name="fecha" onChange={handleChange} value={asistencia.fecha} disabled={(id === 0)} />
+              <input type="date" className="form-control" aria-label="Estado" aria-describedby="states-addon" name="fecha" onChange={handleChange} value={asistencia.fecha} disabled={(id !== 0)} />
             </div>
             {errors.fecha ? <div className="text-danger">{errors.fecha}</div> : null}
           </div>

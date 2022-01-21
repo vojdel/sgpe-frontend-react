@@ -58,7 +58,7 @@ const Inscripcion = () => {
       } else {
         setInscritos([{
           id: 0,
-          cedula: 27122644,
+          cedula: 0,
           nombre: 'No Existen registros',
           grado: 0,
           seccion: ''

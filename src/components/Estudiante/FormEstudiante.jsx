@@ -360,9 +360,14 @@ const FormEstudiante = ({ id, setRegistro, changeId }) => {
                     <div className="input-group mb-3">
                       <select className="form-control" aria-label="Tipo de Sangre" aria-describedby="t_sangre-addon" onChange={handleChange} name="t_sangre" value={estudiante.t_sangre} >
                         <option value="">Seleccione...</option>
-                        <option value="A">A</option>
-                        <option value="B">B</option>
-                        <option value="AB">AB</option>
+                        <option value="A+">A+</option>
+                        <option value="A-">A-</option>
+                        <option value="B+">B+</option>
+                        <option value="B-">B-</option>
+                        <option value="AB+">AB+</option>
+                        <option value="AB-">AB-</option>
+                        <option value="O+">O+</option>
+                        <option value="O-">O-</option>
                       </select>
                       {errors.t_sangre ? <div className="invalid-feedback">{errors.t_sangre}</div> : null}
                     </div>
